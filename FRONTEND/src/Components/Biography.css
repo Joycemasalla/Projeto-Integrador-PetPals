@@ -1,0 +1,32 @@
+.biography {
+  position: relative;
+  background-image: url('../assets/patas.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  color: white;
+  overflow: hidden; /* Para garantir que a camada de sobreposição não ultrapasse os limites do contêiner */
+  margin-top: 50px;
+}
+
+.biography::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Ajuste o valor de 0.4 para controlar a opacidade */
+  z-index: 1; /* Coloca a camada acima da imagem de fundo, mas abaixo do conteúdo */
+}
+
+.banner {
+  position: relative;
+  z-index: 2; /* Garante que o conteúdo da seção fique acima da camada de sobreposição */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+ 
+}
+

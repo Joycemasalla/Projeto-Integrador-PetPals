@@ -1,0 +1,17 @@
+.departments {
+    padding: 2rem 0;
+    background-color: #F9F9F9;
+  }
+  
+  .departments h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #009A8E;
+  }
+  
+  .depart-name img{
+    object-fit: cover;
+  }
+  
+ 
+  

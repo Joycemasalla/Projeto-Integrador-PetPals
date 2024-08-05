@@ -1,0 +1,153 @@
+/* Estilo para o botão de voltar ao topo */
+#voltarTopo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* Ajuste estas posições conforme necessário */
+    z-index: 1000;
+}
+
+#subir {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#subir img {
+    width: 35px;
+    height: auto;
+}
+
+#subir:hover {
+    /* Adicione estilos para quando o botão for passado por cima */
+    opacity: 0.8;
+}
+
+/* Estilos restantes */
+.titulocard {
+    display: flex;
+    max-width: 500px;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.titulocard h2 {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    color: rgb(56, 55, 55);
+    text-align: center;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+    justify-content: center;
+    /* Centralizando os cards */
+    max-width: 800px;
+    /* Definindo uma largura máxima para o grid */
+    margin: 0 auto;
+    /* Centralizando o grid horizontalmente */
+}
+
+.dicas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fefefeff;
+    /* branco1 */
+    width: auto;
+    height: 13rem;
+    /* Ajustando a altura para deixar os cards mais baixos */
+    box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.dicas.dicas.visible:hover {
+    box-shadow: 0 4px 10px #07998d;
+    transform: scale(5.05);
+}
+.dicas img{
+    height: 70px;
+    width: auto;
+    margin: 10px;
+    filter: drop-shadow(1px 1px 3px #07998d); 
+    
+}
+/* CardsDicas.css */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Define a animação de deslizar para dentro */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Começa um pouco abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Move para a posição original */
+    }
+}
+
+/* Inicialmente, os cards estão invisíveis e deslocados */
+.dicas {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Quando a classe "visible" é adicionada, a animação de deslizar é aplicada */
+.dicas.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+.card-title {
+    margin: 0;
+    color: #07998dc0;
+    font-size: 1em;
+    text-align: center;
+}
+
+.card-description {
+    color: #333;
+    font-size: 0.8em;
+    /* Reduzindo o tamanho da fonte para ajustar ao novo tamanho do card */
+    text-align: center;
+    margin-top: 5px;
+    /* Ajustando o espaçamento para melhor aparência */
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+        /* Alterando para duas colunas em telas menores */
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        grid-template-columns: 1fr;
+        /* Alterando para uma coluna em telas muito pequenas */
+        gap: 10px;
+    }
+}

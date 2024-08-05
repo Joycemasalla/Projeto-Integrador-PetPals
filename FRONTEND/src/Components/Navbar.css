@@ -1,0 +1,19 @@
+nav.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #009A8E; /* Cor de fundo */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+ 
+  
+  
+  .logo img{
+    width: 400px;
+    height: auto;
+  }
+  
+  
+ 
+  
