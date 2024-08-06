@@ -579,3 +579,75 @@ input[type="time"]:before {
   color: #444;
   margin-right: 0.5em;
 }
+
+.add-availability {
+  margin-left: 120px;
+  background: #e5e5e5;
+  padding: 40px;
+  height: 100vh;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.add-availability h2 {
+  font-size: 2rem;
+  color: #07998d;
+  margin-bottom: 20px;
+}
+
+.add-availability form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  padding: 0;
+}
+
+.add-availability form input,
+.add-availability form textarea {
+  width: 50%;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.add-availability form textarea {
+  height: 100px;
+}
+
+.add-availability form button {
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(140deg, #FCC931, #493807);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.add-availability form button:hover {
+  background: linear-gradient(140deg, #FFD700, #5D4037);
+}
+
+@media (max-width: 700px) {
+  .add-availability {
+    padding: 20px;
+  }
+
+  .add-availability h2 {
+    font-size: 1.5rem;
+  }
+
+  .add-availability form input,
+  .add-availability form textarea {
+    font-size: 16px;
+  }
+
+  .add-availability form button {
+    font-size: 16px;
+  }
+}

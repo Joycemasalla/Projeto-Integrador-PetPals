@@ -3,6 +3,7 @@ import { TiHome } from "react-icons/ti";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { AiFillMessage } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { IoCalendarClear } from "react-icons/io5";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdAddModerator } from "react-icons/md";
 import { IoPersonAddSharp } from "react-icons/io5";
@@ -52,6 +53,10 @@ const Sidebar = () => {
     navigateTo("/admin/addnew");
     setShow(!show);
   };
+  const gotoAddAvailability = () => {
+    navigateTo("/admin/disponibilidade");
+    setShow(!show);
+  }
 
   return (
     <>
@@ -63,9 +68,11 @@ const Sidebar = () => {
           <TiHome onClick={gotoHomePage} />
           <FaUserDoctor onClick={gotoDoctorsPage} />
           <MdAddModerator onClick={gotoAddNewAdmin} />
+          <IoCalendarClear onClick={gotoAddAvailability} />
           <IoPersonAddSharp onClick={gotoAddNewDoctor} />
           <AiFillMessage onClick={gotoMessagesPage} />
           <RiLogoutBoxFill onClick={handleLogout} />
+
         </div>
       </nav>
       <div

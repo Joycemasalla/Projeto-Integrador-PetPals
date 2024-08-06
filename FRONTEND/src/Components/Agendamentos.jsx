@@ -49,44 +49,54 @@ const Agendamentos = () => {
           </thead>
           <tbody>
             {appointments && appointments.length > 0 ? (
-              appointments.map((appointment) => (
-                <tr key={appointment._id}>
-                  <td>{`${appointment.nomePet}`}</td>
-                  <td>{appointment.appointment_date.substring(0, 16)}</td>
-                  <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
-                  <td>{appointment.department}</td>
-                  <td>
-                    <select id="valores"
-                      className={
-                        appointment.status === "Pendente"
-                          ? "value-pending"
-                          : appointment.status === "Aceito"
-                          ? "value-accepted"
-                          : "value-rejected"
-                      }
-                      value={appointment.status}
-                      disabled
-                    >
-                      <option value="Pendente" className="value-pending">
-                        Pendente
-                      </option>
-                      <option value="Aceito" className="value-accepted">
-                        Aceito
-                      </option>
-                      <option value="Recusado" className="value-rejected">
-                        Rejeitado
-                      </option>
-                    </select>
-                  </td>
-                  <td>
-                    {appointment.hasVisited ? (
-                      <GoCheckCircleFill className="green" />
-                    ) : (
-                      <AiFillCloseCircle className="red" />
-                    )}
-                  </td>
-                </tr>
-              ))
+              appointments.map((appointment) => {
+                // Acessa a data e a hora corretamente
+                const date = appointment.appointment_date.date;
+                const time = appointment.appointment_date.time;
+
+                // Formata a data e a hora
+                const formattedDateTime = `${date} ${time}`;
+
+                return (
+                  <tr key={appointment._id}>
+                    <td>{`${appointment.nomePet}`}</td>
+                    <td>{formattedDateTime}</td>
+                    <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
+                    <td>{appointment.department}</td>
+                    <td>
+                      <select
+                        id="valores"
+                        className={
+                          appointment.status === "Pendente"
+                            ? "value-pending"
+                            : appointment.status === "Aceito"
+                            ? "value-accepted"
+                            : "value-rejected"
+                        }
+                        value={appointment.status}
+                        disabled
+                      >
+                        <option value="Pendente" className="value-pending">
+                          Pendente
+                        </option>
+                        <option value="Aceito" className="value-accepted">
+                          Aceito
+                        </option>
+                        <option value="Recusado" className="value-rejected">
+                          Rejeitado
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      {appointment.hasVisited ? (
+                        <GoCheckCircleFill className="green" />
+                      ) : (
+                        <AiFillCloseCircle className="red" />
+                      )}
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan="6">Nenhum agendamento encontrado!</td>

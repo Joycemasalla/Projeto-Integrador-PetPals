@@ -54,9 +54,9 @@ const appointmentSchema = new mongoose.Schema({
     },
     // Campo para a data da consulta
     appointment_date: {
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-    },
+        date: { type: String, required: true }, // Formato 'YYYY-MM-DD'
+        time: { type: String, required: true }   // Formato 'HH:MM'
+      },
     // Campo para o departamento da consulta
     department: {
         type: String,  // Tipo de dado do campo é String
@@ -100,7 +100,7 @@ const appointmentSchema = new mongoose.Schema({
         default: "Pendente",  // Valor padrão é "Pendente"
     },
     // Campo para o nome do pet
-    nomePet: { 
+    nomePet: {
         type: String,
         required: true,
     },
@@ -116,10 +116,11 @@ const appointmentSchema = new mongoose.Schema({
     },
 
 
+   
 
 
 
-    
+
 });
 
 // Exporta o modelo Appointment baseado no esquema definido

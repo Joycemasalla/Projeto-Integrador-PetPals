@@ -1,6 +1,3 @@
-//responsável por configurar o servidor Express, configurar middlewares, estabelecer conexões com o banco de dados, e definir as rotas da aplicação.
-
-
 // Importa o framework Express para construir o servidor web
 import express from "express";
 
@@ -28,11 +25,13 @@ import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 // Importa o roteador para as rotas relacionadas a usuários
 import userRouter from "./router/userRouter.js";
 
-// Importa a função de login do controlador de usuários
+// Importa o roteador para as rotas relacionadas a agendamentos
+import appointmentRouter from "./router/appointmentRouter.js";
+
+// Importa o roteador para as rotas relacionadas a disponibilidade
+import availabilityRouter from "./router/availabilityRouter.js";
 import { login } from "./controller/userController.js";
-
-import appointmentRouter from "./router/appointmentRouter.js"
-
+import { removeAvailable } from "./controller/availabilityController.js";
 
 // Cria uma instância do aplicativo Express
 const app = express();
@@ -70,10 +69,16 @@ app.use("/api/v1/message", messageRouter);
 // Configura as rotas para a API de usuários
 app.use("/api/v1/user", userRouter);
 
+// Configura as rotas para a API de agendamentos
 app.use("/api/v1/appointment", appointmentRouter);
 
-// Configura a rota para a função de login ///////
-app.use("/api/v1/login", login);
+// Configura as rotas para a API de disponibilidade
+app.use('/api/v1/admin', availabilityRouter);
+
+// Configura a rota para a função de login
+app.post("/api/v1/login", login); ///mexi aqui
+
+app.put('/api/v1/admin/disponibilidade/:id', removeAvailable)
 
 // Estabelece a conexão com o banco de dados
 dbConnection();

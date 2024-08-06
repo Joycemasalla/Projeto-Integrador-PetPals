@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
-import './AppointmentForm.css'
+import './AppointmentForm.css';
 
 const AppointmentForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -20,22 +20,19 @@ const AppointmentForm = () => {
   const [doctorLastName, setDoctorLastName] = useState("");
   const [address, setAddress] = useState("");
   const [hasVisited, setHasVisited] = useState(false);
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
 
   const departmentsArray = [
-    "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutricao",
+    "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição",
   ];
-
-  
 
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:4000/api/v1/user/doctors",
-          { withCredentials: true }
-        );
+        const { data } = await axios.get("http://localhost:4000/api/v1/user/doctors", { withCredentials: true });
         setDoctors(data.doctors);
       } catch (error) {
         toast.error("Erro ao buscar médicos");
@@ -44,9 +41,37 @@ const AppointmentForm = () => {
     fetchDoctors();
   }, []);
 
+  
+  useEffect(() => {
+    const fetchAvailableTimes = async () => {
+      if (appointmentDate) {
+        try {
+          const { data } = await axios.get("http://localhost:4000/api/v1/admin/disponibilidade", {
+            params: { date: appointmentDate },
+          });
+
+          // Supondo que data é uma lista de objetos com o horário disponível
+          const times = data.flatMap(entry => entry.times || []);
+
+          if (Array.isArray(times)) {
+            setAvailableTimes(times);
+          } else {
+            console.warn('Formato de dados inesperado:', data);
+            setAvailableTimes([]);
+          }
+        } catch (error) {
+          console.error('Erro ao buscar horários disponíveis:', error);
+          toast.error("Erro ao buscar horários disponíveis");
+        }
+      }
+    };
+    fetchAvailableTimes();
+  }, [appointmentDate]);
+
   const handleAppointment = async (e) => {
     e.preventDefault();
     try {
+      // Enviar dados do agendamento
       const response = await axios.post(
         "http://localhost:4000/api/v1/appointment/post",
         {
@@ -60,19 +85,41 @@ const AppointmentForm = () => {
           nic,
           dob,
           gender,
-          appointment_date: appointmentDate,
+          appointment_date: {
+            date: appointmentDate,
+            time: selectedTime // Inclua o horário aqui
+          },
           department,
           doctor_firstName: doctorFirstName,
           doctor_lastName: doctorLastName,
           hasVisited,
           address,
+          selected_time: selectedTime
         },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" }
         }
       );
+
+      // Atualizar a disponibilidade removendo o horário selecionado
+      const { data: disponibilidade } = await axios.get('http://localhost:4000/api/v1/admin/disponibilidade', {
+        params: { date: appointmentDate }
+      });
+
+      // Encontrar o ID da disponibilidade que corresponde à data
+      const disponibilidadeId = disponibilidade.find(d => d.date === appointmentDate)._id;
+
+      await axios.put(`http://localhost:4000/api/v1/admin/disponibilidade/${disponibilidadeId}`, {
+        timeToRemove: selectedTime,
+        date: appointmentDate
+      });
+
+      // Atualizar a lista de horários disponíveis localmente
+      setAvailableTimes(prevTimes => prevTimes.filter(time => time !== selectedTime));
+
       toast.success(response.data.message);
+
       // Limpar o formulário após o envio
       setFirstName("");
       setLastName("");
@@ -90,19 +137,23 @@ const AppointmentForm = () => {
       setDoctorLastName("");
       setAddress("");
       setHasVisited(false);
+      setSelectedTime(""); // Limpar horário selecionado
     } catch (error) {
       toast.error(error.response?.data?.message || "Erro ao agendar");
     }
   };
 
+  const handleTimeChange = (e) => {
+    setSelectedTime(e.target.value);
+  };
+
   return (
     <div className="container form-component appointment-form">
       <h2>Agendamento de Consulta</h2>
-      <form onSubmit={handleAppointment} >
+      <form onSubmit={handleAppointment}>
         <div className="primeira">
           <input
             type="text"
-            rows="2"
             placeholder="Nome do Pet"
             value={nomePet}
             onChange={(e) => setNomePet(e.target.value)}
@@ -122,8 +173,6 @@ const AppointmentForm = () => {
             onChange={(e) => setRacaPet(e.target.value)}
             required
           />
-
-
           <input
             type="text"
             placeholder="NIC do Pet"
@@ -143,8 +192,6 @@ const AppointmentForm = () => {
             onChange={(e) => setDob(e.target.value)}
             required
           />
-
-
         </div>
         <div>
           <input
@@ -223,6 +270,21 @@ const AppointmentForm = () => {
               ))}
           </select>
         </div>
+        <div>
+          <select
+            value={selectedTime}
+            onChange={handleTimeChange}
+            disabled={!availableTimes.length}
+            required
+          >
+            <option value="">Selecionar Horário</option>
+            {availableTimes.map((time, index) => (
+              <option value={time} key={index}>
+                {time}
+              </option>
+            ))}
+          </select>
+        </div>
         <textarea
           rows="2"
           value={address}
@@ -230,18 +292,17 @@ const AppointmentForm = () => {
           placeholder="Endereço"
           required
         />
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div>
           <label>
             <input
               type="checkbox"
               checked={hasVisited}
               onChange={(e) => setHasVisited(e.target.checked)}
             />
-            Já visitou antes?
+            Já visitou nossa clínica?
           </label>
         </div>
-        <button type="submit">Agendar Consulta</button>
-
+        <button type="submit">Agendar</button>
       </form>
     </div>
   );

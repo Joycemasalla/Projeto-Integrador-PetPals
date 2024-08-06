@@ -49,6 +49,8 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     ) {
         return next(new ErrorHandler("Por favor preencha todos os campos necessários", 400)); // Se faltar algum campo, retorna um erro
     }
+    
+    
 
     // Verifica se existe um médico com o nome e departamento fornecidos
     const isConflict = await User.findOne({
@@ -171,3 +173,4 @@ export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
         message: "Consulta excluída com sucesso", // Retorna uma mensagem de sucesso
     });
 });
+
