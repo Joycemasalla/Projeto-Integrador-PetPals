@@ -55,7 +55,6 @@ const AddNewAdmin = () => {
   return (
     <section className="page">
       <section className="container form-component add-admin-form">
-      <img src="/src/assets/logo.png" alt="logo" className="logo" style={{ width: '200px', height: 'auto' }} />
       <h1 className="form-title">ADD NOVO ADMIN</h1>
         <form onSubmit={handleAddNewAdmin}>
           <div>
@@ -89,7 +88,7 @@ const AddNewAdmin = () => {
           <div>
             <input
               type="number"
-              placeholder="NIC"
+              placeholder="CPF"
               value={nic}
               onChange={(e) => setNic(e.target.value)}
             />

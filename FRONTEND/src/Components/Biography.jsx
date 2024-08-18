@@ -8,7 +8,7 @@ const Biography = ({ imageUrl }) => {
     <>
       <div className="container biography">
         <div className="banner">
-          <img src={sobrenos} alt="Quem somos" />
+          <img id="bannerclinica" src={sobrenos} alt="Quem somos" />
         </div>
         <div className="banner">
           <h3>Quem Somos</h3>

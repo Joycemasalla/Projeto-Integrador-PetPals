@@ -3,6 +3,8 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, useNavigate, Navigate } from "react-router-dom";
+import { UserContext } from "../Components/UserContext";
+
 
 const Login = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -11,10 +13,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const { setUserData } = useContext(UserContext);
+
+
   const navigateTo = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    // Realize o login e obtenha os dados do usuário
+
     try {
       await axios
         .post(
@@ -47,8 +54,9 @@ const Login = () => {
       <div className="container form-component login-form">
         <h2>Login</h2>
         <p>Faça login para continuar.</p>
-        
+
         <form onSubmit={handleLogin}>
+          
           <input
             type="text"
             placeholder="Email"
@@ -61,12 +69,12 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input
+          {/* <input
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+          /> */}
           <div
             style={{
               gap: "10px",
@@ -77,7 +85,7 @@ const Login = () => {
             <p style={{ marginBottom: 0 }}>Não tem registro?</p>
             <Link
               to={"/register"}
-              style={{ textDecoration: "none", color: "#271776ca" }}
+              style={{ textDecoration: "none", color: "#e5e5e5" }}
             >
               Registrar
             </Link>

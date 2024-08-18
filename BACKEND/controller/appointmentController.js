@@ -34,7 +34,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
         !nomePet ||
         !especiePet ||
         !racaPet ||
-        !nic ||
+        //  !nic ||
         !gender ||
         !dob ||
         !firstName ||
@@ -44,13 +44,11 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
         !appointment_date ||
         !department ||
         !doctor_firstName ||
-        !doctor_lastName ||
-        !address
+        !doctor_lastName 
+        // !address
     ) {
         return next(new ErrorHandler("Por favor preencha todos os campos necessários", 400)); // Se faltar algum campo, retorna um erro
     }
-    
-    
 
     // Verifica se existe um médico com o nome e departamento fornecidos
     const isConflict = await User.findOne({
@@ -72,7 +70,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
         lastName,
         email,
         phone,
-        nic,
+        nic: nic || null, //Define nic como null caso ele nao seja fornecido
         dob,
         gender,
         appointment_date,
@@ -82,7 +80,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
             lastName: doctor_lastName,
         },
         hasVisited,
-        address,
+        // address,
         doctorId,
         patientRegistered: patientId,
         nomePet, // Novo campo incluído
@@ -154,23 +152,33 @@ export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) =>
     });
 });
 
-/**
- * Função para deletar um agendamento.
- * Verifica se o agendamento existe e o remove do banco de dados.
- */
+// Função para deletar um agendamento.
 export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
-    const { id } = req.params;
-    let appointment = await Appointment.findById(id);
+    try {
+        console.log("Tentando deletar agendamento com ID:", req.params.id);
 
-    if (!appointment) {
-        return next(new ErrorHandler("Consulta não encontrada", 404)); // Se o agendamento não for encontrado, retorna um erro
+        const appointment = await Appointment.findByIdAndDelete(req.params.id);
+
+        if (!appointment) {
+            console.log("Agendamento não encontrado com ID:", req.params.id);
+            return res.status(404).json({
+                success: false,
+                message: "Agendamento não encontrado",
+            });
+        }
+
+        console.log("Agendamento deletado com sucesso com ID:", req.params.id);
+        res.status(200).json({
+            success: true,
+            message: "Agendamento deletado com sucesso",
+        });
+    } catch (error) {
+        console.error("Erro ao deletar agendamento:", error);
+        res.status(500).json({
+            success: false,
+            message: "Falha ao deletar agendamento",
+        });
     }
-
-    await appointment.deleteOne();
-
-    res.status(200).json({
-        success: true,
-        message: "Consulta excluída com sucesso", // Retorna uma mensagem de sucesso
-    });
 });
+
 

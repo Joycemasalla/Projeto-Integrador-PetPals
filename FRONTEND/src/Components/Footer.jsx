@@ -39,12 +39,16 @@ const Footer = () => {
     },
   ];
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="container">
       <hr />
       <div className="links">
         <div>
-          <img src={logo} alt="logo" className="logo-img" />
+          <Link to={"/"}>
+            <img src={logo} alt="logo" className="logo-img" />
+          </Link>
         </div>
         <div>
           <h4>Links Rápidos</h4>
@@ -73,7 +77,7 @@ const Footer = () => {
           </div>
           <div>
             <MdEmail />
-            <span><span> </span>   petpals@gmail.com</span>
+            <span><span> </span> petpals@gmail.com</span>
           </div>
           <div>
             <FaLocationArrow />
@@ -88,6 +92,9 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+      </div>
+      <div className="footer-direito">
+        <p>© {currentYear} Pet Pals. Todos os direitos reservados.</p>
       </div>
     </footer>
   );

@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Importa a função sendMessage do controlador de mensagens
-import { getAllMessages, sendMessage } from '../controller/messageController.js';
+import { deleteAgendamentos, deleteMessage, getAllMessages, sendMessage } from '../controller/messageController.js';
 
 import { isAdminAuthenticated} from '../middlewares/auth.js';
 
@@ -13,6 +13,7 @@ const router = express.Router();
 // Quando uma requisição POST é feita para "/send", a função sendMessage é chamada
 router.post("/send", sendMessage);
 router.get("/getall",isAdminAuthenticated,getAllMessages);
+router.delete("/delete/:id",isAdminAuthenticated, deleteMessage);
 
 // Exporta o roteador para que possa ser importado em outros arquivos
 export default router;

@@ -1,4 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+
+
+::-webkit-scrollbar {
+  width: 12px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e5e5; /* Cor de fundo da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #07998d74; /* Cor do "polegar" (a parte que se move) */
+  border-radius: 4px; /* Bordas arredondadas do "polegar" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #07998d; /* Cor do "polegar" quando passa o mouse por cima */
+}
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -416,88 +438,176 @@ body {
   }
 }
 
+/*DOUTORES*/
+/* Estilização do título */
 .doctors h1 {
   color: #07998dc0;
   margin-bottom: 30px;
-  font-size: 2.3rem;
+  font-size: 2rem; /* Tamanho do título */
+  text-align: center; /* Alinha o título ao centro */
 }
+
+/* Estilização do banner que contém os cartões dos médicos */
 .doctors .banner {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-gap: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Permite que os cards se movam para baixo se necessário */
+  gap: 20px;
+  justify-content: center; /* Centraliza os cards horizontalmente */
 }
+
+/* Estilização do cartão dos médicos */
 .doctors .banner .card {
-  background: #fff;
-  border-radius: 12px;
+  background: #07998d36;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  text-align: center;
+  position: relative; /* Necessário para o posicionamento absoluto dos ícones */
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+/* Estilização do hover do cartão */
+.doctors .banner .card:hover {
+  transform: skew(4); /* Eleva o card ao passar o mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Intensifica a sombra ao passar o mouse */
+}
+
+/* Estilização da imagem do avatar */
 .doctors .banner .card img {
-  width: 270px;
-  height: 270px;
-  border-radius: 100%;
-  margin-bottom: 20px;
-  object-fit: cover; /* Corta a imagem para se ajustar ao contêiner */
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
 }
 
+/* Estilização das informações dentro do cartão */
+.doctors .banner .card .info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilização do nome dentro do cartão */
 .doctors .banner .card h4 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
-.doctors .banner .card div {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 20px;
-}
-.doctors .banner .card div p {
-  font-weight: 700;
-}
-.doctors .banner .card div p span {
-  font-weight: 500;
+  font-size: 16px; /* Tamanho do nome */
+  color: #023733;
+  margin-bottom: 10px; /* Espaço abaixo do nome */
+  font-weight: 800;
 }
 
-@media (max-width: 350px) {
-  .doctors .banner {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-    grid-gap: 20px;
-  }
+/* Estilização das informações dentro do cartão */
+.doctors .banner .card .info p {
+  font-size: 14px; /* Tamanho da fonte para informações */
+  margin: 5px 0; /* Espaçamento entre parágrafos */
+  font-weight: 600;
+  justify-content: start;
+  align-items: start;
+  display: flex;
 }
 
-.messages h1 {
-  color: #07998d;
-  margin-bottom: 30px;
-  font-size: 2.3rem;
+.doctors .banner .card .info  span {
+  font-weight: 400; /* Peso da fonte para o texto normal */
+  margin-left: 3px;
 }
-.messages .banner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+
+/* Estilização dos ícones de editar e excluir */
+.card .btn-edit,
+.card .btn-delete {
+  position: absolute;
+  top: 10px; /* Distância do topo */
+  right: 10px; /* Distância da borda direita */
+  background-color: transparent;
+  border: none;
+  color: #023733;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.2em; /* Ajuste o tamanho do ícone conforme necessário */
+  padding: 4px;
+  transition: color 0.3s;
+  
 }
-.messages .banner .card {
-  background: #07998d36;
-  border-radius: 12px;
+.card .btn-edit{
+  margin-right: 30px; /* Espaçamento entre os ícones, se necessário */
+}
+
+.card .btn-edit:hover {
+  color: #27ae61; /* Cor do ícone de editar */
+}
+
+.card .btn-delete:hover {
+  color: #c1392b; /* Cor do ícone de excluir */
+}
+
+
+
+/* Estilização da seção de edição dos doutores */
+.edit-form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border: 1px solid #07998d;
+  max-width: 600px;
+  margin: 20px auto;
 }
-.messages .banner .card div {
-  width: 100%;
+
+/* Estilização do título do formulário de edição */
+.edit-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilização do formulário de edição */
+.edit-form form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 20px;
+  gap: 15px;
 }
-.messages .banner .card div p {
-  font-weight: 700;
+
+/* Estilização dos campos de entrada do formulário */
+.edit-form select, input[type="text"], .edit-form input[type="email"], .edit-form input[type="date"], .edit-form input[type="file"]{
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
 }
-.messages .banner .card div p span {
+ input[type="file"]button {
+  background: #07998d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+
+/* Estilização dos botões do formulário */
+.edit-form button {
+  background: #07998d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
   font-weight: 500;
 }
+
+.edit-form button[type="button"] {
+  background: #a0a0a0;
+}
+
+.edit-form button:hover {
+  opacity: 0.8;
+}
+
+
+
 
 .add-doctor-form {
   width: 100%;
@@ -569,6 +679,8 @@ body {
     height: auto;
   }
 }
+
+
 input[type="date"]:before {
   content: attr(placeholder);
   color: #444;
@@ -580,16 +692,23 @@ input[type="time"]:before {
   margin-right: 0.5em;
 }
 
+
 .add-availability {
-  margin-left: 120px;
-  background: #e5e5e5;
   padding: 40px;
-  height: 100vh;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  min-height: 100vh;
+  background: #e5e5e5;
+  border-radius: 50px;
+  margin-left: 120px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
-.add-availability h2 {
+.form-container {
+  flex: 2;
+}
+
+.add-availability h1, h2 {
   font-size: 2rem;
   color: #07998d;
   margin-bottom: 20px;
@@ -606,9 +725,9 @@ input[type="time"]:before {
 
 .add-availability form input,
 .add-availability form textarea {
-  width: 50%;
+  width: 50%; 
   padding: 15px;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
@@ -619,35 +738,181 @@ input[type="time"]:before {
 
 .add-availability form button {
   padding: 15px 20px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
   background: linear-gradient(140deg, #FCC931, #493807);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  width: fit-content;
 }
 
 .add-availability form button:hover {
   background: linear-gradient(140deg, #FFD700, #5D4037);
 }
 
-@media (max-width: 700px) {
-  .add-availability {
-    padding: 20px;
-  }
+.add-availability .added-times {
+  flex: 2;
+  max-height: 100vh;
+  overflow-y: auto;
+}
 
-  .add-availability h2 {
-    font-size: 1.5rem;
+.add-availability .availability-group {
+  margin-bottom: 10px;
+}
+
+.add-availability .availability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #07998d;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.add-availability .availability-items {
+  padding: 10px;
+}
+
+.add-availability .availability-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #16a34a;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.delete-btn {
+  color: #d9534f; /* Cor para o botão de exclusão */
+}
+
+
+
+.edit-btn:hover,
+.delete-btn:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .add-availability {
+      padding: 20px;
+      flex-direction: column;
   }
 
   .add-availability form input,
   .add-availability form textarea {
-    font-size: 16px;
+      font-size: 14px;
   }
 
   .add-availability form button {
-    font-size: 16px;
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-availability form input,
+  .add-availability form textarea {
+      width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  opacity: 0.8;
+}
+
+/* Messages */
+
+.page.messages {
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+h1 {
+  color: #07998dc0;
+  margin-bottom: 30px;
+  font-size: 2rem; /* Tamanho do título */
+  text-align: center; /* Alinha o título ao centro */
+}
+
+.bannermensagem {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cardmensagem {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.cardmensagem:hover {
+  transform: translateY(-5px);
+}
+
+.detalhesmensagem p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #009A8E;
+  font-weight: bold;
+}
+
+.detalhesmensagem span {
+  color: #555;
+  font-weight: 500;
+}
+
+.delete-buttonmensagem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e74c3c;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+  transition: color 0.3s ease;
+}
+
+.delete-buttonmensagem:hover {
+  color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .cardmensagem {
+    width: 100%;
   }
 }

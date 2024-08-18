@@ -1,9 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { petspulando } from "../assets";
 import './Hero.css'
 import { FaPhone } from "react-icons/fa";
 
 const Hero = ({ title, imageUrl }) => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   return (
     <>
       <div className="hero container">
@@ -17,7 +23,7 @@ const Hero = ({ title, imageUrl }) => {
           <div className="emergencia">
             <h6>Atendimento Emergencial</h6>
             <button className="emergencia-button">
-            <a href="https://whatsapp.com/" target="blank"> <FaPhone /> Ligar</a>
+              <a href="https://whatsapp.com/" target="blank"> <FaPhone /> Ligar</a>
             </button>
           </div>
         </div>

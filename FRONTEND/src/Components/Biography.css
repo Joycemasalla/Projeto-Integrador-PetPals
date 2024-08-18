@@ -1,15 +1,19 @@
 .biography {
   position: relative;
-  background-image: url('../assets/patas.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 20px;
-  color: white;
-  overflow: hidden; /* Para garantir que a camada de sobreposição não ultrapasse os limites do contêiner */
+  padding: 40px 20px;
   margin-top: 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+  overflow: hidden;
 }
 
+.biography.dark {
+  color: #f0f0f0;
+  /* Cor de texto para o modo escuro */
+}
+
+/* Criar o padrão de patas */
 .biography::before {
   content: "";
   position: absolute;
@@ -17,16 +21,66 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Ajuste o valor de 0.4 para controlar a opacidade */
-  z-index: 1; /* Coloca a camada acima da imagem de fundo, mas abaixo do conteúdo */
+  background-image: url('../assets/patas.png');
+  
+  background-size: 280px 310px;
+  background-repeat: repeat;
+  opacity: 0.3;
+  filter: invert(0);
+  /* Padrão: patas pretas no modo claro */
+  z-index: 1;
+}
+
+.biography.dark::before {
+  filter: invert(1);
+  /* Padrão: patas brancas no modo escuro */
 }
 
 .banner {
   position: relative;
-  z-index: 2; /* Garante que o conteúdo da seção fique acima da camada de sobreposição */
+  z-index: 2;
+  /* Conteúdo acima do padrão de patas */
   align-items: center;
   display: flex;
   justify-content: center;
- 
+  flex-direction: column;
+  text-align: center;
 }
 
+#bannerclinica {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.banner h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #009A8E;
+  /* Cor do texto conforme o modo */
+}
+
+.banner p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: inherit;
+  /* Cor do texto conforme o modo */
+}
+
+.toggle-theme-btn {
+  background-color: #009A8E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}

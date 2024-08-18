@@ -12,31 +12,28 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { Context } from "./main";
 import Login from "./Pages/Login";
-import Agendamentos from "./Components/Agendamentos";
 import Consultas from "./Pages/Consultas";
 
-
 const App = () => {
-  const { isAuthenticated, setIsAuthenticated, setUser } =
-    useContext(Context);
+  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          " http://localhost:4000/api/v1/user/paciente/me  ", {
-          withCredentials: true,
-        }
+          "http://localhost:4000/api/v1/user/paciente/me", 
+          { withCredentials: true }
         );
         setIsAuthenticated(true);
         setUser(response.data.user);
       } catch (error) {
+        toast.error("Failed to fetch user data.");
         setIsAuthenticated(false);
         setUser({});
       }
     };
     fetchUser();
-  }, [isAuthenticated]);
+  }, []);  // A dependência vazia garante que o efeito seja executado apenas uma vez ao montar
 
   return (
     <>

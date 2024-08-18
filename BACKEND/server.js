@@ -1,7 +1,5 @@
-// Importa o aplicativo Express a partir do módulo app.js
+import mongoose from "mongoose";
 import app from "./app.js";
-
-// Importa o módulo cloudinary para gerenciar uploads e manipulação de imagens na nuvem
 import cloudinary from "cloudinary";
 
 // Configura as credenciais do Cloudinary com base nas variáveis de ambiente
@@ -11,8 +9,17 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Estabelece a conexão com o banco de dados e trata erros
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Failed to connect to MongoDB:', err);
+});
+
 // Inicia o servidor na porta especificada e define um callback que será executado quando o servidor estiver pronto
 app.listen(process.env.PORT, () => {
-    // Exibe uma mensagem no console indicando que o servidor está escutando na porta especificada
     console.log(`Server listening on port ${process.env.PORT}`);
 });

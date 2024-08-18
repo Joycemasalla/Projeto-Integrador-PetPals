@@ -21,11 +21,12 @@ const Register = () => {
   const handleRegistration = async (e) => {
     e.preventDefault();
     
+    // Validação de campos obrigatórios
     if (!firstName || !lastName || !email || !phone || !nic || !dob || !gender || !password) {
       toast.error("Por favor, preencha todos os campos.");
       return;
     }
-
+  
     try {
       const response = await axios.post(
         "http://localhost:4000/api/v1/user/paciente/register",
@@ -39,6 +40,7 @@ const Register = () => {
       toast.success(response.data.message);
       setIsAuthenticated(true);
       navigateTo("/");
+      // Limpar campos após sucesso
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -47,12 +49,13 @@ const Register = () => {
       setDob("");
       setGender("");
       setPassword("");
-      
     } catch (error) {
       console.error("Erro ao registrar:", error);
       toast.error(error.response?.data?.message || "Erro ao registrar");
     }
   };
+  
+  
 
   if (isAuthenticated) {
     return <Navigate to={"/"} />;
@@ -95,7 +98,7 @@ const Register = () => {
         <div>
           <input
             type="text"
-            placeholder="NIC"
+            placeholder="CPF"
             value={nic}
             onChange={(e) => setNic(e.target.value)}
           />

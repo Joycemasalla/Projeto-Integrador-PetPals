@@ -4,7 +4,18 @@
 // de administrador ou paciente conforme necessário.
 
 import express from "express";
-import { addNewAdmin, addNewDoctor, getAllDoctors, getUserDetails, login, logoutAdmin, logoutPatient, patientRegister } from "../controller/userController.js";
+import { 
+    addNewAdmin, 
+    addNewDoctor, 
+    deleteDoctor, 
+    getAllDoctors, 
+    getUserDetails, 
+    login, 
+    logoutAdmin, 
+    logoutPatient, 
+    patientRegister, 
+    updateDoctor 
+} from "../controller/userController.js";
 import { isAdminAuthenticated, isPatientAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -35,5 +46,16 @@ router.get("/paciente/logout", isPatientAuthenticated, logoutPatient);
 
 // Rota para adicionar um novo médico. Requer autenticação de administrador
 router.post("/doutor/addnew", isAdminAuthenticated, addNewDoctor);
+
+// Rota para atualizar informações de um médico existente. Requer autenticação de administrador
+router.put('/doutor/:id', isAdminAuthenticated, updateDoctor);
+
+
+
+
+// Route to delete a doctor
+router.delete('/doutor/:doctorId', isAdminAuthenticated, deleteDoctor);
+
+
 
 export default router;

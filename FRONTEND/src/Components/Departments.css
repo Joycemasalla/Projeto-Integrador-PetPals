@@ -1,17 +1,112 @@
-.departments {
-    padding: 2rem 0;
-    background-color: #F9F9F9;
+.container.departments {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.5rem; /* Aumentar o tamanho do título */
+  margin-bottom: 40px;
+  color: #009a8e;
+  text-transform: uppercase;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  margin: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Adicionar posição relativa para controle do título */
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
+  border: 2px solid #FFCC01;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px; /* Ajustar a altura para melhorar a visualização */
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  border-bottom: 5px solid #009a8e;
+}
+
+.card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 20px; /* Aumentar o padding para melhor espaçamento */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: absolute; /* Posicionar absolutamente para mover o título para baixo no hover */
+  bottom: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* Fundo branco semi-transparente */
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover .card-content {
+  transform: translateY(100%);
+}
+
+.depart-name {
+  font-size: 1.8rem; /* Aumentar o tamanho da fonte do nome */
+  color: #009a8e;
+  margin: 10px 0;
+  transition: color 0.3s ease-in-out;
+  word-break: break-word; /* Quebra de linha se necessário */
+}
+
+.card:hover .depart-name {
+  color: #FFCC01;
+}
+
+.depart-description {
+  font-size: 1.1rem; /* Aumentar o tamanho da fonte da descrição */
+  color: #666;
+  line-height: 1.6; /* Aumentar o espaçamento entre linhas */
+  margin-bottom: 10px;
+  max-height: 100px; /* Limitar a altura para evitar texto muito longo */
+  overflow: hidden; /* Ocultar o texto que excede o limite */
+  text-overflow: ellipsis; /* Adicionar reticências se o texto for muito longo */
+}
+
+@media (max-width: 1005px) {
+  .card-image {
+    height: 180px;
   }
   
-  .departments h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #009A8E;
+  .depart-name {
+    font-size: 1.6rem; /* Ajustar o tamanho do subtítulo em telas menores */
+  }
+
+  .depart-description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .card-image {
+    height: 160px;
   }
   
-  .depart-name img{
-    object-fit: cover;
+  .depart-name {
+    font-size: 1.4rem; /* Ajustar o tamanho do subtítulo em telas menores */
   }
-  
- 
-  
+
+  .depart-description {
+    font-size: 0.95rem;
+  }
+}

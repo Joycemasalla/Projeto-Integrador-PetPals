@@ -34,6 +34,12 @@ const messageSchema = new mongoose.Schema({
         required: true,  // O campo é obrigatório
         minLength: [10, "A mensagem deve conter pelo menos 10 caracteres"]  // Validação para garantir que o comprimento mínimo seja 10 caracteres
     },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        default: 0, // Define 0 como valor padrão caso não seja especificado
+    }
 
 });
 

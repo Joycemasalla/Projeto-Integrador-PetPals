@@ -1,37 +1,15 @@
-// Importa o framework Express para construir o servidor web
 import express from "express";
-
-// Importa a função config do pacote dotenv para carregar as variáveis de ambiente
 import { config } from "dotenv";
-
-// Importa o middleware cors para habilitar CORS (Cross-Origin Resource Sharing)
 import cors from "cors";
-
-// Importa o middleware cookie-parser para analisar cookies anexados às requisições do cliente
 import cookieParser from "cookie-parser";
-
-// Importa o middleware express-fileupload para permitir o upload de arquivos
 import fileUpload from "express-fileupload";
-
-// Importa a função de conexão com o banco de dados
 import { dbConnection } from "./database/dbConnection.js";
-
-// Importa o roteador para as rotas relacionadas a mensagens
 import messageRouter from "./router/messageRouter.js";
-
-// Importa o middleware para tratamento de erros personalizados
-import { errorMiddleware } from "./middlewares/errorMiddleware.js";
-
-// Importa o roteador para as rotas relacionadas a usuários
 import userRouter from "./router/userRouter.js";
-
-// Importa o roteador para as rotas relacionadas a agendamentos
 import appointmentRouter from "./router/appointmentRouter.js";
-
-// Importa o roteador para as rotas relacionadas a disponibilidade
 import availabilityRouter from "./router/availabilityRouter.js";
 import { login } from "./controller/userController.js";
-import { removeAvailable } from "./controller/availabilityController.js";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 // Cria uma instância do aplicativo Express
 const app = express();
@@ -76,9 +54,9 @@ app.use("/api/v1/appointment", appointmentRouter);
 app.use('/api/v1/admin', availabilityRouter);
 
 // Configura a rota para a função de login
-app.post("/api/v1/login", login); ///mexi aqui
+app.post("/api/v1/login", login);
 
-app.put('/api/v1/admin/disponibilidade/:id', removeAvailable)
+
 
 // Estabelece a conexão com o banco de dados
 dbConnection();

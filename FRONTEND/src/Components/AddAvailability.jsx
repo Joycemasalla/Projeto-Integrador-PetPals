@@ -1,7 +1,6 @@
 //permite que o admin adicione horários disponíveis
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AddAvailability.css';
 
 const AddAvailability = () => {
   const [date, setDate] = useState('');

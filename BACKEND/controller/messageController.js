@@ -10,10 +10,10 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { Message } from "../models/messageSchema.js";
 
 // Importa o modelo User baseado no esquema definido
- import { User } from "../models/userSchema.js";
+import { User } from "../models/userSchema.js";
 
 // Importa a função para gerar tokens JWT
- import { generateToken } from "../utils/jwtToken.js";
+import { generateToken } from "../utils/jwtToken.js";
 
 /**
  * Função assíncrona para registrar um paciente.
@@ -134,7 +134,7 @@ export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
  */
 export const sendMessage = catchAsyncErros(async (req, res, next) => {
     // Extrai os dados do corpo da requisição
-    const { firstName, lastName, email, phone, message } = req.body;
+    const { firstName, lastName, email, phone, message,  rating } = req.body;
 
     // Verifica se todos os campos necessários estão presentes
     if (!firstName || !lastName || !email || !phone || !message) {
@@ -143,7 +143,7 @@ export const sendMessage = catchAsyncErros(async (req, res, next) => {
     }
 
     // Cria uma nova mensagem no banco de dados
-    await Message.create({ email, firstName, lastName, phone, message });
+    await Message.create({ email, firstName, lastName, phone, message,  rating: rating || 0, });
 
     // Retorna uma resposta de sucesso se a mensagem for criada com sucesso
     res.status(200).json({
@@ -165,3 +165,37 @@ export const getAllMessages = catchAsyncErros(async (req, res, next) => {
         messages,
     });
 });
+
+
+
+
+
+export const deleteAgendamentos = async (req, res) => {
+    try {
+        const { id } = req.params;
+        // Lógica para excluir o agendamento com o ID fornecido
+        // Por exemplo:
+        const deletedAppointment = await Appointment.findByIdAndDelete(id);
+        if (!deletedAppointment) {
+            return res.status(404).json({ message: 'Agendamento não encontrado.' });
+        }
+        res.status(200).json({ message: 'Agendamento excluído com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao excluir o agendamento.' });
+    }
+};
+
+
+export const deleteMessage = async (req, res) => {
+    try {
+      const messageId = req.params.id;
+      const deletedMessage = await Message.findByIdAndDelete(messageId);
+      if (!deletedMessage) {
+        return res.status(404).json({ success: false, message: 'Mensagem não encontrada' });
+      }
+      res.status(200).json({ success: true, message: 'Mensagem excluída com sucesso' });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Erro ao excluir a mensagem', error: error.message });
+    }
+  };
+  

@@ -19,4 +19,6 @@ router.put('/update/:id', isAdminAuthenticated, updateAppointmentStatus);
 // Rota para excluir uma consulta existente. Requer autenticação do administrador. O ID da consulta é passado como parâmetro na URL.
 router.delete('/delete/:id', isAdminAuthenticated, deleteAppointment);
 
+
+
 export default router;

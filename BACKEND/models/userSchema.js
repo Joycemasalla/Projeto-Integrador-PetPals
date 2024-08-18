@@ -44,8 +44,8 @@ const userSchema = new mongoose.Schema({
     nic: {
         type: String,  // Tipo de dado do campo é String
         required: true,  // O campo é obrigatório
-        minLength: [11, "O NIC deve conter pelo menos 11 dígitos"],  // Validação para garantir que o comprimento mínimo seja 13 caracteres
-        maxLength: [11, "O NIC deve conter 11 dígitos"]  // Validação para garantir que o comprimento máximo seja 13 caracteres
+        minLength: [11, "O Número de Identificaçã deve conter pelo menos 11 dígitos"],  // Validação para garantir que o comprimento mínimo seja 13 caracteres
+        maxLength: [11, "O Número de Identificaçã deve conter 11 dígitos"]  // Validação para garantir que o comprimento máximo seja 13 caracteres
     },
     // Campo para a data de nascimento do usuário
     dob: {

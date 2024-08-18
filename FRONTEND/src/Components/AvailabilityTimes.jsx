@@ -1,7 +1,6 @@
 //exibe os horários disponíveis para uma data específica
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Availability.css';
 
 const AvailabilityTimes = ({ selectedDate }) => {
   const [times, setTimes] = useState([]);

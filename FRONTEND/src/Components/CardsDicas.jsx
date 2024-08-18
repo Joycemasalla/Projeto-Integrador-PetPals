@@ -1,8 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CardsDicas.css';
 import { adestramento, adocao, alimentacao, cuidados, saude, curiosidades, setaparacima } from '../assets';
 
+const cardData = [
+    { id: 1, img: adestramento, title: 'Adestramento', description: 'Corrija comportamentos, eduque, divirta-se e fortaleça a relação com seu pet.', examples: 'Técnicas de adestramento, comandos básicos, jogos de obediência.' },
+    { id: 2, img: alimentacao, title: 'Alimentação', description: 'Saiba dietas equilibradas, aprenda sobre dietas caseiras, escolha a melhor ração e muito mais.', examples: 'Receitas caseiras, escolha de ração, informações nutricionais.' },
+    { id: 3, img: adocao, title: 'Adoção', description: 'Descubra nomes encantadores, dicas, o que fazer e tudo o que você precisa saber para adotar um pet.', examples: 'Como escolher o pet ideal, preparativos para adoção, cuidados iniciais.' },
+    { id: 4, img: saude, title: 'Saúde', description: 'Aprenda tudo o que precisa saber sobre a saúde do seu pet e proteja seu pet de doenças.', examples: 'Vacinação, cuidados preventivos, sinais de doenças.' },
+    { id: 5, img: cuidados, title: 'Cuidados', description: 'Entenda o cio, gestação, higiene dental, cuidado das orelhas e muito mais.', examples: 'Cuidados com a higiene, acompanhamento durante a gestação, cuidados com o cio.' },
+    { id: 6, img: curiosidades, title: 'Curiosidades', description: 'Aprenda dicas, descubra espécies em perigo de extinção, saiba diversas raças e muito mais.', examples: 'Curiosidades sobre raças, espécies ameaçadas, fatos interessantes.' }
+];
+
 const CardsDicas = () => {
+    const [expandedCardId, setExpandedCardId] = useState(null);
+
     function backToTop() {
         document.documentElement.scrollTop = 0;
     }
@@ -30,6 +41,10 @@ const CardsDicas = () => {
         };
     }, []);
 
+    const handleCardClick = (id) => {
+        setExpandedCardId(prevId => (prevId === id ? null : id));
+    };
+
     return (
         <>
             <div id="voltarTopo">
@@ -41,36 +56,19 @@ const CardsDicas = () => {
                 <h2>Conheça dicas essenciais para dar o conforto que o seu pet merece!</h2>
             </div>
             <div className="card-container">
-                <div className="dicas">
-                    <img src={adestramento} alt="Adestramento" />
-                    <h3 className="card-title">Adestramento</h3>
-                    <p className="card-description">Corrija comportamentos, eduque, divirta-se e fortaleça a relação com seu pet.</p>
-                </div>
-                <div className="dicas">
-                    <img src={alimentacao} alt="Alimentação" />
-                    <h3 className="card-title">Alimentação</h3>
-                    <p className="card-description">Saiba dietas equilibradas, aprenda sobre dietas caseiras, escolha a melhor ração e muito mais.</p>
-                </div>
-                <div className="dicas">
-                    <img src={adocao} alt="Adoção" />
-                    <h3 className="card-title">Adoção</h3>
-                    <p className="card-description">Descubra nomes encantadores, dicas, o que fazer e tudo o que você precisa saber para adotar um pet.</p>
-                </div>
-                <div className="dicas">
-                    <img src={saude} alt="Saúde" />
-                    <h3 className="card-title">Saúde</h3>
-                    <p className="card-description">Aprenda tudo o que precisa saber sobre a saúde do seu pet e proteja seu pet de doenças.</p>
-                </div>
-                <div className="dicas">
-                    <img src={cuidados} alt="Cuidados" />
-                    <h3 className="card-title">Cuidados</h3>
-                    <p className="card-description">Entenda o cio, gestação, higiene dental, cuidado das orelhas e muito mais.</p>
-                </div>
-                <div className="dicas">
-                    <img src={curiosidades} alt="Curiosidades" />
-                    <h3 className="card-title">Curiosidades</h3>
-                    <p className="card-description">Aprenda dicas, descubra espécies em perigo de extinção, saiba diversas raças e muito mais.</p>
-                </div>
+                {cardData.map(card => (
+                    <div
+                        key={card.id}
+                        className={`dicas ${expandedCardId === card.id ? 'expanded' : ''}`}
+                        onClick={() => handleCardClick(card.id)}
+                    >
+                        <img src={card.img} alt={card.title} />
+                        <h3 className="card-title">{card.title}</h3>
+                        <p className="card-description">
+                            {expandedCardId === card.id ? card.examples : card.description}
+                        </p>
+                    </div>
+                ))}
             </div>
         </>
     );

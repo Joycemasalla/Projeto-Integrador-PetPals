@@ -66,10 +66,10 @@ const Sidebar = () => {
       >
         <div className="links">
           <TiHome onClick={gotoHomePage} />
-          <FaUserDoctor onClick={gotoDoctorsPage} />
+          <IoPersonAddSharp onClick={gotoAddNewDoctor} />
           <MdAddModerator onClick={gotoAddNewAdmin} />
           <IoCalendarClear onClick={gotoAddAvailability} />
-          <IoPersonAddSharp onClick={gotoAddNewDoctor} />
+          <FaUserDoctor onClick={gotoDoctorsPage} />
           <AiFillMessage onClick={gotoMessagesPage} />
           <RiLogoutBoxFill onClick={handleLogout} />
 

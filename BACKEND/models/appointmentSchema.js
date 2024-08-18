@@ -37,9 +37,9 @@ const appointmentSchema = new mongoose.Schema({
     // Campo para o NIC (Número de Identificação Nacional) do paciente
     nic: {
         type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        minLength: [11, "O NIC deve conter pelo menos 11 dígitos"],  // Validação para garantir que o NIC tenha pelo menos 11 dígitos
-        maxLength: [11, "O NIC deve conter 11 dígitos"]  // Validação para garantir que o NIC não tenha mais de 11 dígitos
+        default: null, // O campo nao é obrigatorio, se nao for preenchido fica null
+        minLength: [11, "O Número de Identificação deve conter pelo menos 11 dígitos"],  // Validação para garantir que o NIC tenha pelo menos 11 dígitos
+        maxLength: [11, "O Número de Identificaçã deve conter 11 dígitos"]  // Validação para garantir que o NIC não tenha mais de 11 dígitos
     },
     // Campo para a data de nascimento do paciente
     dob: {
@@ -91,7 +91,7 @@ const appointmentSchema = new mongoose.Schema({
     // Campo para o endereço do paciente
     address: {
         type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
+        required: false,  // O campo é obrigatório
     },
     // Campo para o status da consulta
     status: {

@@ -27,127 +27,118 @@
 /* Estilos restantes */
 .titulocard {
     display: flex;
-    max-width: 500px;
-    align-items: center;
-    justify-content: space-between;
-    margin: auto;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .titulocard h2 {
-    font-family: "Ubuntu", sans-serif;
-    font-weight: 500;
-    font-style: italic;
-    color: rgb(56, 55, 55);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: #333;
     text-align: center;
+    font-size: 1.6em;
+    margin: 0;
 }
 
+/* Container dos cards */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
     padding: 20px;
     justify-content: center;
-    /* Centralizando os cards */
-    max-width: 800px;
-    /* Definindo uma largura máxima para o grid */
-    margin: 0 auto;
-    /* Centralizando o grid horizontalmente */
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
+/* Estilos dos cards */
 .dicas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-self: center;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #fefefeff;
-    /* branco1 */
-    width: auto;
-    height: 13rem;
-    /* Ajustando a altura para deixar os cards mais baixos */
-    box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.dicas.dicas.visible:hover {
-    box-shadow: 0 4px 10px #07998d;
-    transform: scale(5.05);
-}
-.dicas img{
-    height: 70px;
-    width: auto;
-    margin: 10px;
-    filter: drop-shadow(1px 1px 3px #07998d); 
-    
-}
-/* CardsDicas.css */
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 20px;
     justify-content: center;
-    max-width: 800px;
-    margin: 0 auto;
+    border-radius: 15px;
+    padding: 20px;
+    background: #ffffff;
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
 }
 
-/* Define a animação de deslizar para dentro */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px); /* Começa um pouco abaixo */
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0); /* Move para a posição original */
-    }
+.dicas.expanded {
+    height: auto;
 }
 
-/* Inicialmente, os cards estão invisíveis e deslocados */
-.dicas {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+.dicas:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
 }
 
-/* Quando a classe "visible" é adicionada, a animação de deslizar é aplicada */
-.dicas.visible {
-    opacity: 1;
-    transform: translateY(0);
-    animation: slideIn 0.6s ease-out forwards;
+.dicas img {
+    height: 120px;
+    width: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.2));
 }
 
 .card-title {
-    margin: 0;
-    color: #07998dc0;
-    font-size: 1em;
+    font-family: "Montserrat", sans-serif;
+    margin: 10px 0;
+    color: #07998d;
+    font-size: 1.4em;
     text-align: center;
 }
 
+/* Cards descrição e exemplo */
+.card-description,
+.card-examples {
+    color: #666;
+    font-size: 0.9em;
+    text-align: center;
+    margin: 10px 0;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+/* Ajustes para a descrição */
 .card-description {
-    color: #333;
-    font-size: 0.8em;
-    /* Reduzindo o tamanho da fonte para ajustar ao novo tamanho do card */
-    text-align: center;
-    margin-top: 5px;
-    /* Ajustando o espaçamento para melhor aparência */
+    display: block;
+    max-height: 200px; /* Ajustado para um valor fixo */
+    overflow: hidden;
+    opacity: 1; /* Opacidade padrão */
 }
 
-/* Adicionando responsividade */
+/* Ajustes para o exemplo */
+.card-examples {
+    display: block;
+    max-height: 200px; /* Ajustado para um valor fixo */
+    overflow: hidden;
+    opacity: 1; /* Opacidade padrão */
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .card-container {
-        grid-template-columns: repeat(2, 1fr);
-        /* Alterando para duas colunas em telas menores */
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
 }
 
 @media (max-width: 480px) {
     .card-container {
         grid-template-columns: 1fr;
-        /* Alterando para uma coluna em telas muito pequenas */
-        gap: 10px;
     }
 }
