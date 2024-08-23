@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaCalendarDay, FaMoon, FaSun } from "react-icons/fa";
-
+import { FaCalendarDay, FaMoon, FaSignOutAlt, FaSun, FaUser } from "react-icons/fa";
 import { Context } from "../main";
 import { logo, setaparacima } from "../assets";
 import './Navbar.css';
@@ -13,10 +12,9 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
-
   const navigateTo = useNavigate();
+  const location = useLocation(); // Hook para obter o caminho atual
 
-  // Check for the theme in localStorage on initial render
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -45,24 +43,13 @@ const Navbar = () => {
     document.documentElement.scrollTop = 0;
   }
 
-  // Função para alternar o tema
   function toggleTheme() {
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     setIsDarkMode(!isDarkMode);
     document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme); // Salva o tema no localStorage
   }
-
-
-
-
-  // Exemplo de uso
-  const themeButton = document.getElementById('theme-toggle-button');
-  if (themeButton) {
-    themeButton.addEventListener('click', toggleTheme);
-  }
-
-
 
   return (
     <>
@@ -73,40 +60,61 @@ const Navbar = () => {
       </div>
       <nav className="container">
         <div className="logo">
-          <Link to={"/"} onClick={() => setShow(!show)}>
+          <Link to="/" onClick={() => setShow(!show)}>
             <img src={logo} alt="logo" className="logo-img" />
           </Link>
         </div>
 
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           <div className="links">
-            <Link to={"/"} onClick={() => setShow(!show)}>
+            <Link
+              to="/"
+              onClick={() => setShow(!show)}
+              className={location.pathname === '/' ? 'active' : ''}
+            >
               Início
             </Link>
-            <Link to={"/appointment"} onClick={() => setShow(!show)}>
+            <Link
+              to="/appointment"
+              onClick={() => setShow(!show)}
+              className={location.pathname === '/appointment' ? 'active' : ''}
+            >
               Agendamento
             </Link>
-            <Link to={"/about"} onClick={() => setShow(!show)}>
+            <Link
+              to="/servicos"
+              onClick={() => setShow(!show)}
+              className={location.pathname === '/servicos' ? 'active' : ''}
+            >
+              Serviços
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setShow(!show)}
+              className={location.pathname === '/about' ? 'active' : ''}
+            >
               Sobre
             </Link>
           </div>
-          <div className="agendamento">
-            <Link to={"/agendamentos"}>
-              <FaCalendarDay />
-            </Link>
+          <div className="iconesmenu">
+            <div className="agendamento btn">
+              <Link to="/agendamentos" title="Ver Agendamentos">
+                <FaCalendarDay />
+              </Link>
+            </div>
+            {isAuthenticated ? (
+              <button className="logoutBtn btn" onClick={handleLogout} title="Sair">
+                <FaSignOutAlt />
+              </button>
+            ) : (
+              <button className="loginBtn btn" onClick={goToLogin} title="Login">
+                <FaUser />
+              </button>
+            )}
+            <button className="themeToggleBtn btn" onClick={toggleTheme} title="Trocar Tema">
+              {isDarkMode ? <FaSun /> : <FaMoon />}
+            </button>
           </div>
-          {isAuthenticated ? (
-            <button className="logoutBtn btn" onClick={handleLogout}>
-              LOGOUT
-            </button>
-          ) : (
-            <button className="loginBtn btn" onClick={goToLogin}>
-              LOGIN
-            </button>
-          )}
-          <button className="themeToggleBtn btn" onClick={toggleTheme}>
-            {isDarkMode ? <FaMoon/> : <FaSun/>}
-          </button>
         </div>
         <div className="hamburger" onClick={() => setShow(!show)}>
           <GiHamburgerMenu />

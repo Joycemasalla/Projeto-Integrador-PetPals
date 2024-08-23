@@ -4,6 +4,7 @@ import Biography from "../Components/Biography";
 import MessageForm from "../Components/MessageForm";
 import Departments from "../Components/Departments";
 import CardsDicas from "../Components/CardsDicas";
+import Servicos from "../Components/Servicos";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <CardsDicas />
       <Biography imageUrl={"/about.png"} />
       <Departments />
+      <Servicos />
       <MessageForm />
     </>
   );

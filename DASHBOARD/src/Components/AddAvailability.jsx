@@ -89,59 +89,61 @@ const AddAvailability = () => {
     }, {})).sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB));
 
     return (
-        <div className="add-availability">
-            <div className="form-container">
-                <h1>Adicionar/Editar Horários Disponíveis</h1>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        required
-                    />
-                    <textarea
-                        placeholder="Digite os horários disponíveis, separados por vírgula ( , )"
-                        value={times}
-                        onChange={(e) => setTimes(e.target.value)}
-                        required
-                    />
-                    <button type="submit">{availableTimeId ? 'Atualizar Horários' : 'Adicionar Horários'}</button>
-                </form>
-            </div>
+        <section className="page">
+            <div className="add-availability">
+                <div className="form-container">
+                    <h1>Adicionar/Editar Horários Disponíveis</h1>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            required
+                        />
+                        <textarea
+                            placeholder="Digite os horários disponíveis, separados por vírgula ( , )"
+                            value={times}
+                            onChange={(e) => setTimes(e.target.value)}
+                            required
+                        />
+                        <button type="submit">{availableTimeId ? 'Atualizar Horários' : 'Adicionar Horários'}</button>
+                    </form>
+                </div>
 
-            <div className="added-times">
-                <h2>Horários Adicionados</h2>
-                {groupedTimes.length > 0 ? (
-                    groupedTimes.map(([date, timesArray]) => (
-                        <div key={date} className="availability-group">
-                            <div className="availability-header" onClick={() => toggleDateVisibility(date)}>
-                                <h3>{date}</h3>
-                                {openDates[date] ? <FaChevronUp /> : <FaChevronDown />}
-                            </div>
-                            {openDates[date] && (
-                                <div className="availability-items">
-                                    {timesArray.map((availability) => (
-                                        <div key={availability._id} className="availability-item">
-                                            <p>{availability.times.join(', ')}</p>
-                                            <div>
-                                                <button className="edit-btn" onClick={() => handleEdit(availability)}>
-                                                    <FaEdit />
-                                                </button>
-                                                <button className="delete-btn" onClick={() => handleDelete(availability._id)}>
-                                                    <FaTrash />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
+                <div className="added-times">
+                    <h2>Horários Adicionados</h2>
+                    {groupedTimes.length > 0 ? (
+                        groupedTimes.map(([date, timesArray]) => (
+                            <div key={date} className="availability-group">
+                                <div className="availability-header" onClick={() => toggleDateVisibility(date)}>
+                                    <h3>{date}</h3>
+                                    {openDates[date] ? <FaChevronUp /> : <FaChevronDown />}
                                 </div>
-                            )}
-                        </div>
-                    ))
-                ) : (
-                    <p>Nenhum horário adicionado ainda.</p>
-                )}
+                                {openDates[date] && (
+                                    <div className="availability-items">
+                                        {timesArray.map((availability) => (
+                                            <div key={availability._id} className="availability-item">
+                                                <p>{availability.times.join(', ')}</p>
+                                                <div>
+                                                    <button className="edit-btn" onClick={() => handleEdit(availability)}>
+                                                        <FaEdit />
+                                                    </button>
+                                                    <button className="delete-btn" onClick={() => handleDelete(availability._id)}>
+                                                        <FaTrash />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <p>Nenhum horário adicionado ainda.</p>
+                    )}
+                </div>
             </div>
-        </div>
+        </section>
     );
 };
 

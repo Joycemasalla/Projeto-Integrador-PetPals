@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { clinicaveterinaria, cirurgia, dermatologia, odontologia, cardiologia, neurologia, oncologia, endocrinologia, comportamentoAnimal, nutricao } from "../assets";
 import './Departments.css';
+import { Link } from "react-router-dom";
 
 const Departments = () => {
   const departmentsArray = [
@@ -98,6 +99,12 @@ const Departments = () => {
           </div>
         ))}
       </Carousel>
+
+      <Link to={"/appointment"} >
+        <button className="btn-cta">
+          Agende sua Consulta
+        </button>
+      </Link>
     </div>
   );
 };

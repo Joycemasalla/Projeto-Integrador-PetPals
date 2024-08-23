@@ -3,20 +3,25 @@
 
 
 ::-webkit-scrollbar {
-  width: 12px; /* Largura da barra de rolagem */
+  width: 12px;
+  /* Largura da barra de rolagem */
 }
 
 ::-webkit-scrollbar-track {
-  background: #e5e5e5; /* Cor de fundo da trilha */
+  background: #e5e5e5;
+  /* Cor de fundo da trilha */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #07998d74; /* Cor do "polegar" (a parte que se move) */
-  border-radius: 4px; /* Bordas arredondadas do "polegar" */
+  background: #07998d74;
+  /* Cor do "polegar" (a parte que se move) */
+  border-radius: 4px;
+  /* Bordas arredondadas do "polegar" */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #07998d; /* Cor do "polegar" quando passa o mouse por cima */
+  background: #07998d;
+  /* Cor do "polegar" quando passa o mouse por cima */
 }
 
 
@@ -63,8 +68,6 @@ body[data-theme='dark'] .white-btn {
   color: #fff;
 }
 
-
-
 /* Estilo dos campos de entrada no tema escuro */
 body[data-theme='dark'] .form-component {
   border: 2px solid #4e8d8d;
@@ -110,14 +113,11 @@ body[data-theme='dark'] .biography .banner img {
 
 body[data-theme='dark'] .card-content,
 body[data-theme='dark'] .card {
-
   background: #2b2b2b;
   color: #e5e5e5;
 }
 
 body[data-theme='dark'] .depart-description {
-
-
   color: #e5e5e5;
 }
 
@@ -125,11 +125,40 @@ body[data-theme='dark'] .dicas {
   filter: brightness(90%);
 }
 
-h1 [data-theme='dark'].banner {
+h1[data-theme='dark'].banner {
   color: #e5e5e5;
 }
 
+/* Estilo para a seção de servicos no modo escuro */
+body[data-theme='dark'] .services {
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+}
 
+body[data-theme='dark'] .services h1 {
+  color: #ddd;
+}
+
+body[data-theme='dark'] .service-item {
+  border-bottom: 1px solid #555;
+  background-color: #2b2b2b;
+}
+
+
+
+body[data-theme='dark'] .service-title {
+  color: #00bfae;
+  /* Ajuste se necessário */
+}
+
+body[data-theme='dark'] .service-description {
+  color: #ccc;
+}
+
+body[data-theme='dark'] .tooltip {
+  background-color: #222;
+  color: #eee;
+}
 
 /* Ajustes de estilo para o tema escuro */
 body[data-theme='dark'] .hero {
@@ -144,24 +173,6 @@ body[data-theme='dark'] .hero .banner p {
   color: #ddd;
 }
 
-body[data-theme='dark'] .form-component {
-  border: 2px solid #4e8d8d;
-  background: #333;
-  color: #ddd;
-}
-
-body[data-theme='dark'] .form-component input,
-body[data-theme='dark'] .form-component select,
-body[data-theme='dark'] .form-component textarea {
-  background: #444;
-  color: #ddd;
-  border: 1px solid #4e8d8d;
-}
-
-body[data-theme='dark'] .form-component button {
-  background: linear-gradient(140deg, #4e8d8d, #2b6e6e);
-}
-
 body[data-theme='dark'] .message-form h2,
 body[data-theme='dark'] .departments h2,
 body[data-theme='dark'] .titulocard h2,
@@ -169,12 +180,112 @@ body[data-theme='dark'] .login-form h2,
 body[data-theme='dark'] .register-form h2,
 body[data-theme='dark'] .appointment-form h2 {
   color: #e5e5e5;
-
 }
 
 body[data-theme='dark'] .titulocard {
   background: linear-gradient(135deg, #3f3f3f, #1f1f1f);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Estilo para a seção Nossos Serviços no modo escuro */
+body[data-theme='dark'] .nossos-servicos {
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+}
+
+body[data-theme='dark'] .nossos-servicos-intro p {
+  color: #ccc;
+}
+
+body[data-theme='dark'] .nossos-servicos-list h1 {
+  color: #fff;
+}
+
+body[data-theme='dark'] .nossos-servicos-card {
+  background-color: #2b2b2b;
+  border: 1px solid #333;
+  color: #e5e5e5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body[data-theme='dark'] .nossos-servicos-card:hover {
+  background-color: #333;
+}
+
+body[data-theme='dark'] .nossos-servicos-icon {
+  color: #00bfae;
+}
+
+body[data-theme='dark'] .nossos-servicos-image {
+  filter: brightness(85%);
+  border-bottom: 2px solid #444;
+}
+
+body[data-theme='dark'] .nossos-servicos-content h2 {
+  color: #fff;
+}
+
+body[data-theme='dark'] .nossos-servicos-description {
+  color: #ccc;
+}
+
+body[data-theme='dark'] .nossos-servicos-info-button {
+  background-color: #444;
+  color: #00bfae;
+  border: none;
+}
+
+body[data-theme='dark'] .nossos-servicos-info-button:hover {
+  background-color: #555;
+}
+
+body[data-theme='dark'] .nossos-servicos-info-tooltip {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #444;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para o departamento no modo escuro */
+body[data-theme='dark'] .nossos-servicos-departamentos {
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+}
+
+
+
+/* Mídia queries para dispositivos móveis */
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 1.5rem;
+  }
+
+  .service-description {
+    font-size: 0.875rem;
+  }
+
+  .service-image {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-icon {
+    font-size: 2rem;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+  }
+
+  .service-description {
+    font-size: 0.75rem;
+  }
+
+  .service-image {
+    max-width: 100px;
+  }
 }
 
 .btn {
@@ -403,6 +514,13 @@ h6 {
   border-radius: 7px;
   border: 1px solid #FCC931;
 }
+.form-component form input:focus,
+.form-component form select:focus,
+.form-component form textarea:focus {
+  border: 2px solid #FCC931;
+  box-shadow: 0 0 5px #FCC931;
+  outline: none;
+}
 
 .form-component button {
   padding: 10px 35px;
@@ -422,10 +540,21 @@ h6 {
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus
 textarea:focus {
   border: 2px solid #FCC931;
   box-shadow: 0 0 5px #FCC931;
   outline: none;
+}
+
+/* Estilo para quando o campo está em foco no tema escuro */
+body[data-theme='dark'] .form-component input:focus,
+body[data-theme='dark'] .form-component textarea:focus {
+  border-color: #377575; /* Cor da borda ao focar */
+  background: #555; /* Cor de fundo ao focar */
+  box-shadow: 0 0 5px rgba(13, 100, 130, 0.5); /* Sombra ao focar */
+  outline: none; /* Remove o contorno padrão do navegador */
 }
 
 
@@ -552,27 +681,34 @@ textarea:focus {
     flex-direction: column-reverse;
   }
 }
+
 .message-form {
   position: relative;
   padding: 2rem;
-  background-color: #f7f7f7; /* Fundo leve para destacar o formulário */
-  border-radius: 10px; /* Cantos arredondados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidade */
+  background-color: #f7f7f7;
+  /* Fundo leve para destacar o formulário */
+  border-radius: 10px;
+  /* Cantos arredondados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra suave para profundidade */
   max-width: 800px;
-  margin: 2rem auto; /* Centraliza o formulário na tela */
+  margin: 2rem auto;
+  /* Centraliza o formulário na tela */
 }
 
 .message-form h2 {
   text-align: center;
   color: #494949;
   margin-bottom: 1.5rem;
-  font-size: 1.8rem; /* Tamanho do texto ajustado */
+  font-size: 1.8rem;
+  /* Tamanho do texto ajustado */
 }
 
 .message-form form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Espaçamento entre os elementos do formulário */
+  gap: 1.5rem;
+  /* Espaçamento entre os elementos do formulário */
 }
 
 .message-form input,
@@ -588,8 +724,10 @@ textarea:focus {
 .message-form input:focus,
 .message-form textarea:focus {
   outline: none;
-  border-color: #009A8E; /* Cor de destaque ao focar no campo */
-  box-shadow: 0 0 8px rgba(0, 154, 142, 0.2); /* Sombra leve ao focar */
+  border-color: #009A8E;
+  /* Cor de destaque ao focar no campo */
+  box-shadow: 0 0 8px rgba(0, 154, 142, 0.2);
+  /* Sombra leve ao focar */
 }
 
 .message-form textarea {
@@ -613,7 +751,7 @@ textarea:focus {
     font-size: 1.5rem;
   }
 
- 
+
 }
 
 footer {
@@ -661,6 +799,7 @@ footer .content div ul a:hover {
 footer .content div ul li span {
   color: gray;
 }
+
 .footer-direito {
   text-align: center;
   padding: 1rem 0;
@@ -680,6 +819,26 @@ footer .content div:last-child div {
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
+}
+.perfil{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil ul {
+  display: flex; /* Alinha os itens horizontalmente */
+  margin: 0; /* Remove a margem padrão da lista */
+  list-style-type: none; /* Remove os marcadores de lista */
+
+}
+
+.perfil ul li {
+  margin-right: 10px; /* Adiciona espaço entre os itens */
+}
+
+.perfil ul li a {
+  font-size: 30px;
 }
 
 footer .content div:last-child div svg {
@@ -768,7 +927,26 @@ footer .content div:last-child div svg {
   font-weight: 700;
 }
 
-/**********************************************************************************************************************/
+.btn-cta {
+  background: #009A8E;
+  padding: 12px 24px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: transparent;
+  margin-top: 3rem;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+
+}
+
+.btn-cta:hover {
+  background: #007569;
+}
+
+/*****************************************NAVBAR*****************************************************************************/
 nav {
   display: flex;
   width: 100%;
@@ -790,6 +968,8 @@ nav .logo {
   font-size: 2rem;
 }
 
+
+
 nav .navLinks {
   flex: 2;
 }
@@ -808,7 +988,7 @@ nav .navLinks .links {
 nav .navLinks .links a {
   text-decoration: none;
   color: #ffffff;
-  font-size: 20px;
+  font-size: px;
   font-weight: 600;
   letter-spacing: 1.4px;
 }
@@ -818,9 +998,16 @@ nav .navLinks .links a:hover {
   transition: 0.3s;
   cursor: pointer;
 }
+/* Estilo para links ativos */
+.navLinks .links .active {
+  color: #FFD700; /* Cor amarela */
+  font-weight: bold; /* Negrito opcional */
+}
+.iconesmenu{
+  display: flex;
+}
 
 nav .btn {
-  padding: 8px 20px;
   color: #e5e5e5;
   background: transparent;
   border: none;
@@ -828,31 +1015,35 @@ nav .btn {
   font-size: 20px;
   font-weight: 600;
   z-index: 2;
+  cursor: pointer;
 }
 
-nav .logoutBtn {
-  background: linear-gradient(135deg, #FFCC01, rgb(178, 166, 2));
+.logoutBtn :hover{
+  color: #FFD700;
+}
+.loginBtn :hover{
+  color: #FFD700;
+}
+.agendamento :hover{
+  color: #FFD700;
+}
+.themeToggleBtn :hover{
+  color: #FFD700;
+
 }
 
-nav .loginBtn {
-  background: linear-gradient(135deg, #FFCC01, rgb(178, 166, 2));
-}
 
-nav .loginBtn:hover,
-nav .logoutBtn:hover {
-  background: linear-gradient(135deg, #e8e8e8, rgb(230, 230, 230));
-  color: #FFCC01;
-  transition: 0.3s;
-}
 
 nav .hamburger {
   display: none;
+  cursor: pointer;
 }
 
 nav svg {
   font-size: 1.75rem;
   color: rgb(255, 255, 255);
 }
+
 
 
 @media (max-width: 1520px) {
@@ -873,6 +1064,7 @@ nav svg {
 
   nav .hamburger {
     display: flex;
+    cursor: pointer;
   }
 
   nav .navLinks {
@@ -893,6 +1085,16 @@ nav svg {
     background: rgba(7, 153, 141, 0.8);
     /* Altere a opacidade se necessário */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav .navLinks .links a {
+    font-size: 10px;
+    /* Altera o tamanho do texto */
+    padding: 15px;
+    /* Adiciona padding para separar os links */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    /* Adiciona uma borda inferior com uma opacidade mais suave */
+    transition: background 0.3s, color 0.3s;
   }
 
   nav .navLinks a:hover {
@@ -919,6 +1121,9 @@ nav svg {
     background: #07998dc0;
     top: 133px;
   }
+
+
+
 
   nav .navLinks .links {
     flex-direction: column;
@@ -961,13 +1166,13 @@ nav svg {
 
 input[type="date"]:before {
   content: attr(placeholder);
-  color: #444;
+  color: rgb(128, 128, 128);
   margin-right: 0.5em;
 }
 
 input[type="time"]:before {
   content: attr(placeholder);
-  color: #444;
+  color: rgb(128, 128, 128);
   margin-right: 0.5em;
 }
 
@@ -975,8 +1180,18 @@ input[type="time"]:before {
   width: 150px;
 }
 
+.logo-img:hover {
+  opacity: 0.8;
+
+}
+
 footer .logo-img {
   width: 100%;
+}
+
+footer .logo-img:hover {
+  opacity: 0.8;
+
 }
 
 .delete-icon {
@@ -986,4 +1201,249 @@ footer .logo-img {
 
 .delete-icon:hover {
   opacity: 0.8;
+}
+
+
+/* =================================================================*/
+
+/*servicos*/
+
+.services {
+  padding: 4rem 2rem;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.services h1 {
+  color: gray;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  background-color: #ffffff;
+  flex-wrap: wrap;
+}
+
+.service-icon {
+  font-size: 2rem;
+  color: #009A8E;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+#maozinha {
+  cursor: pointer;
+}
+
+.service-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.service-title {
+  font-size: 1.75rem;
+  color: #009A8E;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+}
+
+.service-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.tooltip {
+  background-color: #009A8E;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+
+}
+
+
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 1.5rem;
+  }
+
+  .service-description {
+    font-size: 0.875rem;
+  }
+
+  .service-image {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-icon {
+    font-size: 2rem;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+  }
+
+  .service-description {
+    font-size: 0.75rem;
+  }
+
+  .service-image {
+    max-width: 100px;
+  }
+}
+
+/* Estilos para o componente NossosServicos */
+
+.nossos-servicos {
+
+  background-color: #f5f5f5;
+}
+
+.nossos-servicos-intro {
+  text-align: center;
+  margin-bottom: 40px;
+
+}
+
+.nossos-servicos-intro p {
+  font-size: 1rem;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 5rem;
+}
+
+.nossos-servicos-list h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #009A8E;
+  margin-bottom: 30px;
+}
+
+.nossos-servicos-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 colunas */
+  gap: 20px;
+  justify-content: center;
+  /* Centraliza os itens horizontalmente */
+  margin: 0 auto;
+  max-width: 1200px;
+  /* Limita a largura do contêiner */
+  overflow-x: hidden;
+  /* Evita a rolagem horizontal */
+  padding: 0 10px;
+  /* Adiciona padding horizontal */
+}
+
+@media (max-width: 1200px) {
+  .nossos-servicos-container {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 colunas em telas menores */
+  }
+}
+
+@media (max-width: 768px) {
+  .nossos-servicos-container {
+    grid-template-columns: 1fr;
+    /* 1 coluna em telas menores */
+  }
+}
+
+.nossos-servicos-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 50px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  width: 100%;
+  /* Ajusta o tamanho do card */
+  max-width: 300px;
+  /* Define uma largura máxima para o card */
+}
+
+.nossos-servicos-icon {
+  font-size: 2rem;
+  color: #009A8E;
+  margin: 20px 0;
+}
+
+.nossos-servicos-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.nossos-servicos-content {
+  padding: 20px;
+}
+
+.nossos-servicos-title {
+  font-size: 1.25rem;
+  /* Reduz o tamanho da fonte */
+  color: #333;
+  margin: 10px 0;
+}
+
+.nossos-servicos-description {
+  font-size: 0.875rem;
+  /* Reduz o tamanho da fonte */
+  color: #666;
+  margin-bottom: 10px;
+}
+
+#maismenos {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #007569;
+}
+
+.nossos-servicos-info-button:hover {
+  color: #07998d74;
+}
+
+.nossos-servicos-info-tooltip {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 0.875rem;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nossos-servicos-departamentos {
+  margin-top: 40px;
 }

@@ -54,11 +54,7 @@ footer .logo-img {
     height: auto;
 }
 
-footer div {
-    margin-bottom: 1rem;
-}
-
-.social-icons ul {
+/* .social-icons ul {
     display: flex;
     list-style: none;
     padding: 0;
@@ -74,8 +70,8 @@ footer div {
   }
   
   .social-icons ul li a:hover {
-    color: #fcc931; /* Cor de exemplo para hover */
-  }
+    color: #fcc931; /* Cor de exemplo para hover 
+   */
 
 @media (max-width: 768px) {
     footer .links ul a {
@@ -92,3 +88,37 @@ footer div {
         align-items: center;
     }
 }
+
+
+
+/* Container dos ícones */
+/* Estilo básico para os ícones sociais */
+.social-icons {
+    display: flex;
+  }
+  
+  .social-icons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .social-icons ul li {
+    display: flex;
+  }
+  
+  .social-icons ul li a {
+    font-size: 25px;
+    transition: transform 0.3s, opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 40px; /* Ajuste o tamanho conforme necessário */
+    text-decoration: none; /* Remove o sublinhado do link */
+  }
+  
+  
+  
+  

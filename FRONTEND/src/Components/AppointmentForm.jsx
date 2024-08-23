@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Context } from "../main";
+import { useNavigate } from "react-router-dom";
 
 const AppointmentForm = () => {
-  // Estados para armazenar os dados do formulário
-  const [firstName, setFirstName] = useState(""); // Nome do tutor
-  const [lastName, setLastName] = useState(""); // Sobrenome do tutor
-  const [nomePet, setNomePet] = useState(""); // Nome do pet
-  const [especiePet, setEspeciePet] = useState(""); // Espécie do pet
-  const [racaPet, setRacaPet] = useState(""); // Raça do pet
-  const [email, setEmail] = useState(""); // Email do tutor
-  const [phone, setPhone] = useState(""); // Telefone do tutor
-  const [nic, setNic] = useState(""); // NIC do pet
-  const [dob, setDob] = useState(""); // Data de nascimento do pet
-  const [gender, setGender] = useState(""); // Gênero do pet
-  const [appointmentDate, setAppointmentDate] = useState(""); // Data da consulta
-  const [department, setDepartment] = useState(""); // Departamento da consulta
-  const [doctorFirstName, setDoctorFirstName] = useState(""); // Nome do médico
-  const [doctorLastName, setDoctorLastName] = useState(""); // Sobrenome do médico
-  const [address, setAddress] = useState(""); // Endereço do tutor
-  const [hasVisited, setHasVisited] = useState(false); // Se o tutor já visitou a clínica
-  const [availableTimes, setAvailableTimes] = useState([]); // Horários disponíveis
-  const [selectedTime, setSelectedTime] = useState(""); // Horário selecionado
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [nomePet, setNomePet] = useState("");
+  const [especiePet, setEspeciePet] = useState("");
+  const [racaPet, setRacaPet] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [nic, setNic] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [department, setDepartment] = useState("");
+  const [doctorFirstName, setDoctorFirstName] = useState("");
+  const [doctorLastName, setDoctorLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [hasVisited, setHasVisited] = useState(false);
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+  const { isAuthenticated } = useContext(Context);
 
-  // Array de departamentos
   const departmentsArray = [
     "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia",
     "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição"
   ];
 
-  // Estado para armazenar a lista de médicos
   const [doctors, setDoctors] = useState([]);
 
-  // useEffect para buscar a lista de médicos ao carregar o componente
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
         const { data } = await axios.get("http://localhost:4000/api/v1/user/doctors", {
           withCredentials: true
         });
-        setDoctors(data.doctors); // Armazena a lista de médicos no estado
+        setDoctors(data.doctors);
       } catch (error) {
         toast.error("Erro ao buscar médicos");
       }
@@ -47,7 +47,6 @@ const AppointmentForm = () => {
     fetchDoctors();
   }, []);
 
-  // useEffect para buscar horários disponíveis com base na data selecionada
   useEffect(() => {
     const fetchAvailableTimes = async () => {
       if (appointmentDate) {
@@ -59,7 +58,7 @@ const AppointmentForm = () => {
 
           const times = data.flatMap(entry => entry.times || []);
           if (Array.isArray(times)) {
-            setAvailableTimes(times); // Armazena os horários disponíveis no estado
+            setAvailableTimes(times);
           } else {
             console.warn('Formato de dados inesperado:', data);
             setAvailableTimes([]);
@@ -73,37 +72,44 @@ const AppointmentForm = () => {
     fetchAvailableTimes();
   }, [appointmentDate]);
 
-  // useEffect para buscar os dados do usuário ao carregar o componente
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", {
-          withCredentials: true,
-          timeout: 10000 // Tempo de timeout aumentado para 10 segundos
-        });
-        console.log("Dados recebidos da API:", data);
-        setFirstName(data.user.firstName || "");
-        setLastName(data.user.lastName || "");
-        setEmail(data.user.email || "");
-        setPhone(data.user.phone || "");
-        setAddress(data.user.address || "");
-      } catch (error) {
-        if (error.code === 'ECONNABORTED') {
-          console.error("Tempo de timeout excedido");
-          toast.error("Tempo de timeout excedido ao buscar dados do usuário");
-        } else {
-          console.error("Erro ao buscar dados do usuário:", error);
-          toast.error("Erro ao buscar dados do usuário");
+    if (isAuthenticated) {
+      const fetchUserData = async () => {
+        try {
+          const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", {
+            withCredentials: true,
+            timeout: 10000
+          });
+          setFirstName(data.user.firstName || "");
+          setLastName(data.user.lastName || "");
+          setEmail(data.user.email || "");
+          setPhone(data.user.phone || "");
+          setAddress(data.user.address || "");
+        } catch (error) {
+          if (error.code === 'ECONNABORTED') {
+            console.error("Tempo de timeout excedido");
+            toast.error("Tempo de timeout excedido ao buscar dados do usuário");
+          } else {
+            console.error("Erro ao buscar dados do usuário:", error);
+            toast.error("Erro ao buscar dados do usuário");
+          }
         }
-      }
-    };
+      };
 
-    fetchUserData(); // Chama a função para preencher os campos do formulário
-  }, []);
+      fetchUserData();
+    }
+  }, [isAuthenticated]);
 
-  // Função para lidar com o envio do formulário
   const handleAppointment = async (e) => {
     e.preventDefault();
+    
+    // Verifica se o usuário está autenticado
+    if (!isAuthenticated) {
+      toast.error("Você precisa estar logado para agendar uma consulta. Por favor, faça login.");
+      navigate("/login"); // Redireciona para a página de login
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:4000/api/v1/appointment/post",
@@ -126,7 +132,6 @@ const AppointmentForm = () => {
           doctor_firstName: doctorFirstName,
           doctor_lastName: doctorLastName,
           hasVisited
-          // address
         },
         {
           withCredentials: true,
@@ -134,7 +139,6 @@ const AppointmentForm = () => {
         }
       );
 
-      // Atualizar a disponibilidade removendo o horário selecionado
       const { data: disponibilidade } = await axios.get('http://localhost:4000/api/v1/admin/disponibilidade', {
         params: { date: appointmentDate },
         withCredentials: true
@@ -155,11 +159,6 @@ const AppointmentForm = () => {
       toast.success(response.data.message);
 
       // Limpar o formulário após o envio
-      // setFirstName("");
-      // setLastName("");
-      // setEmail("");
-      // setPhone("");
-      // setAddress("");
       setAppointmentDate("");
       setDepartment("");
       setDoctorFirstName("");
@@ -177,7 +176,6 @@ const AppointmentForm = () => {
     }
   };
 
-  // Função para lidar com mudanças no horário selecionado
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
@@ -185,8 +183,33 @@ const AppointmentForm = () => {
   return (
     <div className="container form-component appointment-form">
       <h2>Agendamento de Consulta</h2>
+      {!isAuthenticated && (
+        <div style={{
+          marginBottom: "20px",
+          padding: "10px",
+          borderRadius: "5px",
+          backgroundColor: "#f8f9fa",
+          color: "#333"
+        }}>
+          <p style={{ fontSize: "16px", margin: 0 }}>
+            Para agendar uma consulta, você precisa estar logado. Se ainda não tem uma conta, 
+            <a 
+              href="/register" 
+              style={{ color: "#007bff", textDecoration: "none" }}
+            >
+              registre-se
+            </a> 
+            ou faça 
+            <a 
+              href="/login" 
+              style={{ color: "#007bff", textDecoration: "none" }}
+            >
+              login
+            </a>.
+          </p>
+        </div>
+      )}
       <form onSubmit={handleAppointment}>
-        {/* Primeira seção do formulário: informações do pet */}
         <div className="primeira">
           <input
             type="text"
@@ -211,10 +234,9 @@ const AppointmentForm = () => {
           />
           <input
             type="text"
-            placeholder="NIC / Identificação "
+            placeholder="NIC / Identificação"
             value={nic}
             onChange={(e) => setNic(e.target.value)}
-          // required
           />
           <select value={gender} onChange={(e) => setGender(e.target.value)} required>
             <option value="">Gênero do Pet</option>
@@ -230,7 +252,6 @@ const AppointmentForm = () => {
           />
         </div>
 
-        {/* Segunda seção do formulário: informações do tutor */}
         <div>
           <input
             type="text"
@@ -262,7 +283,6 @@ const AppointmentForm = () => {
           />
         </div>
 
-        {/* Terceira seção do formulário: data, departamento e médico */}
         <div>
           <input
             type="date"
@@ -321,15 +341,7 @@ const AppointmentForm = () => {
           </select>
         </div>
 
-        {/* Quarta seção do formulário: outras informações */}
         <div>
-          {/* <input
-            type="text"
-            placeholder="Endereço"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          /> */}
           <label>
             <input
               type="checkbox"

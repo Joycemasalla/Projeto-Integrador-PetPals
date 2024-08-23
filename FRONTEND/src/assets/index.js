@@ -20,5 +20,6 @@ import saude from "./saude.png";
 import curiosidades from "./curiosidades.png";
 import sobrenos from "./sobrenos.jpg";
 import logoimagem from "./logoimagem.png";
+import perfil from "./perfil.png";
 
-export {logo, pets, petspulando, clinicaveterinaria,logoimagem, sobrenos, cirurgia,curiosidades, dermatologia, odontologia, cardiologia,setaparacima, neurologia, oncologia, endocrinologia, comportamentoAnimal,nutricao, adestramento,adocao, alimentacao, saude, cuidados };
+export {logo, pets, petspulando,perfil, clinicaveterinaria,logoimagem, sobrenos, cirurgia,curiosidades, dermatologia, odontologia, cardiologia,setaparacima, neurologia, oncologia, endocrinologia, comportamentoAnimal,nutricao, adestramento,adocao, alimentacao, saude, cuidados };

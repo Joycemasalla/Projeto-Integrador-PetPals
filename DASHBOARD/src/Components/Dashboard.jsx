@@ -5,11 +5,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
+import { format } from "date-fns";
+import { FaClock, FaFile, FaInfo } from "react-icons/fa6";
 
 const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [addedTimes, setAddedTimes] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -32,17 +36,21 @@ const Dashboard = () => {
         );
         setDoctors(data.doctors);
       } catch (error) {
-        toast.error(error.response?.data?.message || "Falha ao buscar doutores.");
+        toast.error(
+          error.response?.data?.message || "Falha ao buscar doutores."
+        );
       }
     };
 
     const fetchAvailableTimes = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/v1/admin/disponibilidades');
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/admin/disponibilidades"
+        );
         setAddedTimes(response.data);
       } catch (error) {
-        console.error('Erro ao buscar horários disponíveis:', error);
-        toast.error('Erro ao buscar horários disponíveis');
+        console.error("Erro ao buscar horários disponíveis:", error);
+        toast.error("Erro ao buscar horários disponíveis");
       }
     };
 
@@ -53,16 +61,12 @@ const Dashboard = () => {
 
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
-      console.log("Atualizando status para ID:", appointmentId);
-
-      // Atualiza o status do agendamento
       const { data } = await axios.put(
         `http://localhost:4000/api/v1/appointment/update/${appointmentId}`,
         { status },
         { withCredentials: true }
       );
 
-      // Atualiza o estado dos agendamentos
       setAppointments((prevAppointments) =>
         prevAppointments.map((appointment) =>
           appointment._id === appointmentId
@@ -72,32 +76,22 @@ const Dashboard = () => {
       );
 
       if (status === "Aceito") {
-        const appointment = appointments.find(a => a._id === appointmentId);
-        console.log("Agendamento encontrado:", appointment);
+        const appointment = appointments.find((a) => a._id === appointmentId);
 
         if (appointment) {
           const { disponibilityId } = appointment;
-          console.log("ID de Disponibilidade:", disponibilityId);
 
           if (disponibilityId) {
-            console.log("ID do horário a ser excluído:", disponibilityId);
-
-            // Remove o horário da disponibilidade usando o ID correto
             await axios.delete(
               `http://localhost:4000/api/v1/admin/disponibilidade/${disponibilityId}`,
               { withCredentials: true }
             );
-            console.log("Horário excluído com sucesso.");
-            toast.success('Horário excluído com sucesso.');
 
-            // Atualiza a lista de agendamentos e disponibilidades
+            toast.success("Horário excluído com sucesso.");
+
             await fetchAppointments();
             await fetchAvailableTimes();
-          } else {
-            console.warn("ID do horário não encontrado ou não disponível.");
           }
-        } else {
-          console.warn("Agendamento não encontrado.");
         }
       }
 
@@ -121,6 +115,24 @@ const Dashboard = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Falha ao deletar agendamento.");
     }
+  };
+
+  const handleDetailsClick = (appointment) => {
+    setSelectedAppointment(appointment);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedAppointment(null);
+  };
+
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    if (!isNaN(parsedDate.getTime())) {
+      return format(parsedDate, 'dd/MM/yyyy HH:mm:ss');
+    }
+    return "Data inválida";
   };
 
   const { isAuthenticated, admin } = useContext(Context);
@@ -172,6 +184,7 @@ const Dashboard = () => {
             {appointments.length > 0 ? (
               appointments.map((appointment) => {
                 const { date, time } = appointment.appointment_date;
+
                 return (
                   <tr key={appointment._id}>
                     <td>{appointment.nomePet}</td>
@@ -217,6 +230,10 @@ const Dashboard = () => {
                         onClick={() => handleDeleteAppointment(appointment._id)}
                       />
                     </td>
+                    <td><button className="infodetalhes"
+                      onClick={() => handleDetailsClick(appointment)} >
+                      <FaInfo />
+                    </button></td>
                   </tr>
                 );
               })
@@ -228,6 +245,30 @@ const Dashboard = () => {
           </tbody>
         </table>
       </div>
+
+      {modalOpen && selectedAppointment && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <span onClick={closeModal} class="close">×</span>
+            <h3>Detalhes do Agendamento</h3>
+            <p><strong>Nome do Paciente:</strong> {selectedAppointment.firstName} {selectedAppointment.lastName}</p>
+            <p><strong>Email:</strong> {selectedAppointment.email}</p>
+            <p><strong>Telefone:</strong> {selectedAppointment.phone}</p>
+            <p><strong>Data de Nascimento:</strong> {format(new Date(selectedAppointment.dob), 'dd/MM/yyyy')}</p>
+            <p><strong>Gênero:</strong> {selectedAppointment.gender}</p>
+            <p><strong>Data da Consulta:</strong> {selectedAppointment.appointment_date.date}</p>
+            <p><strong>Hora da Consulta:</strong> {selectedAppointment.appointment_date.time}</p>
+            <p><strong>Departamento:</strong> {selectedAppointment.department}</p>
+            <p><strong>Doutor:</strong> {selectedAppointment.doctor.firstName} {selectedAppointment.doctor.lastName}</p>
+            <p><strong>Status:</strong> {selectedAppointment.status}</p>
+            <p><strong>Visitado:</strong> {selectedAppointment.hasVisited ? "Sim" : "Não"}</p>
+            <p><strong>Nome do Pet:</strong> {selectedAppointment.nomePet}</p>
+            <p><strong>Espécie do Pet:</strong> {selectedAppointment.especiePet}</p>
+            <p><strong>Raça do Pet:</strong> {selectedAppointment.racaPet}</p>
+            <p><strong>Data do Agendamento:</strong> {formatDate(selectedAppointment.createdAt)}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

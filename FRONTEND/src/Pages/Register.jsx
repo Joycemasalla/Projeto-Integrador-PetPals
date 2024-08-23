@@ -132,7 +132,7 @@ const Register = () => {
           <p style={{ marginBottom: 0 }}>Já tem registro?</p>
           <Link
             to={"/login"}
-            style={{ textDecoration: "none", color: "#271776ca" }}
+            style={{ textDecoration: "none" }}
           >
             Login 
           </Link>

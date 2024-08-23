@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <>
       <Hero
-        title={"Saiba mais sobre nós | PetPal Clínica Veterinária"}
+        title={"Saiba mais sobre nós  PetPal Clínica Veterinária"}
         imageUrl={"/about.png"}
       />
       <Biography imageUrl={"/whoweare.png"} />

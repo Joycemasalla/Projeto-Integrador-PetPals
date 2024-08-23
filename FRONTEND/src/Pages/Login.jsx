@@ -1,45 +1,43 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { UserContext } from "../Components/UserContext";
 
-
 const Login = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const { setUserData } = useContext(UserContext);
-
-
   const navigateTo = useNavigate();
+
+  useEffect(() => {
+    // Scroll para o topo da página sempre que o componente for montado
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     // Realize o login e obtenha os dados do usuário
-
     try {
-      await axios
-        .post(
-          "http://localhost:4000/api/v1/user/login",
-          { email, password, confirmPassword, role: "Paciente" },
-          {
-            withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          toast.success(res.data.message);
-          setIsAuthenticated(true);
-          navigateTo("/");
-          setEmail("");
-          setPassword("");
-          setConfirmPassword("");
-        });
+      await axios.post(
+        "http://localhost:4000/api/v1/user/login",
+        { email, password, confirmPassword, role: "Paciente" },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        setIsAuthenticated(true);
+        navigateTo("/");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      });
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -56,7 +54,6 @@ const Login = () => {
         <p>Faça login para continuar.</p>
 
         <form onSubmit={handleLogin}>
-          
           <input
             type="text"
             placeholder="Email"
@@ -85,7 +82,7 @@ const Login = () => {
             <p style={{ marginBottom: 0 }}>Não tem registro?</p>
             <Link
               to={"/register"}
-              style={{ textDecoration: "none", color: "#e5e5e5" }}
+              style={{ textDecoration: "none"}}
             >
               Registrar
             </Link>

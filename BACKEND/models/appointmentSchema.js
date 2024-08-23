@@ -114,6 +114,7 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+}, { timestamps: true }); // Adiciona os campos createdAt e updatedAt
 
 
    
@@ -121,7 +122,7 @@ const appointmentSchema = new mongoose.Schema({
 
 
 
-});
+
 
 // Exporta o modelo Appointment baseado no esquema definido
 export const Appointment = mongoose.model('Appointment', appointmentSchema);

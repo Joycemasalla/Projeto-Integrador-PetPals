@@ -1,37 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TiHome } from "react-icons/ti";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { AiFillMessage } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCalendarClear } from "react-icons/io5";
-import { FaUserDoctor } from "react-icons/fa6";
+import { FaMoon, FaSun, FaUserDoctor } from "react-icons/fa6";
 import { MdAddModerator } from "react-icons/md";
 import { IoPersonAddSharp } from "react-icons/io5";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
-
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigateTo = useNavigate();
+  const location = useLocation(); // Hook para obter o caminho atual
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      setIsDarkMode(savedTheme === 'dark');
+    }
+  }, []);
+
+  // Função para alternar o tema
+  function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme); // Salva o tema no localStorage
+  }
 
   const handleLogout = async () => {
-    await axios
-      .get("http://localhost:4000/api/v1/user/admin/logout", {
+    try {
+      const res = await axios.get("http://localhost:4000/api/v1/user/admin/logout", {
         withCredentials: true,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setIsAuthenticated(false);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
       });
+      toast.success(res.data.message);
+      setIsAuthenticated(false);
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error logging out');
+    }
   };
-
-  const navigateTo = useNavigate();
 
   const gotoHomePage = () => {
     navigateTo("/");
@@ -65,14 +80,36 @@ const Sidebar = () => {
         className={show ? "show sidebar" : "sidebar"}
       >
         <div className="links">
-          <TiHome onClick={gotoHomePage} />
-          <IoPersonAddSharp onClick={gotoAddNewDoctor} />
-          <MdAddModerator onClick={gotoAddNewAdmin} />
-          <IoCalendarClear onClick={gotoAddAvailability} />
-          <FaUserDoctor onClick={gotoDoctorsPage} />
-          <AiFillMessage onClick={gotoMessagesPage} />
+          <TiHome 
+            onClick={gotoHomePage} 
+            className={location.pathname === '/' ? 'active' : ''}
+          />
+          <IoPersonAddSharp 
+            onClick={gotoAddNewDoctor} 
+            className={location.pathname === '/doctor/addnew' ? 'active' : ''}
+          />
+          <MdAddModerator 
+            onClick={gotoAddNewAdmin} 
+            className={location.pathname === '/admin/addnew' ? 'active' : ''}
+          />
+          <IoCalendarClear 
+            onClick={gotoAddAvailability} 
+            className={location.pathname === '/admin/disponibilidade' ? 'active' : ''}
+          />
+          <FaUserDoctor 
+            onClick={gotoDoctorsPage} 
+            className={location.pathname === '/doctors' ? 'active' : ''}
+          />
+          <AiFillMessage 
+            onClick={gotoMessagesPage} 
+            className={location.pathname === '/messages' ? 'active' : ''}
+          />
           <RiLogoutBoxFill onClick={handleLogout} />
-
+        </div>
+        <div>
+          <button className="themeToggleBtn btn" id="tema" onClick={toggleTheme}>
+            {isDarkMode ? <FaSun /> : <FaMoon />}
+          </button>
         </div>
       </nav>
       <div

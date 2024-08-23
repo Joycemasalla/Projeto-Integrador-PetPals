@@ -6,42 +6,39 @@ import validator from "validator";
 
 // Define o esquema para a coleção de mensagens no MongoDB
 const messageSchema = new mongoose.Schema({
-    // Campo para o primeiro nome do remetente
     firstName: {
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        minLength: [3, "O nome deve conter pelo menos 3 caracteres"]  // Validação para garantir que o comprimento mínimo seja 3 caracteres
+        type: String,
+        required: true,
+        minLength: [3, "O nome deve conter pelo menos 3 caracteres"]
     },
     lastName: {
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        minLength: [3, "O nome deve conter pelo menos 3 caracteres"]  // Validação para garantir que o comprimento mínimo seja 3 caracteres
+        type: String,
+        required: true,
+        minLength: [3, "O nome deve conter pelo menos 3 caracteres"]
     },
     email: {
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        validate: [validator.isEmail, "O endereço de email é inválido"]  // Validação para garantir que seja um endereço de email válido
+        type: String,
+        required: true,
+        validate: [validator.isEmail, "O endereço de email é inválido"]
     },
     phone: {
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        minLength: [11, "O número deve conter pelo menos 11 digitos"],  // Validação para garantir que o comprimento mínimo seja 11 caracteres
-        maxLength: [11, "O número deve conter 11 digitos"]  // Validação para garantir que o comprimento mínimo seja 11 caracteres
-
+        type: String,
+        required: true,
+        minLength: [11, "O número deve conter pelo menos 11 digitos"],
+        maxLength: [11, "O número deve conter 11 digitos"]
     },
-    message: { 
-        type: String,  // Tipo de dado do campo é String
-        required: true,  // O campo é obrigatório
-        minLength: [10, "A mensagem deve conter pelo menos 10 caracteres"]  // Validação para garantir que o comprimento mínimo seja 10 caracteres
+    message: {
+        type: String,
+        required: true,
+        minLength: [10, "A mensagem deve conter pelo menos 10 caracteres"]
     },
     rating: {
         type: Number,
         min: 1,
         max: 5,
-        default: 0, // Define 0 como valor padrão caso não seja especificado
+        default: 0,
     }
-
-});
+}, { timestamps: true }); // Adiciona os campos createdAt e updatedAt
 
 // Exporta o modelo baseado no esquema definido
-export const Message= mongoose.model('Message', messageSchema);
+export const Message = mongoose.model('Message', messageSchema);
