@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
@@ -20,7 +20,7 @@ const AppointmentForm = () => {
   const [department, setDepartment] = useState("");
   const [doctorFirstName, setDoctorFirstName] = useState("");
   const [doctorLastName, setDoctorLastName] = useState("");
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [hasVisited, setHasVisited] = useState(false);
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
@@ -84,7 +84,7 @@ const AppointmentForm = () => {
           setLastName(data.user.lastName || "");
           setEmail(data.user.email || "");
           setPhone(data.user.phone || "");
-          setAddress(data.user.address || "");
+          // setAddress(data.user.address || "");
         } catch (error) {
           if (error.code === 'ECONNABORTED') {
             console.error("Tempo de timeout excedido");
@@ -102,7 +102,7 @@ const AppointmentForm = () => {
 
   const handleAppointment = async (e) => {
     e.preventDefault();
-    
+
     // Verifica se o usuário está autenticado
     if (!isAuthenticated) {
       toast.error("Você precisa estar logado para agendar uma consulta. Por favor, faça login.");
@@ -193,18 +193,18 @@ const AppointmentForm = () => {
         }}>
           <p style={{ fontSize: "16px", margin: 0 }}>
             Para agendar uma consulta, você precisa estar logado. Se ainda não tem uma conta, 
-            <a 
-              href="/register" 
-              style={{ color: "#007bff", textDecoration: "none" }}
+            <a
+              href="/register"
+              style={{ color: "#00947C", textDecoration: "none" }}
             >
-              registre-se
-            </a> 
-            ou faça 
-            <a 
-              href="/login" 
-              style={{ color: "#007bff", textDecoration: "none" }}
+               registre-se  
+            </a>
+            ou faça  
+            <a
+              href="/login"
+              style={{ color: "#00947C", textDecoration: "none" }}
             >
-              login
+                login
             </a>.
           </p>
         </div>
@@ -213,21 +213,21 @@ const AppointmentForm = () => {
         <div className="primeira">
           <input
             type="text"
-            placeholder="Nome do Pet"
+            placeholder="Nome do Pet *"
             value={nomePet}
             onChange={(e) => setNomePet(e.target.value)}
             required
           />
           <input
             type="text"
-            placeholder="Espécie do Pet"
+            placeholder="Espécie do Pet *"
             value={especiePet}
             onChange={(e) => setEspeciePet(e.target.value)}
             required
           />
           <input
             type="text"
-            placeholder="Raça do Pet"
+            placeholder="Raça do Pet *"
             value={racaPet}
             onChange={(e) => setRacaPet(e.target.value)}
             required
@@ -239,13 +239,13 @@ const AppointmentForm = () => {
             onChange={(e) => setNic(e.target.value)}
           />
           <select value={gender} onChange={(e) => setGender(e.target.value)} required>
-            <option value="">Gênero do Pet</option>
+            <option value="">Gênero do Pet *</option>
             <option value="Masculino">Masculino</option>
             <option value="Feminino">Feminino</option>
           </select>
           <input
             type="date"
-            placeholder="Data de Nascimento do Pet"
+            placeholder="Data de Nascimento do Pet *"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
             required
@@ -255,28 +255,28 @@ const AppointmentForm = () => {
         <div>
           <input
             type="text"
-            placeholder="Nome do Tutor"
+            placeholder="Nome do Tutor *"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
           <input
             type="text"
-            placeholder="Sobrenome do Tutor"
+            placeholder="Sobrenome do Tutor *"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
           <input
             type="email"
-            placeholder="Email do Tutor"
+            placeholder="Email do Tutor *"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="tel"
-            placeholder="Telefone do Tutor"
+            placeholder="Telefone do Tutor *"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
@@ -286,7 +286,7 @@ const AppointmentForm = () => {
         <div>
           <input
             type="date"
-            placeholder="Data da Consulta"
+            placeholder="Data da Consulta *"
             value={appointmentDate}
             onChange={(e) => setAppointmentDate(e.target.value)}
             required
@@ -300,7 +300,7 @@ const AppointmentForm = () => {
             }}
             required
           >
-            <option value="">Selecionar Departamento</option>
+            <option value="">Selecionar Departamento *</option>
             {departmentsArray.map((depart, index) => (
               <option value={depart} key={index}>
                 {depart}
@@ -317,22 +317,22 @@ const AppointmentForm = () => {
             disabled={!department}
             required
           >
-            <option value="">Selecionar Médico</option>
+            <option value="">Selecionar Médico *</option>
             {doctors
-              .filter((doctor) => doctor.doctorDepartment === department)
+              .filter((doctor) => Array.isArray(doctor.doctorDepartment) && doctor.doctorDepartment.includes(department))
               .map((doctor, index) => (
-                <option
-                  key={index} value={`${doctor.firstName} ${doctor.lastName}`}>
+                <option key={index} value={`${doctor.firstName} ${doctor.lastName}`}>
                   Dr(a) {doctor.firstName} {doctor.lastName}
                 </option>
               ))}
           </select>
+
           <select
             value={selectedTime}
             onChange={handleTimeChange}
             required
           >
-            <option value="">Selecionar Horário</option>
+            <option value="">Selecionar Horário *</option>
             {availableTimes.map((time, index) => (
               <option key={index} value={time}>
                 {time}

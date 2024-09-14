@@ -91,7 +91,7 @@ body[data-theme='dark'] .form-component {
 
 body[data-theme='dark'] .form-component input,
 body[data-theme='dark'] .add-doctor-form form input,
-body[data-theme='dark'] .add-availability form input, 
+body[data-theme='dark'] .add-availability form input,
 body[data-theme='dark'] .add-availability form textarea,
 body[data-theme='dark'] .add-doctor-form form select,
 body[data-theme='dark'] .add-admin-form form select,
@@ -106,11 +106,11 @@ body[data-theme=""] .form-component form select {
 /* Estilo para quando o campo está em foco no tema escuro */
 body[data-theme='dark'] .form-component input:focus,
 body[data-theme='dark'] .add-doctor-form form input:focus,
-body[data-theme='dark'] .add-availability form input:focus, 
+body[data-theme='dark'] .add-availability form input:focus,
 body[data-theme='dark'] .add-availability form textarea:focus,
 body[data-theme='dark'] .add-admin-form form select:focus,
 body[data-theme='dark'] .add-doctor-form form select:focus,
-body[data-theme='dark']  .add-doctor-form form textarea:focus,
+body[data-theme='dark'] .add-doctor-form form textarea:focus,
 body[data-theme='dark'] .form-component input:focus,
 body[data-theme='dark'] .form-component textarea:focus {
   border-color: #377575;
@@ -254,7 +254,11 @@ body[data-theme='dark'] .add-availability {
   background: #1e1e1e;
   color: #e5e5e5;
   padding: 20px;
-  border-radius: 8px;
+  min-height: 100vh;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 /* Estilização do contêiner do formulário */
@@ -338,18 +342,14 @@ body[data-theme='dark'] .availability-item {
   background-color: #4b4b4b;
 }
 
-/* Estilização dos botões de edição e exclusão */
-body[data-theme='dark'] .edit-btn,
-body[data-theme='dark'] .delete-btn {
-  color: #e5e5e5;
-}
+
 
 body[data-theme='dark'] .edit-btn:hover {
-  background: #555555;
+  opacity: 0.7;
 }
 
 body[data-theme='dark'] .delete-btn:hover {
-  background: #e57373;
+  opacity: 0.7;
 }
 
 
@@ -470,7 +470,7 @@ body[data-theme='dark'] h1 {
   color: #e5e5e5;
 }
 
-body[data-theme='dark'] .modal-content{
+body[data-theme='dark'] .modal-content {
   background: #2b2b2b;
 }
 
@@ -478,7 +478,7 @@ body[data-theme='dark'] .modal-content{
 
 
 
-body[data-theme='dark'] .modal-content p{
+body[data-theme='dark'] .modal-content p {
   color: #e5e5e5;
 }
 
@@ -522,7 +522,8 @@ body {
     margin-left: 0;
     border-radius: 0;
   }
-  .add-availability{
+
+  .add-availability {
     margin-left: 0;
     border-radius: 0;
   }
@@ -588,6 +589,12 @@ body {
   width: 100%;
 }
 
+.add-admin-form button:hover {
+  background: linear-gradient(140deg, #10ac9c, #0a4e42d7);
+  /* Azul-verde */
+
+}
+
 .form-component p:first-child {
   font-size: 28px;
   font-weight: 700;
@@ -602,13 +609,12 @@ body {
 
 .form-component form input,
 .form-component form select,
-.form-component form textarea
- {
+.form-component form textarea {
   flex: 1;
   font-size: 24px;
   padding: 10px 10px 10px 40px;
   border-radius: 7px;
-  border: 1px solid #FCC931;
+  border: 1px solid #009688;
 }
 
 input[type="text"]:focus,
@@ -619,8 +625,14 @@ input[type="date"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
-  border: 2px solid #FCC931;
-  box-shadow: 0 0 5px #FCC931;
+  border: 2px solid #009688;
+  box-shadow: 0 0 5px #004d40;
+  outline: none;
+}
+
+#status:focus{
+  box-shadow: 0 10 5px #ffffff;
+  border: #fff;
   outline: none;
 }
 
@@ -634,7 +646,8 @@ textarea:focus {
   border-radius: 8px;
   font-size: 24px;
   margin-bottom: 30px;
-  background: linear-gradient(140deg, #FCC931, #493807);
+  background: linear-gradient(140deg, #009688, #004d40);
+  /* Azul-verde */
   cursor: pointer;
 }
 
@@ -690,6 +703,16 @@ textarea:focus {
   }
 }
 
+
+
+
+
+
+
+/*dashboard =========================================================================*/
+
+
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -731,7 +754,8 @@ textarea:focus {
   margin-right: 10px;
   font-size: 34px;
 }
-button.infodetalhes{
+
+button.infodetalhes {
   background-color: #009A8E;
   border-radius: 50%;
   padding: 5px;
@@ -739,7 +763,8 @@ button.infodetalhes{
   color: white;
   border: none;
 }
-button.infodetalhes:hover{
+
+button.infodetalhes:hover {
   background-color: #007D78;
   transition: background-color 0.3s;
 
@@ -835,7 +860,7 @@ button.infodetalhes:hover{
 }
 
 .dashboard .banner table select:focus {
-  outline: none;
+  border: none;
 }
 
 .dashboard .banner table .value-pending {
@@ -871,7 +896,8 @@ button.infodetalhes:hover{
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6); /* Slightly darker background for better focus */
+  background: rgba(0, 0, 0, 0.6);
+  /* Slightly darker background for better focus */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -880,26 +906,34 @@ button.infodetalhes:hover{
 /* Modal container */
 .modal-content {
   background-color: #009A8E;
-  padding: 24px; /* Increased padding for more spacious layout */
+  padding: 24px;
+  /* Increased padding for more spacious layout */
   border-radius: 8px;
-  width: 500px; /* Slightly wider for better content presentation */
-  max-width: 90%; /* Responsive width */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Softer and more extensive shadow */
-  position: relative; /* To position close button properly */
+  width: 500px;
+  /* Slightly wider for better content presentation */
+  max-width: 90%;
+  /* Responsive width */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  /* Softer and more extensive shadow */
+  position: relative;
+  /* To position close button properly */
 }
 
 /* Modal header */
 .modal-content h3 {
   margin-top: 0;
-  font-size: 1.5em; /* Larger font size for header */
-  color: #333; /* Darker text color for better readability */
+  font-size: 1.5em;
+  /* Larger font size for header */
+  color: #333;
+  /* Darker text color for better readability */
 }
 
 /* Modal text paragraphs */
 .modal-content p {
   margin: 12px 0;
   font-size: 1em;
-  color: #555; /* Slightly lighter text color */
+  color: #555;
+  /* Slightly lighter text color */
 }
 
 /* Button for details */
@@ -912,19 +946,23 @@ button.infodetalhes:hover{
   cursor: pointer;
   font-size: 1em;
   margin-right: 8px;
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  transition: background-color 0.3s;
+  /* Smooth transition for hover effect */
 }
 
 .details-btn:hover {
-  background-color: #0056b3; /* Darker blue for hover effect */
+  background-color: #0056b3;
+  /* Darker blue for hover effect */
 }
 
 /* Button for delete icon */
 .delete-icon {
   color: #dc3545;
   cursor: pointer;
-  font-size: 1.2em; /* Larger icon for better visibility */
-  transition: color 0.3s; /* Smooth transition for hover effect */
+  font-size: 1.2em;
+  /* Larger icon for better visibility */
+  transition: color 0.3s;
+  /* Smooth transition for hover effect */
 }
 
 .delete-icon:hover {
@@ -1017,7 +1055,8 @@ button.infodetalhes:hover{
   align-items: center;
   color: #fff;
   padding: 70px 0;
-  z-index: 2; /* Garante que o botão esteja acima de outros conteúdos */
+  z-index: 2;
+  /* Garante que o botão esteja acima de outros conteúdos */
 
 }
 
@@ -1123,7 +1162,8 @@ button.infodetalhes:hover{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 3; /* Garante que o botão esteja acima de outros conteúdos */
+    z-index: 3;
+    /* Garante que o botão esteja acima de outros conteúdos */
 
   }
 
@@ -1132,7 +1172,7 @@ button.infodetalhes:hover{
   }
 
 
-  
+
 }
 
 @media (max-width: 485px) {
@@ -1172,7 +1212,7 @@ button.infodetalhes:hover{
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 300px;
+  width: 350px;
   text-align: center;
   position: relative;
   /* Necessário para o posicionamento absoluto dos ícones */
@@ -1254,37 +1294,28 @@ button.infodetalhes:hover{
 .card .btn-delete {
   position: absolute;
   top: 10px;
-  /* Distância do topo */
   right: 10px;
-  /* Distância da borda direita */
   background-color: transparent;
   border: none;
-  color: #023733;
+  color: #004d40; /* Azul-verde escuro */
   font-weight: 600;
   cursor: pointer;
   font-size: 1.2em;
-  /* Ajuste o tamanho do ícone conforme necessário */
   padding: 4px;
   transition: color 0.3s;
-
 }
 
 .card .btn-edit {
   margin-right: 30px;
-  /* Espaçamento entre os ícones, se necessário */
 }
 
 .card .btn-edit:hover {
-  color: #27ae61;
-  /* Cor do ícone de editar */
+  color: #009688; /* Azul-verde */
 }
 
 .card .btn-delete:hover {
-  color: #c1392b;
-  /* Cor do ícone de excluir */
+  color: #00796b; /* Azul-verde mais escuro */
 }
-
-
 
 /* Estilização da seção de edição dos doutores */
 .edit-form {
@@ -1299,7 +1330,7 @@ button.infodetalhes:hover{
 /* Estilização do título do formulário de edição */
 .edit-form h2 {
   margin-bottom: 20px;
-  color: #333;
+  color: #004d40; /* Azul-verde escuro */
 }
 
 /* Estilização do formulário de edição */
@@ -1316,13 +1347,17 @@ input[type="text"],
 .edit-form input[type="date"],
 .edit-form input[type="file"] {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #009688; /* Azul-verde */
   border-radius: 4px;
   width: 100%;
 }
 
-input[type="file"]button {
-  background: #07998d;
+input[type="file"] {
+  padding: 10px;
+}
+
+input[type="file"] button {
+  background: #009688; /* Azul-verde */
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1332,10 +1367,13 @@ input[type="file"]button {
   margin-left: 10px;
 }
 
+input[type="file"] button:hover {
+  background: #00796b; /* Azul-verde mais escuro */
+}
 
 /* Estilização dos botões do formulário */
 .edit-form button {
-  background: #07998d;
+  background: #009688; /* Azul-verde */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -1346,87 +1384,58 @@ input[type="file"]button {
 }
 
 .edit-form button[type="button"] {
-  background: #a0a0a0;
+  color: #fff;
 }
 
 .edit-form button:hover {
   opacity: 0.8;
 }
 
-
 /* Modal container */
 .modal {
   display: block;
-  /* Garante que o modal está visível quando isModalOpen é true */
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #009A8E;
-  padding: 20px;
-  border-radius: 5px;
-  width: 50%;
-}
-
-
-.modal {
-  display: block;
-  /* Oculto por padrão */
-  position: fixed;
-  /* Fica fixo na tela */
   z-index: 1000;
-  /* Fica acima de outros elementos */
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  /* Adiciona rolagem se necessário */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Fundo semitransparente */
+  background-color: rgba(0, 0, 0, 0.4); /* Fundo semitransparente */
+  justify-content: center;
+  align-items: center;
 }
 
 /* Modal content */
 .modal-content {
   background-color: #ffffff;
   margin: 15% auto;
-  /* Centraliza o modal */
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  /* Largura do modal */
   max-width: 500px;
-  /* Largura máxima */
   border-radius: 8px;
-  /* Borda arredondada */
   position: relative;
 }
 
-.modal-content h3{
-  color: #07998d;
+.modal-content h3 {
+  color: #004d40; /* Azul-verde escuro */
   font-size: 24px;
   font-weight: 700;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-}
-/* Fechar (close) button */
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
 }
 
 /* Estilos específicos para o formulário dentro do modal */
@@ -1438,7 +1447,6 @@ input[type="file"]button {
 
 .confirmation-modal {
   position: fixed;
-
   top: 0;
   left: 0;
   width: 100%;
@@ -1481,13 +1489,91 @@ input[type="file"]button {
 }
 
 
+.department-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.department-section select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.department-section button {
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+.department-section button:hover {
+  background-color: #059877;
+}
+
+.added-departments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.department-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.remove-department-button {
+  background: none;
+  border: none;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: color 0.3s;
+}
+
+.remove-department-button:hover {
+  color: #e74c3c;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  background-color: #07998d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+.modal-buttons button[type="button"] {
+  background-color: #ff2b2b;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.8;
+}
 
 
 
 
 
-
-
+/*ADD DOUTORES================================================*/
 .add-doctor-form {
   width: 100%;
   display: flex;
@@ -1540,7 +1626,8 @@ input[type="file"]button {
   font-size: 24px;
   padding: 10px 10px 10px 40px;
   border-radius: 7px;
-  border: 1px solid #FCC931;
+  border: 1px solid #009688;
+  /* Azul-verde */
 }
 
 .add-doctor-form button {
@@ -1552,9 +1639,17 @@ input[type="file"]button {
   border-radius: 8px;
   font-size: 24px;
   margin-bottom: 30px;
-  background: linear-gradient(140deg, #FCC931, #493807);
+  background: linear-gradient(140deg, #009688, #004d40);
+  /* Azul-verde */
   cursor: pointer;
 }
+
+.add-doctor-form button:hover {
+  background: linear-gradient(140deg, #10ac9c, #0a4e42d7);
+  /* Azul-verde */
+
+}
+
 
 @media (max-width: 945px) {
   .add-doctor-form form .first-wrapper {
@@ -1565,6 +1660,67 @@ input[type="file"]button {
     height: auto;
   }
 }
+
+/* Adiciona estilos para a seção de departamentos */
+.add-doctor-form .tags-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-doctor-form .tags-input p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #009688;
+  /* Azul-verde escuro */
+  margin-bottom: 10px;
+}
+
+.add-doctor-form .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.add-doctor-form .tags-container .tag {
+  background-color: #00796b;
+  /* Azul-verde */
+  color: #fff;
+  border-radius: 15px;
+  padding: 5px 15px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-doctor-form .tags-container .tag .cloe {
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+}
+
+.add-doctor-form select {
+  border: 1px solid #009688;
+  /* Azul-verde escuro */
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.add-doctor-form select option {
+  color: #000000;
+  /* Azul-verde escuro */
+}
+
+
+
+
+
+
+
+
 
 
 input[type="date"]:before {
@@ -1579,6 +1735,10 @@ input[type="time"]:before {
   margin-right: 0.5em;
 }
 
+
+
+
+/*ADD AVAILABILITY========*/
 
 .add-availability {
   min-height: 100vh;
@@ -1614,8 +1774,9 @@ h2 {
   width: 50%;
   padding: 15px;
   font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #FCC931;
+  border-radius: 7px;
+  border: 1px solid #009688;
+  background-color: #fff;
 }
 
 .add-availability form textarea {
@@ -1627,14 +1788,16 @@ h2 {
   font-size: 16px;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(140deg, #FCC931, #493807);
+  background: linear-gradient(140deg, #009688, #004d40);
+  /* Azul-verde */
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .add-availability form button:hover {
-  background: linear-gradient(140deg, #FFD700, #5D4037);
+  background: linear-gradient(140deg, #10ac9c, #0a4e42d7);
+  /* Azul-verde */
 }
 
 .add-availability .added-times {
@@ -1727,13 +1890,14 @@ h2 {
 
 
 
+
 .delete-icon {
-  color: red;
+  color: #DC2626;
   cursor: pointer;
 }
 
 .delete-icon:hover {
-  opacity: 0.8;
+  opacity: 0.99;
 }
 
 /* Messages */
@@ -1756,8 +1920,10 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
-  position: relative; /* Removido para usar o contêiner adicional */
-  overflow: hidden; /* Garante que o conteúdo não ultrapasse o cartão */
+  position: relative;
+  /* Removido para usar o contêiner adicional */
+  overflow: hidden;
+  /* Garante que o conteúdo não ultrapasse o cartão */
   transition: transform 0.3s ease;
 }
 
@@ -1769,7 +1935,8 @@ h1 {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 1; /* Garante que o botão esteja acima de outros conteúdos */
+  z-index: 1;
+  /* Garante que o botão esteja acima de outros conteúdos */
 }
 
 .detalhesmensagem p {

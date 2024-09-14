@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import StarRatings from 'react-star-ratings';
+import { Link } from "react-router-dom";
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -81,14 +82,14 @@ const MessageForm = () => {
         <div>
           <input
             type="text"
-            placeholder="Nome"
+            placeholder="Nome *"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
           <input
             type="text"
-            placeholder="Sobrenome"
+            placeholder="Sobrenome *"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
@@ -97,14 +98,14 @@ const MessageForm = () => {
         <div>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email *"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="tel"
-            placeholder="Telefone"
+            placeholder="Telefone *"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
@@ -112,13 +113,13 @@ const MessageForm = () => {
         </div>
         <textarea
           rows={7}
-          placeholder="Mensagem"
+          placeholder="Mensagem *"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
         />
         <div>
-          <h4>Avalie nosso serviço:</h4>
+          <h4>Avalie nosso serviço: *</h4>
           <StarRatings
             rating={rating}
             starRatedColor="#FFCC01"
@@ -134,6 +135,7 @@ const MessageForm = () => {
         </div>
       </form>
     </div>
+      
   );
 };
 

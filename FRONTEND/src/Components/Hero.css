@@ -64,3 +64,43 @@
   .emergencia-button svg {
     margin-right: 10px;
   }
+
+  /* Estilo para o botão de voltar ao topo */
+
+#voltarTopo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000; /* Garante que o botão esteja acima de outros elementos */
+}
+
+#voltarTopo button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#voltarTopo.show {
+  opacity: 1;
+}
+
+#subir {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#subir img {
+  width: 35px;
+  height: auto;
+  margin-bottom: 70px;
+  margin-right: 19px;
+}
+
+#subir:hover {
+  /* Adicione estilos para quando o botão for passado por cima */
+  opacity: 0.8;
+}

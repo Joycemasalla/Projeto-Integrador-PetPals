@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../main";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -60,13 +60,13 @@ const AddNewAdmin = () => {
           <div>
             <input
               type="text"
-              placeholder="Primeiro Nome"
+              placeholder="Nome *"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Sobrenome"
+              placeholder="Sobrenome *"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -74,27 +74,27 @@ const AddNewAdmin = () => {
           <div>
             <input
               type="text"
-              placeholder="Email"
+              placeholder="Email *"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="number"
-              placeholder="Telefone"
+              placeholder="Telefone *"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div>
             <input
-              type="number"
-              placeholder="CPF"
+              type="string"
+              placeholder="CPF *"
               value={nic}
               onChange={(e) => setNic(e.target.value)}
             />
             <input
               type={"date"}
-              placeholder="Data de Nascimento"
+              placeholder="Data de Nascimento *"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
             />
@@ -107,7 +107,7 @@ const AddNewAdmin = () => {
             </select>
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Password *"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

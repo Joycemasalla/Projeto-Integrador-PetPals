@@ -8,21 +8,25 @@ const AddAvailability = () => {
     const [date, setDate] = useState('');
     const [times, setTimes] = useState('');
     const [addedTimes, setAddedTimes] = useState([]);
-    const [editing, setEditing] = useState(null); // ID do horário sendo editado
-    const [availableTimeId, setAvailableTimeId] = useState(null); // ID do horário específico
-    const [openDates, setOpenDates] = useState({}); // Para controlar a visibilidade dos horários por data
+    const [editing, setEditing] = useState(null);
+    const [availableTimeId, setAvailableTimeId] = useState(null);
+    const [openDates, setOpenDates] = useState({});
+    const [isLoading, setIsLoading] = useState(false); // Indicador de carregamento
 
     useEffect(() => {
         fetchAddedTimes();
     }, []);
 
     const fetchAddedTimes = async () => {
+        setIsLoading(true);
         try {
             const response = await axios.get('http://localhost:4000/api/v1/admin/disponibilidades');
             setAddedTimes(response.data);
         } catch (error) {
             console.error('Erro ao buscar horários adicionados:', error);
             toast.error('Erro ao buscar horários adicionados');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -31,15 +35,13 @@ const AddAvailability = () => {
         try {
             const timesArray = times.split(',').map(time => time.trim());
             if (availableTimeId) {
-                // Atualiza a disponibilidade existente
                 await axios.put(`http://localhost:4000/api/v1/admin/disponibilidade/${availableTimeId}`, {
                     date,
                     times: timesArray
                 });
                 toast.success('Horários atualizados com sucesso');
-                setAvailableTimeId(null); // Limpa o estado do ID após atualização
+                setAvailableTimeId(null);
             } else {
-                // Adiciona nova disponibilidade
                 await axios.post('http://localhost:4000/api/v1/admin/disponibilidade', {
                     date,
                     times: timesArray
@@ -58,8 +60,8 @@ const AddAvailability = () => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:4000/api/v1/admin/disponibilidade/${id}`);
-            toast.success('Horários excluídos com sucesso');
-            fetchAddedTimes(); // Atualiza a lista após exclusão
+            toast.success('Horário excluído com sucesso');
+            fetchAddedTimes();
         } catch (error) {
             console.error('Erro ao excluir horários:', error);
             toast.error('Erro ao excluir horários');
@@ -69,7 +71,7 @@ const AddAvailability = () => {
     const handleEdit = (availability) => {
         setDate(availability.date);
         setTimes(availability.times.join(', '));
-        setAvailableTimeId(availability._id); // Define o ID do horário sendo editado
+        setAvailableTimeId(availability._id);
     };
 
     const toggleDateVisibility = (date) => {
@@ -79,7 +81,11 @@ const AddAvailability = () => {
         }));
     };
 
-    // Agrupa horários por data e ordena por data
+    const isToday = (date) => {
+        const today = new Date().toISOString().split('T')[0];
+        return date === today;
+    };
+
     const groupedTimes = Object.entries(addedTimes.reduce((acc, item) => {
         if (!acc[item.date]) {
             acc[item.date] = [];
@@ -112,15 +118,17 @@ const AddAvailability = () => {
 
                 <div className="added-times">
                     <h2>Horários Adicionados</h2>
-                    {groupedTimes.length > 0 ? (
+                    {isLoading ? (
+                        <div className="loading"></div>
+                    ) : groupedTimes.length > 0 ? (
                         groupedTimes.map(([date, timesArray]) => (
                             <div key={date} className="availability-group">
-                                <div className="availability-header" onClick={() => toggleDateVisibility(date)}>
+                                <div className={`availability-header ${isToday(date) ? 'today' : ''}`} onClick={() => toggleDateVisibility(date)}>
                                     <h3>{date}</h3>
                                     {openDates[date] ? <FaChevronUp /> : <FaChevronDown />}
                                 </div>
                                 {openDates[date] && (
-                                    <div className="availability-items">
+                                    <div className="availability-items open">
                                         {timesArray.map((availability) => (
                                             <div key={availability._id} className="availability-item">
                                                 <p>{availability.times.join(', ')}</p>

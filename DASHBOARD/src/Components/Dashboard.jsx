@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../main";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
 import { format } from "date-fns";
-import { FaClock, FaFile, FaInfo } from "react-icons/fa6";
+import { FaInfo } from "react-icons/fa";
 
 const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
-  const [addedTimes, setAddedTimes] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -42,21 +42,8 @@ const Dashboard = () => {
       }
     };
 
-    const fetchAvailableTimes = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:4000/api/v1/admin/disponibilidades"
-        );
-        setAddedTimes(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar horários disponíveis:", error);
-        toast.error("Erro ao buscar horários disponíveis");
-      }
-    };
-
     fetchAppointments();
     fetchDoctors();
-    fetchAvailableTimes();
   }, []);
 
   const handleUpdateStatus = async (appointmentId, status) => {
@@ -89,8 +76,7 @@ const Dashboard = () => {
 
             toast.success("Horário excluído com sucesso.");
 
-            await fetchAppointments();
-            await fetchAvailableTimes();
+         
           }
         }
       }
@@ -193,7 +179,7 @@ const Dashboard = () => {
                     <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
                     <td>{appointment.department}</td>
                     <td>
-                      <select
+                      <select id="status"
                         className={
                           appointment.status === "Pendente"
                             ? "value-pending"
@@ -230,10 +216,12 @@ const Dashboard = () => {
                         onClick={() => handleDeleteAppointment(appointment._id)}
                       />
                     </td>
-                    <td><button className="infodetalhes"
-                      onClick={() => handleDetailsClick(appointment)} >
-                      <FaInfo />
-                    </button></td>
+                    <td>
+                      <button className="infodetalhes"
+                        onClick={() => handleDetailsClick(appointment)} >
+                        <FaInfo />
+                      </button>
+                    </td>
                   </tr>
                 );
               })
@@ -248,10 +236,10 @@ const Dashboard = () => {
 
       {modalOpen && selectedAppointment && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <span onClick={closeModal} class="close">×</span>
+         <div className="modal-content">
+            <span onClick={closeModal} className="close">×</span>
             <h3>Detalhes do Agendamento</h3>
-            <p><strong>Nome do Paciente:</strong> {selectedAppointment.firstName} {selectedAppointment.lastName}</p>
+            <p><strong>Nome do Tutor:</strong> {selectedAppointment.firstName} {selectedAppointment.lastName}</p>
             <p><strong>Email:</strong> {selectedAppointment.email}</p>
             <p><strong>Telefone:</strong> {selectedAppointment.phone}</p>
             <p><strong>Data de Nascimento:</strong> {format(new Date(selectedAppointment.dob), 'dd/MM/yyyy')}</p>

@@ -16,7 +16,7 @@ const AddNewDoctor = () => {
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
-  const [doctorDepartment, setDoctorDepartment] = useState("");
+  const [doctorDepartments, setDoctorDepartments] = useState([]);
   const [doctorAvatar, setDoctorAvatar] = useState("");
   const [doctorAvatarPreview, setDoctorAvatarPreview] = useState("");
 
@@ -36,6 +36,14 @@ const AddNewDoctor = () => {
     };
   };
 
+  const handleDepartmentClick = (department) => {
+    setDoctorDepartments((prevDepartments) =>
+      prevDepartments.includes(department)
+        ? prevDepartments.filter(dep => dep !== department)
+        : [...prevDepartments, department]
+    );
+  };
+
   const handleAddNewDoctor = async (e) => {
     e.preventDefault();
     try {
@@ -48,7 +56,7 @@ const AddNewDoctor = () => {
       formData.append("nic", nic);
       formData.append("dob", dob);
       formData.append("gender", gender);
-      formData.append("doctorDepartment", doctorDepartment);
+      formData.append("doctorDepartments", JSON.stringify(doctorDepartments));
       formData.append("doctorAvatar", doctorAvatar);
 
       const { data } = await axios.post(
@@ -71,7 +79,7 @@ const AddNewDoctor = () => {
       setDob("");
       setGender("");
       setPassword("");
-      setDoctorDepartment("");
+      setDoctorDepartments([]);
       setDoctorAvatar("");
       setDoctorAvatarPreview("");
     } catch (error) {
@@ -99,65 +107,103 @@ const AddNewDoctor = () => {
             <div>
               <input
                 type="text"
-                placeholder="Primeiro Nome"
+                placeholder="Nome *"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                required
               />
               <input
                 type="text"
-                placeholder="Sobrenome"
+                placeholder="Sobrenome *"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+                required
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Email *"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <input
                 type="text"
-                placeholder="Telefone"
+                placeholder="Telefone *"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                required
               />
               <input
                 type="text"
-                placeholder="CPF"
+                placeholder="CRMV *"
                 value={nic}
                 onChange={(e) => setNic(e.target.value)}
+                required
               />
               <input
                 type="date"
-                placeholder="Data de Nascimento"
+                placeholder="Data de Nascimento *"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
+                required
               />
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
+                required
               >
                 <option value="">Selecione o Gênero</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Feminino">Feminino</option>
               </select>
+              <div className="tags-input">
+                <p>Selecione os Departamentos: *</p>
+                <div className="tags-container">
+                  {doctorDepartments.map((depart, index) => (
+                    <span key={index} className="tag">
+                      {depart}
+                      <span
+                        className="cloe"
+
+
+                        onClick={() =>
+                          setDoctorDepartments((prevDepartments) =>
+                            prevDepartments.filter((d) => d !== depart)
+                          )
+                        }
+                      >
+                        &times;
+                      
+                      </span>                    </span>
+                  ))}
+                </div>
+                <select
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value && !doctorDepartments.includes(value)) {
+                      setDoctorDepartments((prevDepartments) => [...prevDepartments, value]);
+                    }
+                    e.target.value = ""; // Limpa o dropdown após a seleção
+                  }}
+                >
+                  <option value="" disabled>
+                    Adicionar Departamento
+                  </option>
+                  {departmentsArray.map((depart, index) => (
+                    <option key={index} value={depart}>
+                      {depart}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Password Admin *"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
-              <select
-                value={doctorDepartment}
-                onChange={(e) => setDoctorDepartment(e.target.value)}
-              >
-                <option value="">Selecione o Departamento</option>
-                {departmentsArray.map((depart, index) => (
-                  <option value={depart} key={index}>
-                    {depart}
-                  </option>
-                ))}
-              </select>
               <button type="submit">Registrar novo Doutor</button>
             </div>
           </div>

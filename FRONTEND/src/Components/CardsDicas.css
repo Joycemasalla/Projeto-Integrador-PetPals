@@ -1,28 +1,3 @@
-/* Estilo para o botão de voltar ao topo */
-#voltarTopo {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    /* Ajuste estas posições conforme necessário */
-    z-index: 1000;
-}
-
-#subir {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-#subir img {
-    width: 35px;
-    height: auto;
-}
-
-#subir:hover {
-    /* Adicione estilos para quando o botão for passado por cima */
-    opacity: 0.8;
-}
 
 /* Estilos restantes */
 .titulocard {

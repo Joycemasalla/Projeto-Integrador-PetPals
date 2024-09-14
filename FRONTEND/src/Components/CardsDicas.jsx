@@ -13,10 +13,7 @@ const cardData = [
 
 const CardsDicas = () => {
     const [expandedCardId, setExpandedCardId] = useState(null);
-
-    function backToTop() {
-        document.documentElement.scrollTop = 0;
-    }
+ 
 
     useEffect(() => {
         const cards = document.querySelectorAll('.dicas');
@@ -47,11 +44,6 @@ const CardsDicas = () => {
 
     return (
         <>
-            <div id="voltarTopo">
-                <button onClick={backToTop} id="subir">
-                    <img src={setaparacima} alt="Voltar ao topo" />
-                </button>
-            </div>
             <div className='titulocard'>
                 <h2>Clique e conheça dicas essenciais para dar o conforto que o seu pet merece!</h2>
             </div>

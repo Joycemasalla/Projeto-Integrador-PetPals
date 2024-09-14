@@ -68,13 +68,15 @@ const userSchema = new mongoose.Schema({
     // Campo para o papel ou função do usuário
     role: {
         type: String,  // Tipo de dado do campo é String
-        default: "Paciente",  
+        default: "Paciente",
         enum: ["Admin", "Paciente", "Doutor"]  // Validação para garantir que seja uma das opções fornecidas
     },
     // Campo opcional para o departamento do médico (aplicável apenas se o usuário for um doutor)
-    doctorDepartment: {
-        type: String,  // Tipo de dado do campo é String
-    },
+    doctorDepartment: [{
+        type: String
+
+    }], // Array para armazenar múltiplos departamentos
+
     // Campo opcional para o avatar do médico (imagem do perfil do médico)
     doctorAvatar: {
         public_id: String,  // ID público da imagem

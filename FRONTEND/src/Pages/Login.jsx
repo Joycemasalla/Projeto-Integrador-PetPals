@@ -36,7 +36,7 @@ const Login = () => {
         navigateTo("/");
         setEmail("");
         setPassword("");
-        setConfirmPassword("");
+        // setConfirmPassword("");
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -55,10 +55,11 @@ const Login = () => {
 
         <form onSubmit={handleLogin}>
           <input
-            type="text"
+            type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
           />
           <input
             type="password"

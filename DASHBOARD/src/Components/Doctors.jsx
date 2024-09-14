@@ -12,7 +12,8 @@ const Doctors = () => {
   const [doctorAvatarPreview, setDoctorAvatarPreview] = useState("");
   const { isAuthenticated } = useContext(Context);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null); // New state for delete confirmation
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [newDepartment, setNewDepartment] = useState("");
 
   const departmentsArray = [
     "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição",
@@ -60,7 +61,10 @@ const Doctors = () => {
   };
 
   const handleEdit = (doctor) => {
-    setEditingDoctor(doctor);
+    setEditingDoctor({
+      ...doctor,
+      doctorDepartment: doctor.doctorDepartment || []
+    });
     setDoctorAvatarPreview(doctor.doctorAvatar?.url || avatar);
     setIsModalOpen(true);
   };
@@ -81,7 +85,7 @@ const Doctors = () => {
       formData.append("phone", editingDoctor.phone || '');
       formData.append("dob", editingDoctor.dob || '');
       formData.append("nic", editingDoctor.nic || '');
-      formData.append("doctorDepartment", editingDoctor.doctorDepartment || '');
+      formData.append("doctorDepartment", JSON.stringify(editingDoctor.doctorDepartment)); // Envie o array como uma string JSON
 
       if (editingDoctor.newAvatar) {
         formData.append("doctorAvatar", editingDoctor.newAvatar);
@@ -115,7 +119,31 @@ const Doctors = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditingDoctor((prevDoctor) => ({ ...prevDoctor, [name]: value }));
+    if (name === "doctorDepartment") {
+      setEditingDoctor((prevDoctor) => ({
+        ...prevDoctor,
+        doctorDepartment: value,
+      }));
+    } else {
+      setEditingDoctor((prevDoctor) => ({ ...prevDoctor, [name]: value }));
+    }
+  };
+
+  const handleAddDepartment = () => {
+    if (newDepartment && !editingDoctor.doctorDepartment.includes(newDepartment)) {
+      setEditingDoctor((prevDoctor) => ({
+        ...prevDoctor,
+        doctorDepartment: [...prevDoctor.doctorDepartment, newDepartment],
+      }));
+      setNewDepartment("");
+    }
+  };
+
+  const handleRemoveDepartment = (departmentToRemove) => {
+    setEditingDoctor((prevDoctor) => ({
+      ...prevDoctor,
+      doctorDepartment: prevDoctor.doctorDepartment.filter(department => department !== departmentToRemove),
+    }));
   };
 
   const handleAvatarChange = (e) => {
@@ -130,7 +158,6 @@ const Doctors = () => {
 
   const showDeleteConfirmation = (id) => {
     setConfirmDeleteId(id);
-    document.querySelector(".confirmation-modal").style.display = "block";
   };
 
   const handleDelete = async () => {
@@ -145,18 +172,17 @@ const Doctors = () => {
       toast.error(error.response?.data?.message || 'Falha ao excluir médico');
     } finally {
       setConfirmDeleteId(null);
-      document.querySelector(".confirmation-modal").style.display = "none";
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingDoctor(null);
+    setNewDepartment("");
   };
 
   const closeConfirmationModal = () => {
     setConfirmDeleteId(null);
-    document.querySelector(".confirmation-modal").style.display = "none";
   };
 
   return (
@@ -176,7 +202,7 @@ const Doctors = () => {
                 <p>Telefone: <span>{formatPhoneNumber(doctor.phone)}</span></p>
                 <p>Idade: <span>{calculateAge(doctor.dob)} anos</span></p>
                 <p>CPF: <span>{doctor.nic}</span></p>
-                <p>Departamento: <span>{doctor.doctorDepartment}</span></p>
+                <p>Departamentos: <span>{doctor.doctorDepartment.join(', ')}</span></p>
                 <button className="btn-edit" onClick={() => handleEdit(doctor)}>
                   <FaEdit />
                 </button>
@@ -229,7 +255,7 @@ const Doctors = () => {
               <input
                 type="date"
                 name="dob"
-                value={editingDoctor.dob ? new Date(editingDoctor.dob).toISOString().split('T')[0] : ''}
+                value={editingDoctor.dob ? editingDoctor.dob.split("T")[0] : ''}
                 onChange={handleChange}
                 placeholder="Data de Nascimento"
               />
@@ -240,38 +266,55 @@ const Doctors = () => {
                 onChange={handleChange}
                 placeholder="CPF"
               />
-              <select
-                name="doctorDepartment"
-                value={editingDoctor.doctorDepartment || ''}
-                onChange={handleChange}
-              >
-                <option value="">Selecione o Departamento</option>
-                {departmentsArray.map((depart, index) => (
-                  <option value={depart} key={index}>
-                    {depart}
-                  </option>
+              <div className="department-section">
+                <select
+                  name="departmentOptions"
+                  value={newDepartment}
+                  onChange={(e) => setNewDepartment(e.target.value)}
+                >
+                  <option value="">Selecione um Departamento</option>
+                  {departmentsArray.map((depart, index) => (
+                    <option value={depart} key={index}>
+                      {depart}
+                    </option>
+                  ))}
+                </select>
+                <button type="button" onClick={handleAddDepartment}>
+                  Add
+                </button>
+              </div>
+              <div className="added-departments">
+                {editingDoctor.doctorDepartment.map((dept, index) => (
+                  <div key={index} className="department-item">
+                    <span>{dept}</span>
+                    <span
+                      className="remove-department-button"
+                      onClick={() => handleRemoveDepartment(dept)}
+                    >
+                      x
+                    </span>
+                  </div>
                 ))}
-              </select>
+              </div>
               <div className="modal-buttons">
                 <button type="button" onClick={closeModal}>Cancelar</button>
-                <button type="submit">Atualizar</button>
+                <button type="submit">Salvar</button>
               </div>
+
             </form>
           </div>
         </div>
       )}
-
-      {/* Confirmation Modal */}
-      <div className="confirmation-modal" style={{ display: 'none' }}>
-        <div className="confirmation-modal-content">
-          <h2>Confirmar Exclusão</h2>
-          <p>Você tem certeza que deseja excluir este médico?</p>
-          <div className="confirmation-buttons">
-            <button onClick={handleDelete}>Excluir</button>
-            <button onClick={closeConfirmationModal}>Cancelar</button>
+      {confirmDeleteId && (
+        <div className="confirmation-modal">
+          <div className="confirmation-modal-content">
+            <h2>Confirmar Exclusão</h2>
+            <p>Tem certeza de que deseja excluir este médico?</p>
+            <button onClick={handleDelete}>Sim</button>
+            <button onClick={closeConfirmationModal}>Não</button>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

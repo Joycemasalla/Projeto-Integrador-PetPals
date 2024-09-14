@@ -2,6 +2,8 @@ import express from 'express';
 import { deleteAppointment, getAppointments, postAppointment, updateAppointmentStatus, getPatientAppointments } from '../controller/appointmentController.js';
 import { isAdminAuthenticated, isPatientAuthenticated } from '../middlewares/auth.js';
 
+
+
 const router = express.Router();
 
 // Rota para criar uma nova consulta. Requer autenticação do paciente.

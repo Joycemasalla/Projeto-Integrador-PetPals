@@ -134,9 +134,9 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         return next(new ErrorHandler("Formato de avatar inválido! Utilize apenas PNG, JPG ou WEBP.", 400));
     }
 
-    const { firstName, lastName, email, phone, password, gender, dob, nic, doctorDepartment } = req.body;
+    const { firstName, lastName, email, phone, password, gender, dob, nic, doctorDepartments } = req.body;
 
-    if (!firstName || !lastName || !email || !phone || !password || !doctorDepartment || !dob || !nic || !gender) {
+    if (!firstName || !lastName || !email || !phone || !password || !doctorDepartments || !dob || !nic || !gender) {
         return next(new ErrorHandler("Todos os campos obrigatórios devem estar preenchidos!", 400));
     }
 
@@ -149,6 +149,8 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         folder: "doctors",
     });
 
+    const departmentsArray = JSON.parse(doctorDepartments); // Converter JSON para array
+
     const doctor = await User.create({
         firstName,
         lastName,
@@ -158,7 +160,7 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         gender,
         dob,
         nic,
-        doctorDepartment,
+        doctorDepartment: departmentsArray,
         role: "Doutor",
         doctorAvatar: {
             public_id: cloudinaryResponse.public_id,
@@ -172,6 +174,7 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         doctor,
     });
 });
+
 
 // Função para atualizar os dados de um médico
 export const updateDoctor = catchAsyncErros(async (req, res) => {
@@ -200,6 +203,10 @@ export const updateDoctor = catchAsyncErros(async (req, res) => {
         }
 
         // Atualizar detalhes do médico
+        if (updates.doctorDepartment) {
+            updates.doctorDepartment = JSON.parse(updates.doctorDepartment); // Converter JSON para array
+        }
+
         const doctor = await User.findByIdAndUpdate(id, updates, { new: true });
         if (!doctor) {
             return res.status(404).json({ message: "Doutor não encontrado" });
@@ -215,6 +222,7 @@ export const updateDoctor = catchAsyncErros(async (req, res) => {
         res.status(500).json({ message: 'Erro ao atualizar doutor', error });
     }
 });
+
 
 // Função para excluir um médico
 export const deleteDoctor = catchAsyncErros(async (req, res) => {
