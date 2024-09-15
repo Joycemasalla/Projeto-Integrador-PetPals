@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FaStethoscope, FaSyringe, FaAmbulance, FaDog, FaCat, FaInfoCircle, FaClipboard, FaHandHolding, FaHandPointDown, FaRegHandPointUp, FaHandPointUp } from 'react-icons/fa';
+import  { useState } from 'react';
+import { FaStethoscope, FaSyringe, FaAmbulance, FaDog, FaCat, FaHandPointUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const services = [

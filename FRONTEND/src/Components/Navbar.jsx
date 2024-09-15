@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import  { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { FaCalendarDay, FaMoon, FaSignOutAlt, FaSun, FaUser } from "react-icons/fa";
 import { Context } from "../main";
 import { logo, setaparacima } from "../assets";
-import './Navbar.css';
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -112,7 +111,7 @@ const Navbar = () => {
               </button>
             )}
             <button className="themeToggleBtn btn" onClick={toggleTheme} title="Trocar Tema">
-              {isDarkMode ? <FaSun /> : <FaMoon />}
+              {isDarkMode ? <FaSun /> : <FaMoon /> }
             </button>
           </div>
         </div>

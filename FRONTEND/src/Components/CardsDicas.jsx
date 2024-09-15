@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './CardsDicas.css';
-import { adestramento, adocao, alimentacao, cuidados, saude, curiosidades, setaparacima } from '../assets';
+import  { useState, useEffect } from 'react';
+import { adestramento, adocao, alimentacao, cuidados, saude, curiosidades } from '../assets';
 
 const cardData = [
     { id: 1, img: adestramento, title: 'Adestramento', description: 'Corrija comportamentos, eduque, divirta-se e fortaleça a relação com seu pet.', examples: "Recompense o bom comportamento com amor e petiscos para um aprendizado feliz!" },

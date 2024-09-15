@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import  { useContext, useState, useEffect } from "react";
 import { TiHome } from "react-icons/ti";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { AiFillMessage } from "react-icons/ai";
@@ -43,6 +43,7 @@ const Sidebar = () => {
       });
       toast.success(res.data.message);
       setIsAuthenticated(false);
+      navigateTo("/login"); // Redirecione para a página de login após o logout
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error logging out');
     }

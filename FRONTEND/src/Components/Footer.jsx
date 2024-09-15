@@ -1,9 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { FaLocationArrow, FaPhone, FaTwitter, FaFacebook, FaInstagram, FaWhatsapp, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaLocationArrow, FaPhone, FaFacebook, FaInstagram, FaWhatsapp, FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { logo, perfil } from "../assets";
-import './Footer.css';
 
 const Footer = () => {
   const hours = [
@@ -17,22 +15,26 @@ const Footer = () => {
 
   const currentYear = new Date().getFullYear();
 
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer className="container">
       <hr />
       <div className="links">
         <div>
-          <Link to={"/"}>
+          <Link to={"/"} onClick={handleClick}>
             <img src={logo} alt="logo" className="logo-img" />
           </Link>
         </div>
         <div>
           <h4>Links Rápidos</h4>
           <ul>
-            <li><Link to="/">Início</Link></li>
-            <li><Link to="/appointment">Agendamento</Link></li>
-            <li><Link to="/about">Sobre</Link></li>
-            <li> <Link to="/nossosservicos">Serviços</Link></li>
+            <li><Link to="/" onClick={handleClick}>Início</Link></li>
+            <li><Link to="/appointment" onClick={handleClick}>Agendamento</Link></li>
+            <li><Link to="/about" onClick={handleClick}>Sobre</Link></li>
+            <li><Link to="/servicos" onClick={handleClick}>Serviços</Link></li>
           </ul>
         </div>
         <div>
@@ -49,7 +51,7 @@ const Footer = () => {
         <div>
           <h4>Contato</h4>
           <div>
-            <FaPhone />
+            <FaPhone style={{ transform: 'scaleX(-1)' }} />
             <span> 999-999-9999</span>
           </div>
           <div>
@@ -62,11 +64,6 @@ const Footer = () => {
           </div>
           <div className="social-icons">
             <ul>
-              <li>
-                <a href="https://x.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#F4C32F' }}>
-                  <FaTwitter />
-                </a>
-              </li>
               <li>
                 <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#F4C32F' }}>
                   <FaFacebook />
@@ -84,7 +81,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
         </div>
       </div>
       <div className="footer-direito">

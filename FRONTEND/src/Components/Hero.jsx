@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types'; // Importa o pacote prop-types
+import { useEffect, useState } from "react";
 import { petspulando, setaparacima } from "../assets";
-import './Hero.css'
 import { FaPhone } from "react-icons/fa";
 
-const Hero = ({ title, imageUrl }) => {
+const Hero = ({ title }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,6 +66,11 @@ const Hero = ({ title, imageUrl }) => {
       </div>
     </>
   );
+};
+
+// Define o tipo esperado para a prop `title`
+Hero.propTypes = {
+  title: PropTypes.string.isRequired, // `title` deve ser uma string e é obrigatório
 };
 
 export default Hero;

@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Importa o pacote prop-types
+import { createContext, useState, useEffect } from 'react';
 
 // Criar o contexto
 export const UserContext = createContext();
@@ -24,4 +25,9 @@ export const UserProvider = ({ children }) => {
             {children}
         </UserContext.Provider>
     );
+};
+
+// Define o tipo esperado para a prop `children`
+UserProvider.propTypes = {
+    children: PropTypes.node.isRequired, // `children` deve ser um nó React e é obrigatório
 };

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import StarRatings from 'react-star-ratings';
-import { Link } from "react-router-dom";
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -16,8 +15,8 @@ const MessageForm = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", { 
-          withCredentials: true, 
+        const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", {
+          withCredentials: true,
           timeout: 10000
         });
         if (data.user) {
@@ -52,6 +51,11 @@ const MessageForm = () => {
 
   const handleMessage = async (e) => {
     e.preventDefault();
+    // Verifica se a avaliação foi marcada
+    if (rating === 0) {
+      toast.error("Por favor, avalie nosso serviço antes de enviar.");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:4000/api/v1/message/send",
@@ -62,13 +66,13 @@ const MessageForm = () => {
         }
       );
       toast.success(response.data.message);
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPhone("");
+      // setFirstName("");
+      // setLastName("");
+      // setEmail("");
+      // setPhone("");
       setMessage("");
       setRating(0);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error.response ? error.response.data : error);
       toast.error(error.response?.data?.message || "Erro ao enviar mensagem");
@@ -135,7 +139,7 @@ const MessageForm = () => {
         </div>
       </form>
     </div>
-      
+
   );
 };
 

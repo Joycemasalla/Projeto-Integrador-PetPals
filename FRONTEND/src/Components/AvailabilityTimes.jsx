@@ -1,5 +1,5 @@
-//exibe os horários disponíveis para uma data específica
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 const AvailabilityTimes = ({ selectedDate }) => {
@@ -34,6 +34,10 @@ const AvailabilityTimes = ({ selectedDate }) => {
       </ul>
     </div>
   );
+};
+
+AvailabilityTimes.propTypes = {
+  selectedDate: PropTypes.string.isRequired, // Define o tipo da prop `selectedDate` como string e obrigatório
 };
 
 export default AvailabilityTimes;

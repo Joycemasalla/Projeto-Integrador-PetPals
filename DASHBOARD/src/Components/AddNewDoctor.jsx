@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../main";
@@ -36,13 +36,13 @@ const AddNewDoctor = () => {
     };
   };
 
-  const handleDepartmentClick = (department) => {
-    setDoctorDepartments((prevDepartments) =>
-      prevDepartments.includes(department)
-        ? prevDepartments.filter(dep => dep !== department)
-        : [...prevDepartments, department]
-    );
-  };
+  // const handleDepartmentClick = (department) => {
+  //   setDoctorDepartments((prevDepartments) =>
+  //     prevDepartments.includes(department)
+  //       ? prevDepartments.filter(dep => dep !== department)
+  //       : [...prevDepartments, department]
+  //   );
+  // };
 
   const handleAddNewDoctor = async (e) => {
     e.preventDefault();

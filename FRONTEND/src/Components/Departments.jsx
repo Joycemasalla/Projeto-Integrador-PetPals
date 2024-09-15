@@ -1,8 +1,6 @@
-import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { clinicaveterinaria, cirurgia, dermatologia, odontologia, cardiologia, neurologia, oncologia, endocrinologia, comportamentoAnimal, nutricao } from "../assets";
-import './Departments.css';
 import { Link } from "react-router-dom";
 
 const Departments = () => {

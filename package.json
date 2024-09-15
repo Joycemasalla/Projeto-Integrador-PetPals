@@ -3,6 +3,7 @@
     "date-fns": "^4.0.0-beta.1",
     "express": "^4.19.2",
     "formidable": "^3.5.1",
+    "prop-types": "^15.8.1",
     "react-autocomplete": "^1.8.1",
     "react-datepicker": "^7.3.0",
     "react-modal": "^3.16.1",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +8,6 @@ const AddAvailability = () => {
     const [date, setDate] = useState('');
     const [times, setTimes] = useState('');
     const [addedTimes, setAddedTimes] = useState([]);
-    const [editing, setEditing] = useState(null);
     const [availableTimeId, setAvailableTimeId] = useState(null);
     const [openDates, setOpenDates] = useState({});
     const [isLoading, setIsLoading] = useState(false); // Indicador de carregamento
@@ -129,18 +128,20 @@ const AddAvailability = () => {
                                 </div>
                                 {openDates[date] && (
                                     <div className="availability-items open">
-                                        {timesArray.map((availability) => (
-                                            <div key={availability._id} className="availability-item">
-                                                <p>{availability.times.join(', ')}</p>
-                                                <div>
-                                                    <button className="edit-btn" onClick={() => handleEdit(availability)}>
-                                                        <FaEdit />
-                                                    </button>
-                                                    <button className="delete-btn" onClick={() => handleDelete(availability._id)}>
-                                                        <FaTrash />
-                                                    </button>
+                                        {timesArray.flatMap((availability) => (
+                                            availability.times.map((time, index) => (
+                                                <div key={index} className="availability-item">
+                                                    <span>{time}</span>
+                                                    <div>
+                                                        <button className="edit-btn" onClick={() => handleEdit(availability)}>
+                                                            <FaEdit />
+                                                        </button>
+                                                        <button className="delete-btn" onClick={() => handleDelete(availability._id)}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            ))
                                         ))}
                                     </div>
                                 )}
@@ -153,6 +154,7 @@ const AddAvailability = () => {
             </div>
         </section>
     );
+
 };
 
 export default AddAvailability;

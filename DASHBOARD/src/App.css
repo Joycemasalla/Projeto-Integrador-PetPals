@@ -1777,6 +1777,7 @@ h2 {
   border-radius: 7px;
   border: 1px solid #009688;
   background-color: #fff;
+  color: #000000;
 }
 
 .add-availability form textarea {
@@ -1849,6 +1850,15 @@ h2 {
 .delete-btn {
   color: #d9534f;
   /* Cor para o botão de exclusão */
+}
+
+.time-container {
+  display: flex;
+  flex-direction: column; /* Colocar horários em linhas separadas */
+}
+
+.time-container span {
+  margin-bottom: 5px; /* Espaçamento entre os horários */
 }
 
 

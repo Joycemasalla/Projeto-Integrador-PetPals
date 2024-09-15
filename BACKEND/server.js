@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 import cloudinary from "cloudinary";
+import dotenv from 'dotenv';
+
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config();
 
 // Configura as credenciais do Cloudinary com base nas variáveis de ambiente
 cloudinary.v2.config({

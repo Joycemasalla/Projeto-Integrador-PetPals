@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Departments from '../Components/Departments';
 import Hero from '../Components/Hero';
 import { FaStethoscope, FaSyringe, FaAmbulance, FaDog, FaCat, FaPlus, FaMinus } from 'react-icons/fa';
