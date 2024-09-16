@@ -1194,7 +1194,7 @@ footer .logo-img {
   align-items: center;
   padding: 15px 20px 15px 10px; /* Ajustando padding para combinar com a altura mínima */
   min-height: 360px;
-  margin: 0 10px;
+  margin: 12px 10px;
   text-decoration: none;
 
 }
@@ -1306,7 +1306,7 @@ h2 {
 }
 
 .depart-description {
-  font-size: 1.1rem; /* Aumentar o tamanho da fonte da descrição */
+  font-size: 1rem; /* Aumentar o tamanho da fonte da descrição */
   color: #666;
   line-height: 1.6; /* Aumentar o espaçamento entre linhas */
   margin-bottom: 10px;

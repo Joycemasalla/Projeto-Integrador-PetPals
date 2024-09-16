@@ -3,12 +3,19 @@ import ErrorHandler from "../middlewares/errorMiddleware.js"; // Importa a class
 import { Appointment } from "../models/appointmentSchema.js"; // Importa o modelo Appointment baseado no esquema definido
 import { User } from "../models/userSchema.js"; // Importa o modelo User baseado no esquema definido
 
-// import twilio from 'twilio';  // Importa o Twilio
+import twilio from 'twilio';  // Importa o Twilio
+import dotenv from 'dotenv';
+dotenv.config({ path: "./config/config.env" });
 
-// // Configurações do Twilio
-// const accountSid = 'AC61727ff97307873203b99638f364fb4d';
-// const authToken = 'b02f4f314917dfe31191d09f4836d76c';
-// const client = twilio(accountSid, authToken);
+const accountSid = process.env.TWILIO_ACCOUNT_SID;  // Verifique se a variável existe
+const authToken = process.env.TWILIO_AUTH_TOKEN;    // Verifique se a variável existe
+
+
+
+
+const client = twilio(accountSid, authToken);
+
+
 
 /**
  * Função para agendar uma consulta.
@@ -138,70 +145,70 @@ export const getPatientAppointments = catchAsyncErros(async (req, res, next) => 
  * Função para atualizar o status de um agendamento.
  * Verifica se o agendamento existe e atualiza com os novos dados fornecidos.
 //  */
-export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
-    const { id } = req.params;
-    let appointment = await Appointment.findById(id);
-
-    if (!appointment) {
-        return next(new ErrorHandler("Consulta não encontrada", 404)); // Se o agendamento não for encontrado, retorna um erro
-    }
-
-    appointment = await Appointment.findByIdAndUpdate(id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false,
-    });
-
-    res.status(200).json({
-        success: true,
-        message: "Status da consulta atualizado com sucesso", // Retorna uma mensagem de sucesso
-        appointment,
-    });
-});
-
-
-// export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
+//export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
 //     const { id } = req.params;
-//     const { status } = req.body;
-
-//     // Encontra a consulta pelo ID
 //     let appointment = await Appointment.findById(id);
 
 //     if (!appointment) {
-//         return next(new ErrorHandler("Consulta não encontrada", 404)); // Se a consulta não for encontrada
+//         return next(new ErrorHandler("Consulta não encontrada", 404)); // Se o agendamento não for encontrado, retorna um erro
 //     }
 
-//     // Atualiza o status da consulta
 //     appointment = await Appointment.findByIdAndUpdate(id, req.body, {
 //         new: true,
 //         runValidators: true,
 //         useFindAndModify: false,
 //     });
 
-//     // Se o status for "Aceito", enviar mensagem pelo WhatsApp
-//     if (status === "Aceito") {
-//         const messageBody = `Olá ${appointment.firstName} ${appointment.lastName}, sua consulta com o Dr.(a) ${appointment.doctor.firstName} ${appointment.doctor.lastName} foi confirmada para ${appointment.appointment_date}.`;
-
-//         client.messages.create({
-//             body: messageBody,
-//             from: 'whatsapp:+14155238886',  // Número do Twilio (gerado na plataforma do Twilio)
-//              to: 'whatsapp:+553288949994'       //`whatsapp:+55${appointment.phone}`  // Número do cliente com o código do país
-//         })
-//             .then(message => {
-//                 console.log('Mensagem enviada com sucesso:', message.sid);
-//             })
-//             .catch(error => {
-//                 console.error('Erro ao enviar mensagem:', error);
-//             });
-//     }
-
-//     // Retorna a resposta de sucesso com o agendamento atualizado
 //     res.status(200).json({
 //         success: true,
-//         message: "Status da consulta atualizado com sucesso",
+//         message: "Status da consulta atualizado com sucesso", // Retorna uma mensagem de sucesso
 //         appointment,
 //     });
 // });
+
+
+export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Encontra a consulta pelo ID
+    let appointment = await Appointment.findById(id);
+
+    if (!appointment) {
+        return next(new ErrorHandler("Consulta não encontrada", 404)); // Se a consulta não for encontrada
+    }
+
+    // Atualiza o status da consulta
+    appointment = await Appointment.findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    // Se o status for "Aceito", enviar mensagem pelo WhatsApp
+    if (status === "Aceito") {
+        const messageBody = `Olá ${appointment.firstName} ${appointment.lastName}, sua consulta com o Dr.(a) ${appointment.doctor.firstName} ${appointment.doctor.lastName} foi confirmada! Acesse seus agendamentos para visualizar.`;
+
+        client.messages.create({
+            body: messageBody,
+            from: 'whatsapp:+14155238886',  // Número do Twilio (gerado na plataforma do Twilio)
+             to: 'whatsapp:+553288949994'       //`whatsapp:+55${appointment.phone}`  // Número do cliente com o código do país
+        })
+            .then(message => {
+                console.log('Mensagem enviada com sucesso:', message.sid);
+            })
+            .catch(error => {
+                console.error('Erro ao enviar mensagem:', error);
+            });
+    }
+
+    // Retorna a resposta de sucesso com o agendamento atualizado
+    res.status(200).json({
+        success: true,
+        message: "Status da consulta atualizado com sucesso",
+        appointment,
+    });
+});
 
 // Função para deletar um agendamento.
 export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
