@@ -133,8 +133,8 @@ const Dashboard = () => {
           <img src="/src/assets/doc.png" alt="docImg" />
           <div className="content">
             <div>
-              <p>Olá ,</p>
-              <h5>{admin && `${admin.firstName} ${admin.lastName}`}</h5>
+              <p>Olá,</p>
+              <h5>{admin && `${admin.firstName} ${admin.lastName}`}!</h5>
             </div>
             <p>
               Acompanhe os agendamentos, a disponibilidade dos doutores e o status
@@ -193,13 +193,13 @@ const Dashboard = () => {
                         }
                       >
                         <option value="Pendente" className="value-pending">
-                          Pendente
+                          Pendente.
                         </option>
                         <option value="Aceito" className="value-accepted">
-                          Aceito
+                          Aceito.
                         </option>
                         <option value="Recusado" className="value-rejected">
-                          Rejeitado
+                          Rejeitado.
                         </option>
                       </select>
                     </td>

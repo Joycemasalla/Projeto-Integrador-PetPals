@@ -4,7 +4,12 @@ import { User } from "../models/userSchema.js";
 import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
 
-// Função para registrar um paciente
+/**
+ * Função assíncrona para registrar um paciente.
+ * Responsável por criar um novo paciente no banco de dados.
+ * Verifica se todos os campos obrigatórios estão preenchidos,
+ * verifica se o email já está em uso e cria um novo usuário no banco de dados.
+ */
 export const patientRegister = catchAsyncErros(async (req, res, next) => {
     const { firstName, lastName, email, password, phone, gender, dob, nic, role = 'Paciente' } = req.body;
 
@@ -21,11 +26,19 @@ export const patientRegister = catchAsyncErros(async (req, res, next) => {
     generateToken(user, "Paciente cadastrado com sucesso", 200, res);
 });
 
-// Função para realizar login
-export const login = catchAsyncErros(async (req, res, next) => {
-    const { email, password, confirmPassword, role } = req.body;
 
-    if (!email || !password ||  !role) { // Tirei o !confirmPassword ||
+
+/**
+ * Função assíncrona para realizar login.
+ * Responsável por autenticar um usuário existente.
+ * Verifica se todos os campos obrigatórios estão preenchidos,
+ * verifica se as senhas coincidem, verifica se o email e a senha são válidos,
+ * e se o papel do usuário é permitido para login.
+ */
+export const login = catchAsyncErros(async (req, res, next) => {
+    const { email, password, role = 'Paciente' } = req.body;
+
+    if (!email || !password || !role) { // Tirei o !confirmPassword ||
         return next(new ErrorHandler("Por favor, preencha todos os campos", 400));
     }
 
@@ -50,7 +63,12 @@ export const login = catchAsyncErros(async (req, res, next) => {
     generateToken(user, "Usuário logado com sucesso", 200, res);
 });
 
-// Função para adicionar um novo administrador
+/**
+ * Função assíncrona para adicionar um novo administrador.
+ * Responsável por criar um novo usuário administrador no banco de dados.
+ * Verifica se todos os campos obrigatórios estão preenchidos e
+ * se o email já está em uso, e então cria um novo administrador.
+ */
 export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
     const { firstName, lastName, email, phone, password, gender, dob, nic } = req.body;
 
@@ -245,3 +263,10 @@ export const deleteDoctor = catchAsyncErros(async (req, res) => {
         res.status(500).json({ message: 'Erro ao excluir doutor', error });
     }
 });
+
+
+
+
+
+
+

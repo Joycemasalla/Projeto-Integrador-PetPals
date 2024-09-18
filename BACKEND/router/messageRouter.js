@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Importa a função sendMessage do controlador de mensagens
-import { deleteAgendamentos, deleteMessage, getAllMessages, sendMessage } from '../controller/messageController.js';
+import { deleteMessage, getAllMessages, sendMessage } from '../controller/messageController.js';
 
 import { isAdminAuthenticated} from '../middlewares/auth.js';
 

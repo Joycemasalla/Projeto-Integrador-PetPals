@@ -6,7 +6,7 @@
 import express from "express";
 import { 
     addNewAdmin, 
-    addNewDoctor, 
+    addNewDoctor,  
     deleteDoctor, 
     getAllDoctors, 
     getUserDetails, 

@@ -15,117 +15,9 @@ import { User } from "../models/userSchema.js";
 // Importa a função para gerar tokens JWT
 import { generateToken } from "../utils/jwtToken.js";
 
-/**
- * Função assíncrona para registrar um paciente.
- * Responsável por criar um novo paciente no banco de dados.
- * Verifica se todos os campos obrigatórios estão preenchidos,
- * verifica se o email já está em uso e cria um novo usuário no banco de dados.
- */
-export const patientRegister = catchAsyncErros(async (req, res, next) => {
-    // Extrai os dados do corpo da requisição
-    const { firstName, lastName, email, password, phone, gender, dob, nic, role } = req.body;
 
-    // Verifica se todos os campos obrigatórios foram preenchidos
-    if (!firstName || !lastName || !email || !password || !phone || !gender || !dob || !nic || !role) {
-        // Se algum campo estiver faltando, retorna um erro 400 com uma mensagem apropriada
-        return next(new ErrorHandler("Por favor preencha todos os campos", 400));
-    }
 
-    // Verifica se já existe um usuário com o mesmo email
-    let user = await User.findOne({ email });
-    if (user) {
-        // Se um usuário com o mesmo email for encontrado, retorna um erro 400 com uma mensagem apropriada
-        return next(new ErrorHandler("Já existe um usuário com este email", 400));
-    }
 
-    // Cria um novo usuário no banco de dados com os dados fornecidos
-    user = await User.create({ firstName, lastName, email, password, phone, gender, dob, nic, role });
-
-    // Gera um token JWT e responde com sucesso
-    generateToken(user, "Paciente cadastrado com sucesso", 200, res);
-});
-
-/**
- * Função assíncrona para realizar login.
- * Responsável por autenticar um usuário existente.
- * Verifica se todos os campos obrigatórios estão preenchidos,
- * verifica se as senhas coincidem, verifica se o email e a senha são válidos,
- * e se o papel do usuário é permitido para login.
- */
-export const login = catchAsyncErros(async (req, res, next) => {
-    // Extrai os dados do corpo da requisição
-    const { email, password, confirmPassword, role } = req.body;
-
-    // Verifica se todos os campos obrigatórios foram preenchidos
-    if (!email || !password || !confirmPassword || !role) {
-        return next(new ErrorHandler("Por favor preencha todos os campos", 400));
-    }
-
-    // Verifica se as senhas coincidem
-    if (password !== confirmPassword) {
-        return next(new ErrorHandler("As senhas não coincidem", 400));
-    }
-
-    // Procura o usuário pelo email
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-        return next(new ErrorHandler("Email ou senha inválidos", 400));
-    }
-
-    // Verifica se a senha é válida
-    const isPasswordMatched = await user.comparePassword(password);
-    if (!isPasswordMatched) {
-        return next(new ErrorHandler("Email ou senha inválidos", 400));
-    }
-
-    // Verifica se o papel do usuário é permitido para login
-    if (role !== user.role) {
-        return next(new ErrorHandler("Você não tem permissão para fazer isto", 400));
-    }
-
-    // Gera um token JWT e responde com sucesso
-    generateToken(user, "Usuário logado com sucesso", 200, res);
-});
-
-/**
- * Função assíncrona para adicionar um novo administrador.
- * Responsável por criar um novo usuário administrador no banco de dados.
- * Verifica se todos os campos obrigatórios estão preenchidos e
- * se o email já está em uso, e então cria um novo administrador.
- */
-export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
-    // Extrai os dados do corpo da requisição
-    const { firstName, lastName, email, phone, password, gender, dob, nic } = req.body;
-    // Verifica se todos os campos obrigatórios foram preenchidos
-    if (!email || !password || !firstName || !lastName || !phone || !gender || !dob || !nic) {
-        return next(new ErrorHandler("Por favor preencha todos os campos", 400));
-    }
-
-    // Verifica se já existe um usuário com o mesmo email
-    const isRegistered = await User.findOne({ email });
-    if (isRegistered) {
-        return next(new ErrorHandler(`${isRegistered.role} já existe um administrador com este email`));
-    }
-
-    // Cria um novo administrador no banco de dados com os dados fornecidos
-    const admin = await User.create({
-        firstName,
-        lastName,
-        email,
-        phone,
-        password,
-        gender,
-        dob,
-        nic,
-        role: "Admin"
-    });
-
-    // Responde com sucesso
-    res.status(200).json({
-        success: true,
-        message: "Administrador cadastrado com sucesso",
-    });
-});
 
 /**
  * Função assíncrona para enviar uma mensagem.
@@ -166,24 +58,6 @@ export const getAllMessages = catchAsyncErros(async (req, res, next) => {
     });
 });
 
-
-
-
-
-export const deleteAgendamentos = async (req, res) => {
-    try {
-        const { id } = req.params;
-        // Lógica para excluir o agendamento com o ID fornecido
-        // Por exemplo:
-        const deletedAppointment = await Appointment.findByIdAndDelete(id);
-        if (!deletedAppointment) {
-            return res.status(404).json({ message: 'Agendamento não encontrado.' });
-        }
-        res.status(200).json({ message: 'Agendamento excluído com sucesso.' });
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao excluir o agendamento.' });
-    }
-};
 
 
 export const deleteMessage = async (req, res) => {

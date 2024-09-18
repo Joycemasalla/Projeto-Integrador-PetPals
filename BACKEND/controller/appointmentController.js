@@ -145,26 +145,6 @@ export const getPatientAppointments = catchAsyncErros(async (req, res, next) => 
  * Função para atualizar o status de um agendamento.
  * Verifica se o agendamento existe e atualiza com os novos dados fornecidos.
 //  */
-//export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
-//     const { id } = req.params;
-//     let appointment = await Appointment.findById(id);
-
-//     if (!appointment) {
-//         return next(new ErrorHandler("Consulta não encontrada", 404)); // Se o agendamento não for encontrado, retorna um erro
-//     }
-
-//     appointment = await Appointment.findByIdAndUpdate(id, req.body, {
-//         new: true,
-//         runValidators: true,
-//         useFindAndModify: false,
-//     });
-
-//     res.status(200).json({
-//         success: true,
-//         message: "Status da consulta atualizado com sucesso", // Retorna uma mensagem de sucesso
-//         appointment,
-//     });
-// });
 
 
 export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
@@ -240,3 +220,17 @@ export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
 });
 
 
+export const deleteAgendamentos = async (req, res) => {
+    try {
+        const { id } = req.params;
+        // Lógica para excluir o agendamento com o ID fornecido
+        // Por exemplo:
+        const deletedAppointment = await Appointment.findByIdAndDelete(id);
+        if (!deletedAppointment) {
+            return res.status(404).json({ message: 'Agendamento não encontrado.' });
+        }
+        res.status(200).json({ message: 'Agendamento excluído com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao excluir o agendamento.' });
+    }
+};
