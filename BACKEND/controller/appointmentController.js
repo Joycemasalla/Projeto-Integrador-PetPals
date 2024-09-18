@@ -167,7 +167,22 @@ export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) =>
         client.messages.create({
             body: messageBody,
             from: 'whatsapp:+14155238886',  // Número do Twilio (gerado na plataforma do Twilio)
-             to: 'whatsapp:+553288949994'       //`whatsapp:+55${appointment.phone}`  // Número do cliente com o código do país
+            to: 'whatsapp:+553288949994'       //`whatsapp:+55${appointment.phone}`  // Número do cliente com o código do país
+        })
+            .then(message => {
+                console.log('Mensagem enviada com sucesso:', message.sid);
+            })
+            .catch(error => {
+                console.error('Erro ao enviar mensagem:', error);
+            });
+    }
+    else if (status === "Recusado") {
+        const messageBody = `Olá ${appointment.firstName} ${appointment.lastName}, infelizmente sua consulta com o Dr.(a) ${appointment.doctor.firstName} ${appointment.doctor.lastName} não pôde ser confirmada. Por favor, tente agendar em outro horário ou entre em contato com a clínica para mais informações.`;
+
+        client.messages.create({
+            body: messageBody,
+            from: 'whatsapp:+14155238886',  // Número do Twilio (gerado na plataforma do Twilio)
+            to: 'whatsapp:+553288949994'       //`whatsapp:+55${appointment.phone}`  // Número do cliente com o código do país
         })
             .then(message => {
                 console.log('Mensagem enviada com sucesso:', message.sid);
