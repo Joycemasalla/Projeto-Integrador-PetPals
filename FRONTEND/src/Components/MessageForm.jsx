@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import StarRatings from 'react-star-ratings';
+import { useContext } from "react";
+import { Context } from "../main";
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,37 +13,45 @@ const MessageForm = () => {
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated } = useContext(Context);
+
 
   useEffect(() => {
+      
+    console.log(isAuthenticated);
     const fetchUserData = async () => {
-      try {
-        const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", {
-          withCredentials: true,
-          timeout: 10000
-        });
-        if (data.user) {
-          setFirstName(data.user.firstName || "");
-          setLastName(data.user.lastName || "");
-          setEmail(data.user.email || "");
-          setPhone(data.user.phone || "");
-          setIsLoggedIn(true);
-        } else {
-          toast.error("Dados do usuário não encontrados");
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        if (error.response) {
-          console.error("Erro ao buscar dados do usuário:", error.response.data);
-          if (isLoggedIn) {
-            toast.error(`Erro ao buscar dados do usuário: ${error.response.data.message || error.message}`);
+      if (isAuthenticated) {
+
+
+        try {
+          const { data } = await axios.get("http://localhost:4000/api/v1/user/paciente/me", {
+            withCredentials: true,
+            timeout: 10000
+          });
+          if (data.user) {
+            setFirstName(data.user.firstName || "");
+            setLastName(data.user.lastName || "");
+            setEmail(data.user.email || "");
+            setPhone(data.user.phone || "");
+            setIsLoggedIn(true);
+          } else {
+            toast.error("Dados do usuário não encontrados");
+            setIsLoggedIn(false);
           }
-          setIsLoggedIn(false);
-        } else if (error.code === 'ECONNABORTED') {
-          console.error("Tempo de timeout excedido");
-          toast.error("Tempo de timeout excedido ao buscar dados do usuário");
-        } else {
-          console.error("Erro desconhecido:", error);
-          toast.error("Erro desconhecido ao buscar dados do usuário");
+        } catch (error) {
+          if (error.response) {
+            console.error("Erro ao buscar dados do usuário:", error.response.data);
+            if (isLoggedIn) {
+              toast.error(`Erro ao buscar dados do usuário: ${error.response.data.message || error.message}`);
+            }
+            setIsLoggedIn(false);
+          } else if (error.code === 'ECONNABORTED') {
+            console.error("Tempo de timeout excedido");
+            toast.error("Tempo de timeout excedido ao buscar dados do usuário");
+          } else {
+            console.error("Erro desconhecido:", error);
+            toast.error("Erro desconhecido ao buscar dados do usuário");
+          }
         }
       }
     };

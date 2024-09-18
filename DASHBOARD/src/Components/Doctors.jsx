@@ -5,20 +5,22 @@ import { Context } from "../main";
 import { Navigate } from "react-router-dom";
 import { avatar } from "../assets";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
 const Doctors = () => {
+  // Estados para armazenar a lista de médicos, médico em edição, pré-visualização do avatar e outros controles
   const [doctors, setDoctors] = useState([]);
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [doctorAvatarPreview, setDoctorAvatarPreview] = useState("");
-  const { isAuthenticated } = useContext(Context);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-  const [newDepartment, setNewDepartment] = useState("");
+  const { isAuthenticated } = useContext(Context);  // Verifica se o usuário está autenticado
+  const [isModalOpen, setIsModalOpen] = useState(false);  // Controla o estado do modal de edição
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);  // Armazena o ID do médico a ser excluído
+  const [newDepartment, setNewDepartment] = useState("");  // Armazena o novo departamento que será adicionado
 
+  // Lista de departamentos disponíveis para seleção
   const departmentsArray = [
     "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição",
   ];
 
+  // Função para buscar médicos da API quando o componente é carregado
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -26,7 +28,7 @@ const Doctors = () => {
           "http://localhost:4000/api/v1/user/doctors",
           { withCredentials: true }
         );
-        setDoctors(data.doctors);
+        setDoctors(data.doctors);  // Define os médicos buscados no estado
       } catch (error) {
         console.error("Erro ao buscar médicos:", error);
         toast.error(error.response?.data?.message || 'Falha ao buscar médicos');
@@ -35,10 +37,12 @@ const Doctors = () => {
     fetchDoctors();
   }, []);
 
+  // Redireciona o usuário para a página de login se ele não estiver autenticado
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
 
+  // Função para calcular a idade de um médico a partir da data de nascimento
   const calculateAge = (dob) => {
     const birthDate = new Date(dob);
     const currentYear = new Date().getFullYear();
@@ -50,6 +54,7 @@ const Doctors = () => {
     return age;
   };
 
+  // Função para formatar o número de telefone em um formato mais legível
   const formatPhoneNumber = (phoneNumber) => {
     if (!phoneNumber) return phoneNumber;
     const cleaned = ('' + phoneNumber).replace(/\D/g, '');
@@ -60,15 +65,17 @@ const Doctors = () => {
     return phoneNumber;
   };
 
+  // Inicia o processo de edição, definindo o médico selecionado e abrindo o modal de edição
   const handleEdit = (doctor) => {
     setEditingDoctor({
       ...doctor,
       doctorDepartment: doctor.doctorDepartment || []
     });
-    setDoctorAvatarPreview(doctor.doctorAvatar?.url || avatar);
-    setIsModalOpen(true);
+    setDoctorAvatarPreview(doctor.doctorAvatar?.url || avatar);  // Prepara a pré-visualização do avatar
+    setIsModalOpen(true);  // Abre o modal
   };
 
+  // Atualiza as informações do médico no backend
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -85,18 +92,20 @@ const Doctors = () => {
       formData.append("phone", editingDoctor.phone || '');
       formData.append("dob", editingDoctor.dob || '');
       formData.append("nic", editingDoctor.nic || '');
-      formData.append("doctorDepartment", JSON.stringify(editingDoctor.doctorDepartment)); // Envie o array como uma string JSON
+      formData.append("doctorDepartment", JSON.stringify(editingDoctor.doctorDepartment));  // Adiciona o departamento como JSON
 
       if (editingDoctor.newAvatar) {
-        formData.append("doctorAvatar", editingDoctor.newAvatar);
+        formData.append("doctorAvatar", editingDoctor.newAvatar);  // Se houver um novo avatar, ele será enviado
       }
 
+      // Faz a requisição para atualizar o médico na API
       const { data } = await axios.put(
         `http://localhost:4000/api/v1/user/doutor/${editingDoctor._id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
       );
 
+      // Atualiza o estado local com os dados retornados pela API
       if (data && data.doctor) {
         toast.success('Médico atualizado com sucesso');
         setDoctors((prevDoctors) =>
@@ -107,6 +116,7 @@ const Doctors = () => {
         console.error('Resposta do servidor:', data);
       }
 
+      // Reseta os estados após a edição
       setEditingDoctor(null);
       setDoctorAvatarPreview("");
       setIsModalOpen(false);
@@ -117,6 +127,7 @@ const Doctors = () => {
     }
   };
 
+  // Função que captura mudanças nos inputs do formulário de edição
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "doctorDepartment") {
@@ -129,16 +140,18 @@ const Doctors = () => {
     }
   };
 
+  // Função para adicionar um novo departamento à lista de departamentos do médico
   const handleAddDepartment = () => {
     if (newDepartment && !editingDoctor.doctorDepartment.includes(newDepartment)) {
       setEditingDoctor((prevDoctor) => ({
         ...prevDoctor,
         doctorDepartment: [...prevDoctor.doctorDepartment, newDepartment],
       }));
-      setNewDepartment("");
+      setNewDepartment("");  // Reseta o campo de novo departamento
     }
   };
 
+  // Remove um departamento da lista de departamentos do médico
   const handleRemoveDepartment = (departmentToRemove) => {
     setEditingDoctor((prevDoctor) => ({
       ...prevDoctor,
@@ -146,20 +159,23 @@ const Doctors = () => {
     }));
   };
 
+  // Carrega a imagem do avatar do médico e atualiza a pré-visualização
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setDoctorAvatarPreview(reader.result);
-      setEditingDoctor((prevDoctor) => ({ ...prevDoctor, newAvatar: file }));
+      setDoctorAvatarPreview(reader.result);  // Exibe a imagem selecionada
+      setEditingDoctor((prevDoctor) => ({ ...prevDoctor, newAvatar: file }));  // Atualiza o estado com o novo arquivo
     };
   };
 
+  // Mostra o modal de confirmação para exclusão de um médico
   const showDeleteConfirmation = (id) => {
     setConfirmDeleteId(id);
   };
 
+  // Função para deletar um médico
   const handleDelete = async () => {
     if (!confirmDeleteId) return;
 
@@ -175,15 +191,19 @@ const Doctors = () => {
     }
   };
 
+  // Fecha o modal de edição
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingDoctor(null);
     setNewDepartment("");
   };
 
+  // Fecha o modal de confirmação de exclusão
   const closeConfirmationModal = () => {
     setConfirmDeleteId(null);
   };
+
+
 
   return (
     <section className="page doctors">

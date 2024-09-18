@@ -52,5 +52,4 @@ export const errorMiddleware = (err, req, res, next) => {
     });
 };
 
-// Exporta a classe ErrorHandler para uso em outros arquivos
 export default ErrorHandler;

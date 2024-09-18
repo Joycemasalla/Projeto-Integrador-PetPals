@@ -1,4 +1,3 @@
-// Importa o framework Express para criar roteadores
 import express from 'express';
 
 // Importa a função sendMessage do controlador de mensagens
@@ -15,5 +14,4 @@ router.post("/send", sendMessage);
 router.get("/getall",isAdminAuthenticated,getAllMessages);
 router.delete("/delete/:id",isAdminAuthenticated, deleteMessage);
 
-// Exporta o roteador para que possa ser importado em outros arquivos
 export default router;

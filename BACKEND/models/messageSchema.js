@@ -40,5 +40,4 @@ const messageSchema = new mongoose.Schema({
     }
 }, { timestamps: true }); // Adiciona os campos createdAt e updatedAt
 
-// Exporta o modelo baseado no esquema definido
 export const Message = mongoose.model('Message', messageSchema);

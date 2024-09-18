@@ -49,30 +49,42 @@ const Sidebar = () => {
     }
   };
 
-  const gotoHomePage = () => {
-    navigateTo("/");
-    setShow(!show);
-  };
-  const gotoDoctorsPage = () => {
-    navigateTo("/doctors");
-    setShow(!show);
-  };
-  const gotoMessagesPage = () => {
-    navigateTo("/messages");
-    setShow(!show);
-  };
-  const gotoAddNewDoctor = () => {
-    navigateTo("/doctor/addnew");
-    setShow(!show);
-  };
-  const gotoAddNewAdmin = () => {
-    navigateTo("/admin/addnew");
-    setShow(!show);
-  };
-  const gotoAddAvailability = () => {
-    navigateTo("/admin/disponibilidade");
-    setShow(!show);
-  }
+ // Função para redirecionar para a página inicial
+const gotoHomePage = () => {
+  navigateTo("/"); // Navega para a página inicial
+  setShow(!show); 
+};
+
+// Função para redirecionar para a página de médicos
+const gotoDoctorsPage = () => {
+  navigateTo("/doctors");  
+  setShow(!show); 
+};
+
+// Função para redirecionar para a página de mensagens
+const gotoMessagesPage = () => {
+  navigateTo("/messages");  
+  setShow(!show); 
+};
+
+// Função para redirecionar para a página de adicionar um novo médico
+const gotoAddNewDoctor = () => {
+  navigateTo("/doctor/addnew");  
+  setShow(!show); 
+};
+
+// Função para redirecionar para a página de adicionar um novo administrador
+const gotoAddNewAdmin = () => {
+  navigateTo("/admin/addnew");  
+  setShow(!show); 
+};
+
+// Função para redirecionar para a página de adicionar disponibilidade
+const gotoAddAvailability = () => {
+  navigateTo("/admin/disponibilidade");  
+  setShow(!show); 
+};
+
 
   return (
     <>

@@ -50,10 +50,7 @@ router.post("/doutor/addnew", isAdminAuthenticated, addNewDoctor);
 // Rota para atualizar informações de um médico existente. Requer autenticação de administrador
 router.put('/doutor/:id', isAdminAuthenticated, updateDoctor);
 
-
-
-
-// Route to delete a doctor
+// Rota para deletar um médico existente
 router.delete('/doutor/:doctorId', isAdminAuthenticated, deleteDoctor);
 
 

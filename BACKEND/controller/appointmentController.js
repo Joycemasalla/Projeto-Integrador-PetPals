@@ -11,18 +11,15 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;  // Verifique se a variável 
 const authToken = process.env.TWILIO_AUTH_TOKEN;    // Verifique se a variável existe
 
 
-
-
 const client = twilio(accountSid, authToken);
 
 
-
-/**
- * Função para agendar uma consulta.
- * Verifica se todos os campos necessários estão preenchidos.
- * Verifica se existe conflito de horários com o médico.
- * Cria um novo agendamento no banco de dados.
- */
+/*
+ Função para agendar uma consulta.
+ Verifica se todos os campos necessários estão preenchidos.
+ Verifica se existe conflito de horários com o médico.
+Cria um novo agendamento no banco de dados.
+*/
 export const postAppointment = catchAsyncErros(async (req, res, next) => {
     const {
         firstName,
@@ -109,10 +106,10 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     });
 });
 
-/**
- * Função para obter todos os agendamentos.
- * Retorna uma lista de todos os agendamentos no banco de dados.
- */
+/*
+ Função para obter todos os agendamentos.
+ Retorna uma lista de todos os agendamentos no banco de dados.
+*/
 export const getAppointments = catchAsyncErros(async (req, res, next) => {
     const appointments = await Appointment.find();
     res.status(200).json({
@@ -122,10 +119,10 @@ export const getAppointments = catchAsyncErros(async (req, res, next) => {
     });
 });
 
-/**
- * Função para obter agendamentos do paciente autenticado.
- * Retorna uma lista de agendamentos específicos do paciente que está autenticado.
- */
+/*
+ Função para obter agendamentos do paciente autenticado.
+ Retorna uma lista de agendamentos específicos do paciente que está autenticado.
+*/
 export const getPatientAppointments = catchAsyncErros(async (req, res, next) => {
     try {
         const userId = req.user._id; // Supondo que o middleware 'isPatientAuthenticated' adiciona req.user
@@ -141,12 +138,10 @@ export const getPatientAppointments = catchAsyncErros(async (req, res, next) => 
     }
 });
 
-/**
- * Função para atualizar o status de um agendamento.
- * Verifica se o agendamento existe e atualiza com os novos dados fornecidos.
-//  */
-
-
+/*
+ Função para atualizar o status de um agendamento.
+ Verifica se o agendamento existe e atualiza com os novos dados fornecidos.
+*/
 export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) => {
     const { id } = req.params;
     const { status } = req.body;

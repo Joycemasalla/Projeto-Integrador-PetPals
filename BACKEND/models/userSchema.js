@@ -1,6 +1,5 @@
 //validações para garantir a integridade dos dados e utiliza middlewares para pré-processamento antes de salvar os dados no banco de dados.
 
-
 // Importa o módulo mongoose para gerenciar a conexão com o banco de dados MongoDB
 import mongoose from "mongoose";
 
@@ -109,5 +108,4 @@ userSchema.methods.generateJsonWebToken = function () {
     });
 };
 
-// Exporta o modelo User baseado no esquema definido
 export const User = mongoose.model('User', userSchema);

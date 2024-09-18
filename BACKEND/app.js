@@ -11,7 +11,6 @@ import availabilityRouter from "./router/availabilityRouter.js";
 import { login } from "./controller/userController.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
-// Cria uma instância do aplicativo Express
 const app = express();
 
 // Carrega as variáveis de ambiente do arquivo config.env localizado na pasta config
@@ -57,12 +56,10 @@ app.use('/api/v1/admin', availabilityRouter);
 app.post("/api/v1/login", login);
 
 
-
 // Estabelece a conexão com o banco de dados
 dbConnection();
 
 // Adiciona o middleware para tratamento de erros personalizados
 app.use(errorMiddleware);
 
-// Exporta a instância do aplicativo Express para que possa ser importada em outros arquivos
 export default app;

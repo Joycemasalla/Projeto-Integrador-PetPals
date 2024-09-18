@@ -1,4 +1,3 @@
-// availabilitySchema.js
 import mongoose from 'mongoose';
 
 const availabilitySchema = new mongoose.Schema({

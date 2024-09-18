@@ -4,73 +4,77 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import axios from "axios";
 import { avatar } from "../assets";
-
 const AddNewDoctor = () => {
+  // Pega os valores de autenticação do contexto global (se o usuário está autenticado e função para atualizar esse valor)
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [nic, setNic] = useState("");
-  const [dob, setDob] = useState("");
-  const [gender, setGender] = useState("");
-  const [password, setPassword] = useState("");
-  const [doctorDepartments, setDoctorDepartments] = useState([]);
-  const [doctorAvatar, setDoctorAvatar] = useState("");
+  // Estados para armazenar as informações do novo doutor que será cadastrado
+  const [firstName, setFirstName] = useState(""); 
+  const [lastName, setLastName] = useState(""); 
+  const [email, setEmail] = useState(""); 
+  const [phone, setPhone] = useState(""); 
+  const [nic, setNic] = useState(""); 
+  const [dob, setDob] = useState(""); 
+  const [gender, setGender] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [doctorDepartments, setDoctorDepartments] = useState([]); 
+  const [doctorAvatar, setDoctorAvatar] = useState(""); 
   const [doctorAvatarPreview, setDoctorAvatarPreview] = useState("");
 
+  // Hook para redirecionamento
   const navigateTo = useNavigate();
 
+  // Array que contém os departamentos que podem ser selecionados
   const departmentsArray = [
-    "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição",
+    "Clínica", "Cirurgia", "Dermatologia", "Odontologia", "Cardiologia", 
+    "Neurologia", "Oncologia", "Endocrinologia", "Comportamento Animal", "Nutrição",
   ];
 
+  // Função para tratar o upload da imagem do avatar
   const handleAvatar = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const file = e.target.files[0]; // Pega o arquivo de imagem selecionado
+    const reader = new FileReader(); // Cria um leitor de arquivos
+    reader.readAsDataURL(file); // Converte o arquivo em URL para pré-visualização
     reader.onload = () => {
-      setDoctorAvatarPreview(reader.result);
-      setDoctorAvatar(file);
+      setDoctorAvatarPreview(reader.result); // Armazena a pré-visualização da imagem
+      setDoctorAvatar(file); // Armazena o arquivo da imagem para ser enviado
     };
   };
 
-  // const handleDepartmentClick = (department) => {
-  //   setDoctorDepartments((prevDepartments) =>
-  //     prevDepartments.includes(department)
-  //       ? prevDepartments.filter(dep => dep !== department)
-  //       : [...prevDepartments, department]
-  //   );
-  // };
-
+  // Função para cadastrar um novo doutor
   const handleAddNewDoctor = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Evita o comportamento padrão do formulário (recarregar a página)
+
     try {
-      const formData = new FormData();
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("email", email);
-      formData.append("phone", phone);
+      const formData = new FormData(); // Cria um objeto FormData para enviar os dados
+      formData.append("firstName", firstName); 
+      formData.append("lastName", lastName); 
+      formData.append("email", email); 
+      formData.append("phone", phone); 
       formData.append("password", password);
       formData.append("nic", nic);
-      formData.append("dob", dob);
-      formData.append("gender", gender);
+      formData.append("dob", dob); 
+      formData.append("gender", gender); 
       formData.append("doctorDepartments", JSON.stringify(doctorDepartments));
-      formData.append("doctorAvatar", doctorAvatar);
+      formData.append("doctorAvatar", doctorAvatar); 
 
+      // Faz a requisição ao backend para cadastrar o novo doutor
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/doutor/addnew",
-        formData,
+        "http://localhost:4000/api/v1/user/doutor/addnew", 
+        formData, // Dados do formulário
         {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true, // Envia os cookies de autenticação
+          headers: { "Content-Type": "multipart/form-data" }, // Define que o conteúdo é multipart (para envio de arquivos)
         }
       );
 
+      // Se a requisição for bem-sucedida, exibe mensagem de sucesso
       toast.success(data.message);
+      // Define o usuário como autenticado
       setIsAuthenticated(true);
+      // Redireciona para a página inicial
       navigateTo("/");
+      // Limpa os campos do formulário após o envio
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -83,13 +87,18 @@ const AddNewDoctor = () => {
       setDoctorAvatar("");
       setDoctorAvatarPreview("");
     } catch (error) {
+      // Se houver erro, exibe uma mensagem de erro
       toast.error(error.response?.data?.message || 'Erro ao cadastrar o doutor');
     }
   };
 
+  // Se o usuário não estiver autenticado, redireciona para a página de login
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
+
+
+
 
   return (
     <section className="page">

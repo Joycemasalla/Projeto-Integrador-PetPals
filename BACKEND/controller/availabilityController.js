@@ -1,4 +1,3 @@
-// controllers/availabilityController.js
 import Availability from '../models/availabilitySchema.js';
 
 // Função para adicionar disponibilidade
@@ -104,7 +103,7 @@ export const updateAvailableTimes = async (req, res) => {
     }
 };
 
-// Exemplo em Express.js
+// Função para remover horário disponível
 
 export const removeAvailable = async (req, res) => {
     const { id } = req.params;

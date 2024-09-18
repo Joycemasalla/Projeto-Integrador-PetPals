@@ -7,43 +7,57 @@ import { Navigate } from "react-router-dom";
 import { FaTrash } from 'react-icons/fa';
 import { format } from 'date-fns';
 
+
 const Messages = () => {
+  // Estado para armazenar a lista de mensagens
   const [messages, setMessages] = useState([]);
+  // Contexto para verificar se o usuário está autenticado
   const { isAuthenticated } = useContext(Context);
 
+  // Função para renderizar estrelas com base na avaliação
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-      stars.push(<span key={i}>{i <= rating ? '★' : '☆'}</span>);
+      stars.push(<span key={i}>{i <= rating ? '★' : '☆'}</span>); // Adiciona estrela preenchida ou vazia
     }
     return stars;
   };
 
+  // Hook useEffect para buscar mensagens quando o componente é montado
   useEffect(() => {
     const fetchMessages = async () => {
       try {
+        // Requisição para buscar todas as mensagens
         const { data } = await axios.get("http://localhost:4000/api/v1/message/getall", { withCredentials: true });
-        setMessages(data.messages);
+        setMessages(data.messages); // Atualiza o estado com as mensagens recebidas
       } catch (error) {
+        // Exibe mensagem de erro se a requisição falhar
         toast.error(error.response?.data?.message || 'Falha ao buscar mensagens');
       }
     };
-    fetchMessages();
-  }, []);
+    fetchMessages(); // Chama a função para buscar mensagens
+  }, []); // Dependência vazia para garantir que a busca ocorra apenas uma vez quando o componente é montado
 
+  // Função para excluir uma mensagem com base no ID
   const deleteMessage = async (id) => {
     try {
+      // Requisição para excluir a mensagem
       await axios.delete(`http://localhost:4000/api/v1/message/delete/${id}`, { withCredentials: true });
+      // Atualiza o estado removendo a mensagem excluída
       setMessages(messages.filter((message) => message._id !== id));
-      toast.success("Mensagem excluída com sucesso");
+      toast.success("Mensagem excluída com sucesso"); // Exibe mensagem de sucesso
     } catch (error) {
+      // Exibe mensagem de erro se a exclusão falhar
       toast.error(error.response?.data?.message || 'Erro ao excluir a mensagem');
     }
   };
 
+  // Se o usuário não estiver autenticado, redireciona para a página de login
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
+
+
 
   return (
     <section className="page messages">

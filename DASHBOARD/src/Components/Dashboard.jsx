@@ -1,40 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../main";
-import { Navigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { GoCheckCircleFill } from "react-icons/go";
-import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
-import { format } from "date-fns";
-import { FaInfo } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react"; 
+import { Context } from "../main"; 
+import { Navigate } from "react-router-dom"; 
+import axios from "axios"; 
+import { toast } from "react-toastify"; // Biblioteca para exibir notificações
+import { GoCheckCircleFill } from "react-icons/go"; // Ícones para status de sucesso
+import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai"; // Ícones de fechar e deletar
+import { format } from "date-fns"; // Biblioteca para formatar datas
+import { FaInfo } from "react-icons/fa"; // Ícone para exibir informações
 
 const Dashboard = () => {
+  // Estados para armazenar as listas de agendamentos e doutores
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
+
+  // Estado para armazenar o agendamento selecionado e controlar a exibição do modal
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  
 
+  // useEffect é usado para buscar agendamentos e doutores assim que o componente é montado
   useEffect(() => {
+    // Função assíncrona para buscar os agendamentos
     const fetchAppointments = async () => {
       try {
+        // Faz uma requisição GET para buscar todos os agendamentos
         const { data } = await axios.get(
           "http://localhost:4000/api/v1/appointment/getall",
-          { withCredentials: true }
+          { withCredentials: true } // Inclui os cookies para autenticação
         );
-        setAppointments(data.appointments);
+        setAppointments(data.appointments); // Atualiza o estado com os agendamentos
       } catch (error) {
-        setAppointments([]);
+        setAppointments([]); // Caso dê erro, define agendamentos como uma lista vazia
       }
     };
 
+    // Função assíncrona para buscar a lista de doutores
     const fetchDoctors = async () => {
       try {
         const { data } = await axios.get(
           "http://localhost:4000/api/v1/user/doctors",
           { withCredentials: true }
         );
-        setDoctors(data.doctors);
+        setDoctors(data.doctors); // Atualiza o estado com a lista de doutores
       } catch (error) {
         toast.error(
           error.response?.data?.message || "Falha ao buscar doutores."
@@ -42,18 +48,21 @@ const Dashboard = () => {
       }
     };
 
-    fetchAppointments();
-    fetchDoctors();
-  }, []);
+    fetchAppointments(); // Chama a função para buscar agendamentos
+    fetchDoctors(); // Chama a função para buscar doutores
+  }, []); // O array vazio indica que essa lógica executa uma vez quando o componente é montado
 
+  // Função para atualizar o status de um agendamento
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
+      // Faz uma requisição PUT para atualizar o status do agendamento
       const { data } = await axios.put(
         `http://localhost:4000/api/v1/appointment/update/${appointmentId}`,
-        { status },
+        { status }, // O status que será atualizado
         { withCredentials: true }
       );
 
+      // Atualiza o estado dos agendamentos com o novo status
       setAppointments((prevAppointments) =>
         prevAppointments.map((appointment) =>
           appointment._id === appointmentId
@@ -62,69 +71,77 @@ const Dashboard = () => {
         )
       );
 
+      // Se o status for "Aceito", remove a disponibilidade associada
       if (status === "Aceito") {
         const appointment = appointments.find((a) => a._id === appointmentId);
 
         if (appointment) {
-          const { disponibilityId } = appointment;
+          const { disponibilityId } = appointment; // ID da disponibilidade
 
           if (disponibilityId) {
+            // Faz uma requisição DELETE para remover a disponibilidade
             await axios.delete(
               `http://localhost:4000/api/v1/admin/disponibilidade/${disponibilityId}`,
               { withCredentials: true }
             );
 
             toast.success("Horário excluído com sucesso.");
-
-         
           }
         }
       }
 
-      toast.success(data.message);
+      toast.success(data.message); // Exibe uma mensagem de sucesso
     } catch (error) {
       console.error("Erro ao atualizar status:", error);
       toast.error(error.response?.data?.message || "Erro ao atualizar status.");
     }
   };
 
+  // Função para deletar um agendamento
   const handleDeleteAppointment = async (appointmentId) => {
     try {
       const { data } = await axios.delete(
         `http://localhost:4000/api/v1/appointment/delete/${appointmentId}`,
         { withCredentials: true }
       );
+      // Remove o agendamento deletado da lista de agendamentos
       setAppointments((prevAppointments) =>
         prevAppointments.filter((appointment) => appointment._id !== appointmentId)
       );
-      toast.success(data.message);
+      toast.success(data.message); // Exibe mensagem de sucesso
     } catch (error) {
       toast.error(error.response?.data?.message || "Falha ao deletar agendamento.");
     }
   };
 
+  // Função para exibir os detalhes de um agendamento em um modal
   const handleDetailsClick = (appointment) => {
-    setSelectedAppointment(appointment);
-    setModalOpen(true);
+    setSelectedAppointment(appointment); // Define o agendamento selecionado
+    setModalOpen(true); // Abre o modal
   };
 
+  // Função para fechar o modal
   const closeModal = () => {
-    setModalOpen(false);
-    setSelectedAppointment(null);
+    setModalOpen(false); // Fecha o modal
+    setSelectedAppointment(null); // Limpa o agendamento selecionado
   };
 
+  // Função para formatar a data de um agendamento
   const formatDate = (date) => {
     const parsedDate = new Date(date);
     if (!isNaN(parsedDate.getTime())) {
-      return format(parsedDate, 'dd/MM/yyyy HH:mm:ss');
+      return format(parsedDate, 'dd/MM/yyyy HH:mm:ss'); // Formata a data
     }
-    return "Data inválida";
+    return "Data inválida"; // Retorna uma mensagem de erro se a data for inválida
   };
 
+  // Verifica se o usuário está autenticado e é administrador
   const { isAuthenticated, admin } = useContext(Context);
   if (!isAuthenticated) {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/login"} />; // Se não estiver autenticado, redireciona para login
   }
+
+
 
   return (
     <section className="dashboard page">
@@ -236,7 +253,7 @@ const Dashboard = () => {
 
       {modalOpen && selectedAppointment && (
         <div className="modal-overlay">
-         <div className="modal-content">
+          <div className="modal-content">
             <span onClick={closeModal} className="close">×</span>
             <h3>Detalhes do Agendamento</h3>
             <p><strong>Nome do Tutor:</strong> {selectedAppointment.firstName} {selectedAppointment.lastName}</p>

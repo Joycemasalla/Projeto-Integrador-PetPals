@@ -9,21 +9,15 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 // Importa o modelo Message a partir do arquivo messageSchema
 import { Message } from "../models/messageSchema.js";
 
-// Importa o modelo User baseado no esquema definido
-import { User } from "../models/userSchema.js";
-
-// Importa a função para gerar tokens JWT
-import { generateToken } from "../utils/jwtToken.js";
 
 
 
 
-
-/**
- * Função assíncrona para enviar uma mensagem.
- * Responsável por criar uma nova mensagem no banco de dados.
- * Verifica se todos os campos necessários estão presentes.
- */
+/*
+  Função assíncrona para enviar uma mensagem.
+  Responsável por criar uma nova mensagem no banco de dados.
+  Verifica se todos os campos necessários estão presentes.
+*/
 export const sendMessage = catchAsyncErros(async (req, res, next) => {
     // Extrai os dados do corpo da requisição
     const { firstName, lastName, email, phone, message,  rating } = req.body;
@@ -44,11 +38,11 @@ export const sendMessage = catchAsyncErros(async (req, res, next) => {
     });
 });
 
-/**
- * Função assíncrona para obter todas as mensagens.
- * Busca todas as mensagens no banco de dados.
- * Retorna uma resposta com todas as mensagens.
- */
+/*
+  Função assíncrona para obter todas as mensagens.
+  Busca todas as mensagens no banco de dados.
+  Retorna uma resposta com todas as mensagens.
+*/
 export const getAllMessages = catchAsyncErros(async (req, res, next) => {
     // Busca todas as mensagens no banco de dados
     const messages = await Message.find();
@@ -59,6 +53,7 @@ export const getAllMessages = catchAsyncErros(async (req, res, next) => {
 });
 
 
+/*Função para deletar uma mensagem*/
 
 export const deleteMessage = async (req, res) => {
     try {

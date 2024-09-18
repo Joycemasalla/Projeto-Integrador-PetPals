@@ -7,18 +7,24 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
 
 const Agendamentos = () => {
+  // Estado para armazenar os agendamentos do usuário
   const [appointments, setAppointments] = useState([]);
+  // Obtém o estado de autenticação do contexto
   const { isAuthenticated } = useContext(Context);
 
+  // Efeito colateral para buscar os agendamentos do usuário ao carregar o componente
   useEffect(() => {
     const fetchUserAppointments = async () => {
       try {
+        // Faz uma requisição para obter os agendamentos do usuário
         const { data } = await axios.get(
           "http://localhost:4000/api/v1/appointment/user",
           { withCredentials: true }
         );
+        // Atualiza o estado com os agendamentos obtidos
         setAppointments(data.appointments);
       } catch (error) {
+        // Exibe uma mensagem de erro se a requisição falhar
         console.error("Error fetching appointments:", error);
         toast.error(error.response?.data?.message || "Failed to fetch appointments.");
       }
@@ -27,21 +33,28 @@ const Agendamentos = () => {
     fetchUserAppointments();
   }, []);
 
+  // Função para excluir um agendamento
   const handleDeleteAppointment = async (id) => {
     try {
+      // Faz uma requisição para excluir o agendamento
       const response = await axios.delete(`http://localhost:4000/api/v1/appointment/delete/${id}`, { withCredentials: true });
       console.log("Resposta da exclusão:", response.data);
+      // Atualiza o estado para remover o agendamento excluído
       setAppointments(appointments.filter(appointment => appointment._id !== id));
       toast.success("Agendamento excluído com sucesso.");
     } catch (error) {
+      // Exibe uma mensagem de erro se a exclusão falhar
       console.error("Erro ao deletar agendamento:", error);
       toast.error(error.response?.data?.message || "Erro ao excluir agendamento.");
     }
   };
 
+  // Redireciona para a página de login se o usuário não estiver autenticado
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
+
+
 
   return (
     <section className="appointments page">

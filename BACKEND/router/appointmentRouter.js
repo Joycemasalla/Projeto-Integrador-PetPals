@@ -2,8 +2,6 @@ import express from 'express';
 import { deleteAppointment, getAppointments, postAppointment, updateAppointmentStatus, getPatientAppointments } from '../controller/appointmentController.js';
 import { isAdminAuthenticated, isPatientAuthenticated } from '../middlewares/auth.js';
 
-
-
 const router = express.Router();
 
 // Rota para criar uma nova consulta. Requer autenticação do paciente.
@@ -20,7 +18,6 @@ router.put('/update/:id', isAdminAuthenticated, updateAppointmentStatus);
 
 // Rota para excluir uma consulta existente. Requer autenticação do administrador. O ID da consulta é passado como parâmetro na URL.
 router.delete('/delete/:id', isAdminAuthenticated, deleteAppointment);
-
 
 
 export default router;
