@@ -66,6 +66,13 @@ A documentação completa da API pode ser encontrada aqui.
 
 [DOCUMENTAÇÃO PETPALS.pdf](https://github.com/user-attachments/files/17049002/DOCUMENTACAO.PETPALS.pdf)
 
+🚀 Deploy
+
+Você pode ver a aplicação em funcionamento aqui.
+
+Site PetPals: https://projeto-integrador-pet-pals-tzcr.vercel.app/
+Possível visualizar o frontend somente. Para as interações com a aplicação é necessário conecção com o backend
+
 
 🐛 Relatar Problemas
 
