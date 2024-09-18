@@ -3,14 +3,18 @@ PetPals
 PetPals é um projeto de gerenciamento de consultas e serviços para clínicas veterinárias e donos de pets. A aplicação permite o agendamento de consultas, gerenciamento de médicos e disponibilidade, e oferece uma interface para comunicação entre donos de pets e clínicas.
 
 🚀 Início
+
 Para começar a usar o PetPals, siga estas instruções:
 
 📋 Pré-requisitos
+
 Antes de começar, você precisa ter instalado:
 
 Node.js (>= 18.15.0)
 npm (>= 9.8.1)
+
 🔧 Instalação
+
 Clone o repositório:
 https://github.com/Joycemasalla/Projeto-Integrador-PetPals.git
 
@@ -41,6 +45,7 @@ Gerenciamento de Médicos: Adicione, edite e remova médicos da clínica.
 Disponibilidade: Gerencie horários disponíveis para consultas.
 
 📸 Capturas de Tela
+
 ![Captura de tela 2024-09-18 151512](https://github.com/user-attachments/assets/7b544c8c-68ad-46a6-b91c-b700c6569211)
 
 📚 Documentação
