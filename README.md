@@ -40,7 +40,7 @@ Gerenciamento de Médicos: Adicione, edite e remova médicos da clínica.
 Disponibilidade: Gerencie horários disponíveis para consultas.
 
 📸 Capturas de Tela
-C:\Users\joyce\Pictures\Screenshots\Captura de tela 2024-09-18 151512.png
+![Captura de tela 2024-09-18 151512](https://github.com/user-attachments/assets/7b544c8c-68ad-46a6-b91c-b700c6569211)
 
 📚 Documentação
 A documentação completa da API pode ser encontrada aqui.
