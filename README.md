@@ -63,6 +63,7 @@ Disponibilidade: Gerencie horários disponíveis para consultas.
 📚 Documentação
 
 A documentação completa da API pode ser encontrada aqui.
+
 [DOCUMENTAÇÃO PETPALS.pdf](https://github.com/user-attachments/files/17049002/DOCUMENTACAO.PETPALS.pdf)
 
 
