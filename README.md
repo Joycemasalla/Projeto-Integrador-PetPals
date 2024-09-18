@@ -41,12 +41,14 @@ npm start
 Abra o navegador e acesse http://localhost:3000 para a aplicação frontend e http://localhost:5000 para o backend (se estiver configurado dessa forma).
 
 📦 Uso
+
 Frontend: O frontend está localizado no diretório frontend/ e usa React para a interface do usuário.
 
 Backend: O backend está no diretório backend/ e utiliza Express para criar APIs RESTful.
 
 
 🔍 Funcionalidades
+
 Gerenciamento de Consultas: Agende e visualize consultas para seus pets.
 
 Gerenciamento de Médicos: Adicione, edite e remova médicos da clínica.
@@ -59,12 +61,15 @@ Disponibilidade: Gerencie horários disponíveis para consultas.
 ![Captura de tela 2024-09-18 151512](https://github.com/user-attachments/assets/7b544c8c-68ad-46a6-b91c-b700c6569211)
 
 📚 Documentação
+
 A documentação completa da API pode ser encontrada aqui.
 
 🐛 Relatar Problemas
+
 Se você encontrar um problema, por favor, abra uma issue no GitHub.
 
 🤝 Contribuindo
+
 Faça um fork do repositório.
 
 Crie uma branch para sua feature ou correção:
