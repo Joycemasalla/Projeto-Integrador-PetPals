@@ -1,4 +1,4 @@
-                                                                                                      PetPals
+                                                                                          PetPals
 PetPals é um projeto de gerenciamento de consultas e serviços para clínicas veterinárias e donos de pets. A aplicação permite o agendamento de consultas, gerenciamento de médicos e disponibilidade, e oferece uma interface para comunicação entre donos de pets e clínicas.
 
 🚀 Início
