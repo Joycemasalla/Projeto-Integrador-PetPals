@@ -177,7 +177,7 @@ export const updateAppointmentStatus = catchAsyncErros(async (req, res, next) =>
             });
     }
     else if (status === "Recusado") {
-        const messageBody = `Olá ${appointment.firstName} ${appointment.lastName}, infelizmente sua consulta com o Dr.(a) ${appointment.doctor.firstName} ${appointment.doctor.lastName} não pôde ser confirmada. Por favor, tente agendar em outro horário ou entre em contato com a clínica para mais informações.`;
+        const messageBody = `Olá ${appointment.firstName} ${appointment.lastName}, infelizmente sua consulta com o Dr.(a) ${appointment.doctor.firstName} ${appointment.doctor.lastName} não pôde ser confirmada. Por favor, tente agendar em outro horário ou entre em contato com a clínica para mais informações. Aguardamos seu retorno.`;
 
         client.messages.create({
             body: messageBody,
