@@ -18,7 +18,6 @@ const MessageForm = () => {
 
   useEffect(() => {
       
-    console.log(isAuthenticated);
     const fetchUserData = async () => {
       if (isAuthenticated) {
 
