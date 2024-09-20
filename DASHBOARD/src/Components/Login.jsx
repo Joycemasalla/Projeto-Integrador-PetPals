@@ -20,6 +20,7 @@ const Login = () => {
 
     try {
       await axios
+      
         .post(
           "http://localhost:4000/api/v1/user/login",
           { email, password, role: "Admin" }, // Envia os dados do formulário para o backend
@@ -28,6 +29,7 @@ const Login = () => {
             headers: { "Content-Type": "application/json" }, // Define o tipo de conteúdo como JSON
           }
         )
+        
         .then((res) => {
           toast.success(res.data.message); // Exibe mensagem de sucesso
           setIsAuthenticated(true); // Atualiza o estado de autenticação
@@ -38,8 +40,8 @@ const Login = () => {
     } catch (error) {
       toast.error(error.response.data.message); // Exibe mensagem de erro se a autenticação falhar
     }
-  };
 
+  };
   // Se o usuário já estiver autenticado, redireciona para a página principal
   if (isAuthenticated) {
     return <Navigate to={"/"} />;

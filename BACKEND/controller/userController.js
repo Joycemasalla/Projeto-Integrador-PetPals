@@ -42,9 +42,6 @@ export const login = catchAsyncErros(async (req, res, next) => {
         return next(new ErrorHandler("Por favor, preencha todos os campos", 400));
     }
 
-    // if (password !== confirmPassword) {
-    //     return next(new ErrorHandler("As senhas não coincidem", 400));
-    // }
 
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
