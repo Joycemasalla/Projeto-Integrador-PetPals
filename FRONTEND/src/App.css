@@ -1862,9 +1862,21 @@ footer .logo-img:hover {
 }
 
 #CTAservico {
-  margin-left: 37rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-decoration: none;
   
 }
+
+
+
+
+a {
+  text-decoration: none; /* Remove a sublinhado do Link */
+}
+
 
 
 /* Agendamentos.css */
